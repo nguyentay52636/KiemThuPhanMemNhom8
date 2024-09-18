@@ -11,6 +11,10 @@ public class Account {
         this.maQuyen = maQuyen;
     }
 
+    public Account() {
+
+    }
+
     public String getMaNV() {
         return maNV;
     }
@@ -18,6 +22,7 @@ public class Account {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }

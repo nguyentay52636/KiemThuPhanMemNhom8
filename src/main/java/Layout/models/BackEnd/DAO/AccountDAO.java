@@ -1,5 +1,7 @@
 package Layout.models.BackEnd.DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ public class AccountDAO {
         }
         return dstk;
     }
+    // lay email
 
     public Boolean add(Account tk) {
         qltkConnectiion = new ConnectionDB();
@@ -68,5 +71,40 @@ public class AccountDAO {
 
     public void close() {
         qltkConnectiion.closeConnection();
+    }
+
+    public Boolean updatePasswordByEmail(String email, String newPassword) {
+        qltkConnectiion = new ConnectionDB();
+        Boolean ok = false;
+        String qry = "UPDATE account SET MatKhau = ? WHERE email = ?";
+        try (Connection conn = qltkConnectiion.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(qry)) {
+            if (checkEmailExists(email) != null) {
+                pstmt.setString(1, newPassword); // Gán giá trị cho tham số thứ nhất
+                pstmt.setString(2, email); // Gán giá trị cho tham số thứ hai
+                int rowsAffected = pstmt.executeUpdate();
+                ok = rowsAffected > 0;
+            } else {
+                System.out.println("Không tìm thấy email trong cơ sở dữ liệu.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            qltkConnectiion.closeConnection();
+        }
+        return ok;
+    }
+
+    public Account checkEmailExists(String email) {
+        ArrayList<Account> accounts = readDB();
+        for (Account ac : accounts) {
+            if (ac.getEmail().equals(email)) {
+                {
+                    return ac;
+                }
+
+            }
+        }
+        return null;
     }
 }

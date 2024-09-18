@@ -218,7 +218,7 @@ public class FormAccount extends JPanel {
         }
 
         // add item for comboBox
-        String[] items = { "Tất cả", "Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
+        String[] items = { "Tất cả", "Emai", "Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
@@ -357,6 +357,7 @@ public class FormAccount extends JPanel {
                     // tao row header
                     Row headerRow = sheet.createRow(0);
                     headerRow.createCell(0).setCellValue("STT");
+                    headerRow.createCell(1).setCellValue("Email");
                     headerRow.createCell(1).setCellValue("Tên tài khoản");
                     headerRow.createCell(2).setCellValue("Mật khẩu");
                     headerRow.createCell(3).setCellValue("Mã nhân viên");
@@ -407,13 +408,13 @@ public class FormAccount extends JPanel {
 
                         while (rowIterator.hasNext()) {
                             Row row = rowIterator.next();
-
+                            String email = row.getCell(1).getStringCellValue();
                             String tenTaiKhoan = row.getCell(1).getStringCellValue();
                             String matKhau = row.getCell(2).getStringCellValue();
                             String maNV = row.getCell(3).getStringCellValue();
                             String maQuyen = row.getCell(4).getStringCellValue();
 
-                            Account permission = new Account(tenTaiKhoan, matKhau, maNV, maQuyen);
+                            Account permission = new Account(email, tenTaiKhoan, matKhau, maNV, maQuyen);
 
                             // add to the database
                             qltk.add(permission);
