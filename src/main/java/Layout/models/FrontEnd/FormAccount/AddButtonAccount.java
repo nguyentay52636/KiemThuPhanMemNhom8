@@ -102,7 +102,12 @@ public class AddButtonAccount extends JFrame {
                 JOptionPane.showMessageDialog(null, "Lỗi, không tìm thấy tài khoản");
                 this.dispose();
             }
-
+            txtEmail.setText(this.tkSua.getEmail());
+            String emailAdmin = "admin@expamle.com";
+            String getTxtEmail = txtEmail.getText();
+            if (getTxtEmail.equals(emailAdmin)) {
+                txtEmail.setEnabled(false);  // Khóa ô input
+            }
             txUsername.setText(this.tkSua.getUsername());
             txUsername.setEditable(false);
             txPassword.setText(this.tkSua.getPassword());
@@ -207,6 +212,7 @@ public class AddButtonAccount extends JFrame {
     }
 
     private Boolean checkEmpty() {
+        String email = txtEmail.getText();
         String username = txUsername.getText();
         String pass = txPassword.getText();
         String manv = txMaNV.getText();
@@ -214,6 +220,9 @@ public class AddButtonAccount extends JFrame {
 
         if (username.trim().equals("")) {
             return showErrorTx(txUsername, "Tên đăng nhập không được để trống");
+
+        } else if (email.trim().equals("")) {
+            return showErrorTx(txtEmail, "Email không được để trống");
 
         } else if (pass.equals("")) {
             return showErrorTx(txPassword, "Mật khẩu không được để trống");
