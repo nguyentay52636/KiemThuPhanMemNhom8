@@ -170,13 +170,14 @@ public class AddButtonAccount extends JFrame {
 
     private void btnThemMouseClicked() {
         if (checkEmpty()) {
+            String email = txtEmail.getText();
             String username = txUsername.getText();
             String pass = txPassword.getText();
             String manv = txMaNV.getText();
             String maquyen = txMaQuyen.getText();
 
-            Account newAccount = new Account(username, pass, manv, maquyen);
-            if (qltkBUS.add(username, pass, manv, maquyen)) {
+            Account newAccount = new Account(email, username, pass, manv, maquyen);
+            if (qltkBUS.add(email, username, pass, manv, maquyen)) {
                 JOptionPane.showMessageDialog(this, "Thêm " + username + " thành công!");
                 if (accountAddedListener != null) {
                     accountAddedListener.onAccountAdded(newAccount);
