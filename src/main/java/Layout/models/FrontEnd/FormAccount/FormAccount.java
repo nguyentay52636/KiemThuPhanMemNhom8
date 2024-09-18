@@ -321,7 +321,7 @@ public class FormAccount extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn một tài khoản");
                     return;
                 }
-                String username = (String) table1.getValueAt(selectedRow, 1);
+                String username = (String) table1.getValueAt(selectedRow, 2);
 
                 // Tạo một đối tượng mới của AddButtonAccount với tham số đầu tiên là "Sửa" và
                 // tham số thứ hai là tên tài khoản được chọn
@@ -329,7 +329,8 @@ public class FormAccount extends JPanel {
                 account.setAccountAddedListener(new AccountAddedListener() {
                     @Override
                     public void onAccountAdded(Account newAccount) {
-                        qltk.update(newAccount.getUsername(), newAccount.getPassword(), newAccount.getMaNV(),
+                        qltk.update(newAccount.getEmail(), newAccount.getUsername(), newAccount.getPassword(),
+                                newAccount.getMaNV(),
                                 newAccount.getMaQuyen());
                         refresh();
                     }

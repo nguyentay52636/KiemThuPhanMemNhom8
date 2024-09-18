@@ -186,8 +186,8 @@ public class AccountBUS {
         return ok;
     }
 
-    public Boolean update(String username, String pass, String maNV, String maQuyen) {
-        Boolean ok = qltkDAO.update(username, pass, maNV, maQuyen);
+    public Boolean update(String Email, String username, String pass, String maNV, String maQuyen) {
+        Boolean ok = qltkDAO.update(Email, username, pass, maNV, maQuyen);
 
         if (ok) {
             dstk.forEach((tk) -> {

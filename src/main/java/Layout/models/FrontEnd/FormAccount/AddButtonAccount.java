@@ -1,14 +1,23 @@
 package Layout.models.FrontEnd.FormAccount;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import Layout.models.BackEnd.BUS.AccountBUS;
 import Layout.models.BackEnd.DTO.Account;
 import Layout.models.FrontEnd.FormPermission.FormChoosePermission;
 import Layout.models.FrontEnd.FormStaff.FormChooseEmployee;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
 
 public class AddButtonAccount extends JFrame {
     private FormAccount.AccountAddedListener accountAddedListener;
@@ -21,9 +30,9 @@ public class AddButtonAccount extends JFrame {
     JTextField txPassword = new JTextField(15);
     JTextField txMaNV = new JTextField(15);
     JTextField txMaQuyen = new JTextField(15);
-
-//    MoreButton btnChonNhanVien = new MoreButton();
-//    MoreButton btnChonQuyen = new MoreButton();
+    JTextField txtEmail = new JTextField(15);
+    // MoreButton btnChonNhanVien = new MoreButton();
+    // MoreButton btnChonQuyen = new MoreButton();
     JButton button1 = new JButton();
     JButton button2 = new JButton();
 
@@ -43,6 +52,7 @@ public class AddButtonAccount extends JFrame {
         this.type = _type;
 
         // inputs
+        txtEmail.setBorder(BorderFactory.createTitledBorder("Email"));
         txUsername.setBorder(BorderFactory.createTitledBorder("Tên tài khoản"));
         txPassword.setBorder(BorderFactory.createTitledBorder("Mật khẩu"));
         txMaNV.setBorder(BorderFactory.createTitledBorder(" "));
@@ -51,7 +61,7 @@ public class AddButtonAccount extends JFrame {
         JPanel plChonNhanVien = new JPanel();
         plChonNhanVien.setBorder(BorderFactory.createTitledBorder("Mã nhân viên"));
         plChonNhanVien.add(txMaNV);
-//        plChonNhanVien.add(btnChonNhanVien);
+        // plChonNhanVien.add(btnChonNhanVien);
         button1.setPreferredSize(new Dimension(50, 50));
         button1.setIcon(new ImageIcon(getClass().getResource("/images/icons8_assistant_30px.png")));
         plChonNhanVien.add(button1);
@@ -59,12 +69,13 @@ public class AddButtonAccount extends JFrame {
         JPanel plChonQuyen = new JPanel();
         plChonQuyen.setBorder(BorderFactory.createTitledBorder("Mã quyền"));
         plChonQuyen.add(txMaQuyen);
-//        plChonQuyen.add(btnChonQuyen);
+        // plChonQuyen.add(btnChonQuyen);
         button2.setPreferredSize(new Dimension(50, 50));
         button2.setIcon(new ImageIcon(getClass().getResource("/images/icons8_police_badge_30px.png")));
         plChonQuyen.add(button2);
 
         JPanel plInput = new JPanel();
+        plInput.add(txtEmail);
         plInput.add(txUsername);
         plInput.add(txPassword);
         plInput.add(plChonNhanVien);
@@ -154,7 +165,6 @@ public class AddButtonAccount extends JFrame {
             }
         });
 
-
         this.setVisible(true);
     }
 
@@ -222,7 +232,8 @@ public class AddButtonAccount extends JFrame {
         return false;
     }
 
-    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException,
+            InstantiationException, IllegalAccessException {
         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
                 .getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {

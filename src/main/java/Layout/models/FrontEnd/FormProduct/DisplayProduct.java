@@ -1,18 +1,13 @@
 
 package Layout.models.FrontEnd.FormProduct;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -23,22 +18,41 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import Layout.models.BackEnd.BUS.ProductBUS;
 import Layout.models.BackEnd.BUS.TypeProductBUS;
 import Layout.models.BackEnd.DTO.Product;
 import Layout.models.BackEnd.DTO.TypeProduct;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 
 public class DisplayProduct extends JFrame {
 
@@ -46,8 +60,8 @@ public class DisplayProduct extends JFrame {
     private JPanel contentPane;
     private JTextField txtTimKiem;
     private JTable table;
-    private ProductBUS prbus= new ProductBUS();
-    private TypeProductBUS tpbus= new TypeProductBUS();
+    private ProductBUS prbus = new ProductBUS();
+    private TypeProductBUS tpbus = new TypeProductBUS();
     private JButton btnadd;
     private JButton btndelete;
     private JButton btnedit;
@@ -68,10 +82,6 @@ public class DisplayProduct extends JFrame {
     private JTextField toi;
     private JPanel panel2;
     private JDialog dialog;
-
-
-
-
 
     public DisplayProduct() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,28 +130,29 @@ public class DisplayProduct extends JFrame {
                 // Kiểm tra xem có hàng nào được chọn không
                 if (selectedRow != -1) {
                     // Hiển thị hộp thoại xác nhận xóa
-                    int option = JOptionPane.showConfirmDialog(DisplayProduct.this, "Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+                    int option = JOptionPane.showConfirmDialog(DisplayProduct.this,
+                            "Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
 
                     // Nếu người dùng đồng ý xóa
                     if (option == JOptionPane.YES_OPTION) {
                         String maSP = (String) table.getValueAt(selectedRow, 0);
-                        prbus.updateTrangthai(maSP, 1)   ;
+                        prbus.updateTrangthai(maSP, 1);
                         refreshTable();
                     }
                 } else {
                     // Nếu không có hàng nào được chọn, hiển thị thông báo cho người dùng
-                    JOptionPane.showMessageDialog(DisplayProduct.this, "Vui lòng chọn một sản phẩm để xóa", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(DisplayProduct.this, "Vui lòng chọn một sản phẩm để xóa", "Thông báo",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
 
         panel2.add(btndelete);
 
-
         // Sự kiện khi nhấn nút "DELETE"
 
         btnedit = new JButton("Sửa");
-//        btnedit.setBackground(new Color(255, 255, 255));
+        // btnedit.setBackground(new Color(255, 255, 255));
         btnedit.setPreferredSize(new Dimension(144, 43));
         btnedit.setIcon(new ImageIcon(getClass().getResource("/images/editing.png")));
 
@@ -165,7 +176,8 @@ public class DisplayProduct extends JFrame {
 
                 } else {
                     // Nếu không có hàng nào được chọn, hiển thị thông báo cho người dùng
-                    JOptionPane.showMessageDialog(DisplayProduct.this, "Vui lòng chọn một sản phẩm để chỉnh sửa", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(DisplayProduct.this, "Vui lòng chọn một sản phẩm để chỉnh sửa",
+                            "Thông báo", JOptionPane.WARNING_MESSAGE);
                 }
                 refreshTable();
             }
@@ -176,7 +188,7 @@ public class DisplayProduct extends JFrame {
         // Sự kiện khi nhấn nút "EDIT"
 
         btnview = new JButton("Xem");
-//        btnview.setBackground(new Color(255, 255, 255));
+        // btnview.setBackground(new Color(255, 255, 255));
         btnview.setPreferredSize(new Dimension(144, 43));
         btnview.setIcon(new ImageIcon(getClass().getResource("/images/view.png")));
 
@@ -197,17 +209,15 @@ public class DisplayProduct extends JFrame {
 
                     showProductDetailsDialog(maSP, maLSP, tenSP, donGia, fileAnh, soLuong, trangThai);
                 } else {
-                    JOptionPane.showMessageDialog(DisplayProduct.this, "Vui lòng chọn một sản phẩm để xem chi tiết", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(DisplayProduct.this, "Vui lòng chọn một sản phẩm để xem chi tiết",
+                            "Thông báo", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
         panel2.add(btnview);
 
-
-
-
         btnxuat = new JButton("Xuất Excel");
-//        btnxuat.setBackground(new Color(255, 255, 255));
+        // btnxuat.setBackground(new Color(255, 255, 255));
         btnxuat.setPreferredSize(new Dimension(144, 43));
         btnxuat.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
         btnxuat.addActionListener(new ActionListener() {
@@ -226,7 +236,7 @@ public class DisplayProduct extends JFrame {
 
                     // tao row header
                     Row headerRow = sheet.createRow(0);
-//                    headerRow.createCell(1).setCellValue("STT");
+                    // headerRow.createCell(1).setCellValue("STT");
                     headerRow.createCell(1).setCellValue("Mã SP");
                     headerRow.createCell(2).setCellValue("Mã LSP");
                     headerRow.createCell(3).setCellValue("Tên SP");
@@ -256,9 +266,8 @@ public class DisplayProduct extends JFrame {
         });
         panel2.add(btnxuat);
 
-
         btnnhap = new JButton("Nhập Excel");
-//        btnnhap.setBackground(new Color(255, 255, 255));
+        // btnnhap.setBackground(new Color(255, 255, 255));
         btnnhap.setPreferredSize(new Dimension(144, 43));
         btnnhap.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
         btnnhap.addActionListener(new ActionListener() {
@@ -313,27 +322,25 @@ public class DisplayProduct extends JFrame {
         });
         panel2.add(btnnhap);
 
-
         JPanel panel3 = new JPanel();
         FlowLayout fl_panel3 = new FlowLayout();
         fl_panel3.setVgap(0);
         panel3.setLayout(fl_panel3);
         panel1.add(panel3);
 
-        panel_1= new JPanel();
+        panel_1 = new JPanel();
         panel3.add(panel_1);
 
-        String[] items = {"Đang bán","Đã xóa"}; // Initialize an array of strings with your desired items
+        String[] items = { "Đang bán", "Đã xóa" }; // Initialize an array of strings with your desired items
         cbhienthi = new JComboBox<>(items);
         panel_1.add(cbhienthi);
-
 
         paneltimkiem = new JPanel();
         paneltimkiem.setBorder(new TitledBorder("Tìm kiếm"));
         paneltimkiem.setLayout(new FlowLayout());
         panel3.add(paneltimkiem);
 
-        String[] options = {"MaSP", "TenSP", "MaLSP","Dongia","Soluong"};
+        String[] options = { "MaSP", "TenSP", "MaLSP", "Dongia", "Soluong" };
         comboBox1 = new JComboBox<>(options);
         comboBox1.setBackground(new Color(255, 255, 255));
         comboBox1.setPreferredSize(new Dimension(130, 40));
@@ -342,11 +349,10 @@ public class DisplayProduct extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String option = (String)comboBox1.getSelectedItem();
+                String option = (String) comboBox1.getSelectedItem();
                 eventJTextfield(option);
             }
         });
-
 
         txtTimKiem = new JTextField("");
         txtTimKiem.setHorizontalAlignment(SwingConstants.CENTER);
@@ -364,22 +370,21 @@ public class DisplayProduct extends JFrame {
         tu.setHorizontalAlignment(SwingConstants.CENTER);
         tu.setPreferredSize(new Dimension(65, 25));
         panelloc.add(tu);
-        addFocusListenerToTextField(tu,"Từ");
+        addFocusListenerToTextField(tu, "Từ");
         sukientimkiem(tu); // Pass tu to sukientimkiem
-
 
         toi = new JTextField("Tới");
         toi.setHorizontalAlignment(SwingConstants.CENTER);
         toi.setPreferredSize(new Dimension(65, 25));
         panelloc.add(toi);
-        addFocusListenerToTextField(toi,"Tới");
+        addFocusListenerToTextField(toi, "Tới");
         sukientimkiem(toi);
-        JButton btnlammoi= new JButton("Làm mới");
+        JButton btnlammoi = new JButton("Làm mới");
         btnlammoi.setFont(new Font("Tahoma", Font.BOLD, 11));
         btnlammoi.setIcon(new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png")));
         btnlammoi.setPreferredSize(new Dimension(144, 45));
         panel3.add(btnlammoi);
-        btnlammoi.addActionListener( new ActionListener() {
+        btnlammoi.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -405,7 +410,6 @@ public class DisplayProduct extends JFrame {
             columnModel.getColumn(i).setPreferredWidth(150);
         }
 
-
         // Tạo một model mới và thêm các cột vào model
         model = new DefaultTableModel();
         model.addColumn("Mã SP");
@@ -415,7 +419,7 @@ public class DisplayProduct extends JFrame {
         model.addColumn("Số lượng");
         model.addColumn("File ảnh");
         model.addColumn("Trạng thái");
-        String hienthi= (String)cbhienthi.getSelectedItem();
+        String hienthi = (String) cbhienthi.getSelectedItem();
         Trangthai(hienthi);
         cbhienthi.addActionListener(new ActionListener() {
             @Override
@@ -434,7 +438,8 @@ public class DisplayProduct extends JFrame {
                 if (e.getClickCount() == 1) { // Check if it's a single click
                     int row = table.getSelectedRow(); // Get the selected row
                     if (row != -1) { // Check if a row is selected
-                        String trangThai = table.getValueAt(row, 6).toString(); // Get the value of the "trangThai" column
+                        String trangThai = table.getValueAt(row, 6).toString(); // Get the value of the "trangThai"
+                                                                                // column
                         if (trangThai.equals("Đã xóa")) { // Check if "trangThai" is "1"
                             String maSP = table.getValueAt(row, 0).toString(); // Get the value of the "maSP" column
                             showConfirmationDialog(maSP); // Show confirmation dialog
@@ -444,11 +449,9 @@ public class DisplayProduct extends JFrame {
             }
         });
 
-
-        contentPane.add(panel1,BorderLayout.NORTH);
-        contentPane.add(scrollPane1,BorderLayout.CENTER);
+        contentPane.add(panel1, BorderLayout.NORTH);
+        contentPane.add(scrollPane1, BorderLayout.CENTER);
     }
-
 
     public JPanel getPanel_disable() {
         // Vô hiệu hóa các nút trong contentPane
@@ -472,7 +475,7 @@ public class DisplayProduct extends JFrame {
         // Các thành phần trong dialog
         JLabel lblMaSP = new JLabel("Mã sản phẩm:");
         JTextField txtMaSP = new JTextField();
-        JLabel lblMaLSP= new JLabel("Mã lô hàng sản phẩm: ");
+        JLabel lblMaLSP = new JLabel("Mã lô hàng sản phẩm: ");
 
         ArrayList<TypeProduct> listlsp = tpbus.getDslsp();
 
@@ -494,15 +497,21 @@ public class DisplayProduct extends JFrame {
         JLabel lblSoLuong = new JLabel("Số lượng:");
         JTextField txtSoLuong = new JTextField();
         JLabel lblTrangThai = new JLabel("Trạng thái:");
-        JComboBox<String> cboTrangThai = new JComboBox<>(new String[]{"Đang bán", "Đã xóa"});
+        JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang bán", "Đã xóa" });
 
         // thêm sự kiên cho nút chọn ảnh
         btnChooseImage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/main/resources/")); // Set the default directory to 'resources'
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/main/resources/")); // Set
+                                                                                                                    // the
+                                                                                                                    // default
+                                                                                                                    // directory
+                                                                                                                    // to
+                                                                                                                    // 'resources'
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif",
+                        "jpeg");
                 fileChooser.addChoosableFileFilter(filter);
                 fileChooser.setAcceptAllFileFilterUsed(false);
                 int returnValue = fileChooser.showOpenDialog(null);
@@ -561,24 +570,25 @@ public class DisplayProduct extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Lấy thông tin sản phẩm từ các ô nhập liệu
                 String maSP = txtMaSP.getText();
-                String maLSP = (String)cbLSP.getSelectedItem() ;
+                String maLSP = (String) cbLSP.getSelectedItem();
                 String tenSP = txtTenSP.getText();
                 String fileAnh = btnChooseImage.getText();
-                String trangThai =doitrangthai( cboTrangThai.getSelectedItem()+"");
+                String trangThai = doitrangthai(cboTrangThai.getSelectedItem() + "");
                 String txtdonGia = txtDonGia.getText();
-                String txtsoLuong =txtSoLuong.getText();
+                String txtsoLuong = txtSoLuong.getText();
 
                 // Kiểm tra xem mã sản phẩm đã tồn tại trong bảng chưa
                 float donGia = Float.parseFloat(txtdonGia);
                 int soLuong = Integer.parseInt(txtsoLuong);
-                if(checkinform( maSP,"addDialog", donGia,soLuong)) {
+                if (checkinform(maSP, "addDialog", donGia, soLuong)) {
 
                     model = (DefaultTableModel) table.getModel();
                     // Thêm hàng mới vào bảng với thông tin sản phẩm vừa nhập
-                    model.addRow(new Object[]{maSP, maLSP, tenSP, donGia, fileAnh, soLuong, trangThai});
+                    model.addRow(new Object[] { maSP, maLSP, tenSP, donGia, fileAnh, soLuong, trangThai });
 
                     // Tạo đối tượng Typeproduct
-                    Product  product = new Product (maSP, maLSP, tenSP, donGia, soLuong, fileAnh,Integer.parseInt(trangThai) );
+                    Product product = new Product(maSP, maLSP, tenSP, donGia, soLuong, fileAnh,
+                            Integer.parseInt(trangThai));
                     prbus.addBus(product);
                     refreshTable();
                     // Đóng dialog khi nhấn nút "OK"
@@ -596,7 +606,6 @@ public class DisplayProduct extends JFrame {
 
         // Sự kiện khi thay đổi trường dữ liệu nhập vào
         DocumentListener documentListener = new DocumentListener() {
-
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -619,10 +628,10 @@ public class DisplayProduct extends JFrame {
                         !txtTenSP.getText().isEmpty() &&
                         !txtDonGia.getText().isEmpty() &&
                         !btnChooseImage.getText().isEmpty() &&
-                        !txtSoLuong.getText().isEmpty() ;
+                        !txtSoLuong.getText().isEmpty();
 
-
-                // Kích hoạt hoặc vô hiệu hóa nút "OK" tùy thuộc vào việc các trường đã được nhập đầy đủ hay không
+                // Kích hoạt hoặc vô hiệu hóa nút "OK" tùy thuộc vào việc các trường đã được
+                // nhập đầy đủ hay không
                 btnOK.setEnabled(allFieldsFilled);
             }
         };
@@ -646,7 +655,8 @@ public class DisplayProduct extends JFrame {
         addDialog.setVisible(true);
     }
 
-    private void showDialogToEditProduct(String maSP,String maLSP, String tenSP, Float donGia, String fileAnh, int soLuong,String trangThai) {
+    private void showDialogToEditProduct(String maSP, String maLSP, String tenSP, Float donGia, String fileAnh,
+            int soLuong, String trangThai) {
         // Tạo một dialog mới
         JDialog editDialog = new JDialog(this, "Chỉnh sửa sản phẩm", true);
         editDialog.setSize(450, 400);
@@ -665,13 +675,13 @@ public class DisplayProduct extends JFrame {
         JLabel lblTenSP = new JLabel("Tên sản phẩm:");
         JTextField txtTenSP = new JTextField(tenSP);
         JLabel lblDonGia = new JLabel("Đơn giá:");
-        JTextField txtDonGia = new JTextField(donGia+"");
+        JTextField txtDonGia = new JTextField(donGia + "");
         JLabel lblFileAnh = new JLabel("File ảnh:");
         JButton btnChooseImage = new JButton(fileAnh);
         JLabel lblSoLuong = new JLabel("Số lượng:");
-        JTextField txtSoLuong = new JTextField(soLuong+"");
+        JTextField txtSoLuong = new JTextField(soLuong + "");
         JLabel lblTrangThai = new JLabel("Trạng thái:");
-        JComboBox<String> cboTrangThai = new JComboBox<>(new String[]{"Đang bán", "Đã xóa"});
+        JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang bán", "Đã xóa" });
         cboTrangThai.setSelectedItem(trangThai);
 
         btnChooseImage.addActionListener(new ActionListener() {
@@ -680,7 +690,8 @@ public class DisplayProduct extends JFrame {
                 JFileChooser fileChooser = new JFileChooser();
 
                 // Thiết lập chỉ cho phép chọn file ảnh
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Ảnh (*.jpg, *.png, *.gif)", "jpg", "png", "gif");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Ảnh (*.jpg, *.png, *.gif)", "jpg", "png",
+                        "gif");
                 fileChooser.setFileFilter(filter);
 
                 // Hiển thị hộp thoại chọn file và lấy đường dẫn của file được chọn
@@ -694,7 +705,6 @@ public class DisplayProduct extends JFrame {
                 }
             }
         });
-
 
         // Thêm các thành phần vào panel
         panel.add(lblMaSP);
@@ -712,7 +722,8 @@ public class DisplayProduct extends JFrame {
         panel.add(lblTrangThai);
         panel.add(cboTrangThai);
 
-        // Tạo một panel mới để chứa nút OK và Cancel (tương tự như phương thức showDialogToAddProduct)
+        // Tạo một panel mới để chứa nút OK và Cancel (tương tự như phương thức
+        // showDialogToAddProduct)
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
@@ -747,9 +758,10 @@ public class DisplayProduct extends JFrame {
                         !txtMaLSP.getText().isEmpty() &&
                         !txtDonGia.getText().isEmpty() &&
                         !btnChooseImage.getText().isEmpty() &&
-                        !txtSoLuong.getText().isEmpty() ;
+                        !txtSoLuong.getText().isEmpty();
 
-                // Kích hoạt hoặc vô hiệu hóa nút "OK" tùy thuộc vào việc các trường đã được nhập đầy đủ hay không
+                // Kích hoạt hoặc vô hiệu hóa nút "OK" tùy thuộc vào việc các trường đã được
+                // nhập đầy đủ hay không
                 btnOK.setEnabled(allFieldsFilled);
             }
         };
@@ -766,7 +778,8 @@ public class DisplayProduct extends JFrame {
                 // Lấy chỉ mục của hàng đã được chọn trong bảng
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(editDialog, "Vui lòng chọn một sản phẩm để chỉnh sửa", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(editDialog, "Vui lòng chọn một sản phẩm để chỉnh sửa", "Thông báo",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -783,7 +796,8 @@ public class DisplayProduct extends JFrame {
                 int newsoluong = Integer.parseInt(newSoLuong);
                 if (checkinform(newMaSP, "editDialog", newdongia, newsoluong)) {
 
-                    Product pr = new Product(newMaSP, newMaLSP, newTenSP, newdongia, newsoluong, newFileAnh, Integer.parseInt(newTrangThai));
+                    Product pr = new Product(newMaSP, newMaLSP, newTenSP, newdongia, newsoluong, newFileAnh,
+                            Integer.parseInt(newTrangThai));
                     prbus.update(pr);
 
                     editDialog.dispose();
@@ -791,7 +805,8 @@ public class DisplayProduct extends JFrame {
             }
         });
 
-        // Sự kiện khi nhấn nút "Cancel" (tương tự như phương thức showDialogToAddProduct)
+        // Sự kiện khi nhấn nút "Cancel" (tương tự như phương thức
+        // showDialogToAddProduct)
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Đóng dialog khi nhấn nút "Cancel"
@@ -799,29 +814,32 @@ public class DisplayProduct extends JFrame {
             }
         });
 
-        // Thêm panel nút vào cuối panel chính (tương tự như phương thức showDialogToAddProduct)
+        // Thêm panel nút vào cuối panel chính (tương tự như phương thức
+        // showDialogToAddProduct)
         panel.add(buttonPanel);
 
-        // Thêm panel chứa các thành phần vào dialog (tương tự như phương thức showDialogToAddProduct)
+        // Thêm panel chứa các thành phần vào dialog (tương tự như phương thức
+        // showDialogToAddProduct)
         editDialog.getContentPane().add(panel);
 
-        // Đặt vị trí hiển thị dialog (theo cửa sổ cha) (tương tự như phương thức showDialogToAddProduct)
+        // Đặt vị trí hiển thị dialog (theo cửa sổ cha) (tương tự như phương thức
+        // showDialogToAddProduct)
         editDialog.setLocationRelativeTo(this);
 
         // Hiển thị dialog
         editDialog.setVisible(true);
     }
 
-
     // Phương thức để hiển thị dialog thông tin sản phẩm
-    private void showProductDetailsDialog(String maSP,String maLSP, String tenSP, Float donGia, String fileAnh, int soLuong, String trangThai) {
+    private void showProductDetailsDialog(String maSP, String maLSP, String tenSP, Float donGia, String fileAnh,
+            int soLuong, String trangThai) {
         // Tạo một dialog mới
         JDialog detailsDialog = new JDialog(this, "Chi tiết sản phẩm", true);
         detailsDialog.setSize(700, 600);
 
         // Panel chính để chứa các thành phần
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(1,2));
+        mainPanel.setLayout(new GridLayout(1, 2));
 
         // Panel bên trái để chứa hình ảnh sản phẩm
         JPanel imagePanel = new JPanel();
@@ -834,7 +852,6 @@ public class DisplayProduct extends JFrame {
         JLabel imageLabel = new JLabel(new ImageIcon(getClass().getResource("/images/Product Images/" + fileAnh)));
         imageLabel.setPreferredSize(new Dimension(500, 500));
         imagePanel.add(imageLabel);
-
 
         // Panel bên phải để chứa thông tin sản phẩm
         JPanel infoPanel = new JPanel();
@@ -904,32 +921,30 @@ public class DisplayProduct extends JFrame {
         detailsDialog.setVisible(true);
     }
 
-
     public boolean checkinform(String maSP, String x, Float donGiaStr, int soLuongStr) {
 
-        if (x== "addDialog") {
+        if (x == "addDialog") {
             if (prbus.checkidproduct(maSP)) {
-                JOptionPane.showMessageDialog(dialog, "Mã sản phẩm đã tồn tại trong bảng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(dialog, "Mã sản phẩm đã tồn tại trong bảng.", "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
                 return false; // Thoát khỏi sự kiện nếu có lỗi
             }
         }
 
-
-        if (donGiaStr<0) {
-            JOptionPane.showMessageDialog(dialog, "Số lượng phải là số thực không âm", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (donGiaStr < 0) {
+            JOptionPane.showMessageDialog(dialog, "Số lượng phải là số thực không âm", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false; // Thoát khỏi sự kiện nếu có lỗi
         }
 
         String soLuongStr1 = String.valueOf(soLuongStr);
         if (!soLuongStr1.trim().matches("^[1-9]\\d*$")) {
-            JOptionPane.showMessageDialog(dialog, "Số lượng phải là số dương từ 1 đến 9", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(dialog, "Số lượng phải là số dương từ 1 đến 9", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false; // tôi muốn đổi chúng sang dạng chuỗi để làm cái này
         }
         return true;
     }
-
-
-
 
     public void refreshTable() {
         String option = (String) cbhienthi.getSelectedItem();
@@ -947,7 +962,8 @@ public class DisplayProduct extends JFrame {
         panel2.setVisible(option.equals("Đang bán")); // Set panel visibility based on option
 
         for (Product sp : listsp) {
-            if ((option.equals("Đã xóa") && sp.getTrangthai() == 1) || (option.equals("Đang bán") && sp.getTrangthai() == 0)) {
+            if ((option.equals("Đã xóa") && sp.getTrangthai() == 1)
+                    || (option.equals("Đang bán") && sp.getTrangthai() == 0)) {
                 addRowToModel(sp);
             }
         }
@@ -982,7 +998,8 @@ public class DisplayProduct extends JFrame {
     }
 
     public void showConfirmationDialog(String maSP) {
-        int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn khôi phục sản phẩm này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn khôi phục sản phẩm này?", "Xác nhận",
+                JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             prbus.updateTrangthai(maSP, 0);
             refreshTable();
@@ -1010,12 +1027,13 @@ public class DisplayProduct extends JFrame {
 
     private void addRowToModel(Product product) {
 
-        model.addRow(new Object[]{
-                product.getMaSP(), product.getMaLSP(), product.getTenSP(), product.getDonGia(), product.getSoLuong(), product.getHinhAnh(),doitrangthai(product.getTrangthai()+"")
+        model.addRow(new Object[] {
+                product.getMaSP(), product.getMaLSP(), product.getTenSP(), product.getDonGia(), product.getSoLuong(),
+                product.getHinhAnh(), doitrangthai(product.getTrangthai() + "")
         });
     }
 
-    private void addFocusListenerToTextField(JTextField textField,String text) {
+    private void addFocusListenerToTextField(JTextField textField, String text) {
         textField.addFocusListener(new FocusListener() {
 
             @Override
@@ -1034,8 +1052,8 @@ public class DisplayProduct extends JFrame {
         });
     }
 
-    public void loc(String tu, String toi,int trangthai) {
-        String combox = (String)comboBox1.getSelectedItem();
+    public void loc(String tu, String toi, int trangthai) {
+        String combox = (String) comboBox1.getSelectedItem();
 
         model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
@@ -1049,12 +1067,12 @@ public class DisplayProduct extends JFrame {
 
         if (combox.equals("Dongia")) {
             ArrayList<Product> lispr = prbus.getList();
-            float tu1 =Integer.parseInt(tu);
+            float tu1 = Integer.parseInt(tu);
             float toi1 = Integer.parseInt(toi);
             for (Product pr : lispr) {
-                if (pr.getDonGia() >= tu1 && pr.getDonGia() <= toi1 && pr.getTrangthai()==trangthai) {
-                    model.addRow(new Object[]{pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
-                            pr.getDonGia(), pr.getSoLuong(), pr.getHinhAnh(), pr.getTrangthai()});
+                if (pr.getDonGia() >= tu1 && pr.getDonGia() <= toi1 && pr.getTrangthai() == trangthai) {
+                    model.addRow(new Object[] { pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
+                            pr.getDonGia(), pr.getSoLuong(), pr.getHinhAnh(), pr.getTrangthai() });
                 }
             }
 
@@ -1062,12 +1080,12 @@ public class DisplayProduct extends JFrame {
 
         if (combox.equals("Soluong")) {
             ArrayList<Product> lispr = prbus.getList();
-            float tu1 =Float.parseFloat(tu);
+            float tu1 = Float.parseFloat(tu);
             float toi1 = Float.parseFloat(toi);
             for (Product pr : lispr) {
-                if (pr.getSoLuong() >= tu1 && pr.getSoLuong() <= toi1 && pr.getTrangthai()==trangthai) {
-                    model.addRow(new Object[]{pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
-                            pr.getDonGia(), pr.getSoLuong(), pr.getHinhAnh(), pr.getTrangthai()});
+                if (pr.getSoLuong() >= tu1 && pr.getSoLuong() <= toi1 && pr.getTrangthai() == trangthai) {
+                    model.addRow(new Object[] { pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
+                            pr.getDonGia(), pr.getSoLuong(), pr.getHinhAnh(), pr.getTrangthai() });
                 }
             }
 
@@ -1075,18 +1093,19 @@ public class DisplayProduct extends JFrame {
 
     }
 
-    public  String doitrangthai(String state) {
+    public String doitrangthai(String state) {
         if (state.equals("0")) {
             return "Đang bán";
         } else if (state.equals("Đang bán")) {
             return "0";
-        } else if(state.equals("1")){
+        } else if (state.equals("1")) {
             return "Đã xóa";
-        }else if(state.equals("Đã xóa")) {
+        } else if (state.equals("Đã xóa")) {
             return "1";
         }
         return "Lỗi";
     }
+
     public void disableButtons() {
         // Vô hiệu hóa các nút
         btnadd.setEnabled(false);
@@ -1096,6 +1115,7 @@ public class DisplayProduct extends JFrame {
         btnnhap.setEnabled(false);
         cbhienthi.removeItem("Đã xóa");
     }
+
     private void xuatexcel() {
         // TODO add your handling code here:
         try {
@@ -1144,8 +1164,8 @@ public class DisplayProduct extends JFrame {
             Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên, có thể thay đổi nếu cần
 
             Iterator<Row> iterator = sheet.iterator();
-            ArrayList<Integer> dong= new ArrayList<>();
-            int i=1;
+            ArrayList<Integer> dong = new ArrayList<>();
+            int i = 1;
             while (iterator.hasNext()) {
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
@@ -1158,16 +1178,16 @@ public class DisplayProduct extends JFrame {
                 // Đọc dữ liệu từ các ô trong hàng
                 String masp = cellIterator.next().getStringCellValue(); // Điều chỉnh loại dữ liệu nếu cần
                 String malsp = cellIterator.next().getStringCellValue(); // Điều chỉnh loại dữ liệu nếu cần
-                String tensp=cellIterator.next().getStringCellValue();
-                Float dongia=Float.parseFloat(cellIterator.next().getStringCellValue());
-                int soluong=Integer.parseInt(cellIterator.next().getStringCellValue());
-                String fileanh=cellIterator.next().getStringCellValue();
-                int trangthai=Integer.parseInt(doitrangthai(cellIterator.next().getStringCellValue()));
+                String tensp = cellIterator.next().getStringCellValue();
+                Float dongia = Float.parseFloat(cellIterator.next().getStringCellValue());
+                int soluong = Integer.parseInt(cellIterator.next().getStringCellValue());
+                String fileanh = cellIterator.next().getStringCellValue();
+                int trangthai = Integer.parseInt(doitrangthai(cellIterator.next().getStringCellValue()));
                 i++;
-                if(prbus.checkidproduct(masp)) {
+                if (prbus.checkidproduct(masp)) {
                     dong.add(i);
-                }else {
-                    Product pr= new Product(masp,malsp,tensp,dongia,soluong,fileanh,trangthai);
+                } else {
+                    Product pr = new Product(masp, malsp, tensp, dongia, soluong, fileanh, trangthai);
                     listsp.add(pr);
                 }
 
@@ -1188,13 +1208,13 @@ public class DisplayProduct extends JFrame {
                 System.out.println(); // Xuống dòng sau khi in xong
             }
 
-
             workbook.close();
             inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     private void openFile(String file) {
         try {
             File path = new File(file);
@@ -1204,4 +1224,3 @@ public class DisplayProduct extends JFrame {
         }
     }
 }
-

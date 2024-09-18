@@ -424,11 +424,14 @@ INSERT INTO `product` (`MaSP`, `MaLSP`, `TenSP`, `DonGia`, `SoLuong`, `HinhAnh`,
 --
 
 CREATE TABLE `account` (
-                           `TenTaiKhoan` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-                           `MatKhau` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-                           `MaNV` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-                           `MaQuyen` varchar(10) COLLATE utf8_unicode_ci NOT NULL
+      `Email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+    `TenTaiKhoan` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `MatKhau` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `MaNV` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+    `MaQuyen` varchar(10) COLLATE utf8_unicode_ci NOT NULL
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 --
 -- Đang đổ dữ liệu cho bảng tài khoản

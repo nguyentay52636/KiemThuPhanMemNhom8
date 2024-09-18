@@ -86,13 +86,12 @@ public class PasswordResetUI extends JFrame {
                             "Lỗi",
                             JOptionPane.ERROR_MESSAGE);
                 } else {
-            
+
                     try {
                         Account account = new Account();
                         System.out.println(account);
                         AccountDAO accountDAO = new AccountDAO();
-                        String email = "admin@example.com"; // Thay thế bằng email thực tế
-                       
+                        String email = "admin@example.com";
 
                         // Cập nhật mật khẩu trong cơ sở dữ liệu
                         boolean isUpdated = accountDAO.updatePasswordByEmail(email, newPassword);

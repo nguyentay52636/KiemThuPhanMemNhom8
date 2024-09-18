@@ -26,7 +26,7 @@ public class AccountDAO {
             ResultSet r = qltkConnectiion.sqlQuery(qry);
             if (r != null) {
                 while (r.next()) {
-                    String email = r.getString("email");
+                    String email = r.getString("Email");
                     String ten = r.getString("TenTaiKhoan");
                     String pass = r.getString("MatKhau");
                     String manv = r.getString("MaNV");
@@ -61,10 +61,11 @@ public class AccountDAO {
         return ok;
     }
 
-    public Boolean update(String username, String pass, String maNV, String maQuyen) {
+    public Boolean update(String Email, String username, String pass, String maNV, String maQuyen) {
         qltkConnectiion = new ConnectionDB();
-        Boolean ok = qltkConnectiion.sqlUpdate("Update account Set MatKhau='" + pass + "',MaNV='" + maNV
-                + "',MaQuyen='" + maQuyen + "' where TenTaiKhoan='" + username + "'");
+        Boolean ok = qltkConnectiion
+                .sqlUpdate("Update account Set Email='" + Email + "'   ,MatKhau='" + pass + "',MaNV='" + maNV
+                        + "',MaQuyen='" + maQuyen + "' where TenTaiKhoan='" + username + "'");
         qltkConnectiion.closeConnection();
         return ok;
     }

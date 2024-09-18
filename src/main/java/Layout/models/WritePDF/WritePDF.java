@@ -4,25 +4,10 @@
  */
 package Layout.models.WritePDF;
 
-
-import Layout.models.BackEnd.BUS.ImportBUS;
-import Layout.models.BackEnd.BUS.ImportDetailsBUS;
-import Layout.models.BackEnd.BUS.InvoiceDetailBUS;
-import Layout.models.BackEnd.BUS.ProductBUS;
-import Layout.models.BackEnd.BUS.PromotionBUS;
-import Layout.models.BackEnd.BUS.StaffBUS;
-import Layout.models.BackEnd.DTO.*;
-import Layout.models.FrontEnd.Formatter.PriceFormatter;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import javax.swing.*;
+import java.awt.Desktop;
+import java.awt.FileDialog;
+import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,11 +18,43 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import Layout.models.BackEnd.BUS.CustomerBUS;
+import Layout.models.BackEnd.BUS.ImportDetailsBUS;
+import Layout.models.BackEnd.BUS.InvoiceDetailBUS;
+import Layout.models.BackEnd.BUS.ProductBUS;
+import Layout.models.BackEnd.BUS.PromotionBUS;
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.BUS.SupplierBUS;
+import Layout.models.BackEnd.DTO.Customer;
+import Layout.models.BackEnd.DTO.Import;
+import Layout.models.BackEnd.DTO.ImportDetails;
+import Layout.models.BackEnd.DTO.Invoice;
+import Layout.models.BackEnd.DTO.InvoiceDetail;
+import Layout.models.BackEnd.DTO.Product;
+import Layout.models.BackEnd.DTO.Promotion;
+import Layout.models.BackEnd.DTO.Staff;
+import Layout.models.BackEnd.DTO.Supplier;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
 
 /**
  *
  * @author tham xinh
- * gaigai
+ *         gaigai
  */
 public class WritePDF {
 
@@ -53,9 +70,12 @@ public class WritePDF {
 
     public WritePDF() {
         try {
-            fontData = new Font(BaseFont.createFont("src/main/resources/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11, Font.NORMAL);
-            fontTitle = new Font(BaseFont.createFont("src/main/resources/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 25, Font.NORMAL);
-            fontHeader = new Font(BaseFont.createFont("src/main/resources/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11, Font.NORMAL);
+            fontData = new Font(BaseFont.createFont("src/main/resources/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED), 11, Font.NORMAL);
+            fontTitle = new Font(BaseFont.createFont("src/main/resources/Roboto/Roboto-Regular.ttf",
+                    BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 25, Font.NORMAL);
+            fontHeader = new Font(BaseFont.createFont("src/main/resources/Roboto/Roboto-Regular.ttf",
+                    BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11, Font.NORMAL);
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException ex) {
@@ -125,31 +145,40 @@ public class WritePDF {
 
             setTitle("THÔNG TIN PHIẾU NHẬP");
 
-
             Paragraph para1 = new Paragraph(new Phrase("Mã phiếu: " + imp.getMaPN(), fontData));
             Paragraph para2 = new Paragraph(new Phrase("Thời gian tạo: " + imp.getNgayNhap(), fontData));
             StaffBUS stbus = new StaffBUS();
+            SupplierBUS nhaCungCapBus = new SupplierBUS();
+            Supplier nhaCungCap = nhaCungCapBus.getsupplierDTO(imp.getMaNCC());
+
             Staff st = stbus.getStaff(imp.getMaNV());
             Paragraph para3 = new Paragraph(new Phrase("Người tạo: " + st.getTenNV(), fontData));
+            Paragraph para4 = new Paragraph(new Phrase(" Nhà cung cấp: " + st.getTenNV(), fontData));
+
             // PromotionBUS prom= new PromotionBUS();
-            //Promotion pro= prom.getKhuyenMai(invoice.getMaKhuyenMai());
-            //Paragraph para4 = new Paragraph(new Phrase("Thông tin khuyến mãi : " +pro.getTenKhuyenMai()+" + Phần trăm khuyến mãi: " +pro.getPhanTramKhuyenMai(), fontData));
+            // Promotion pro= prom.getKhuyenMai(invoice.getMaKhuyenMai());
+            // Paragraph para4 = new Paragraph(new Phrase("Thông tin khuyến mãi : "
+            // +pro.getTenKhuyenMai()+" + Phần trăm khuyến mãi: "
+            // +pro.getPhanTramKhuyenMai(), fontData));
             para1.setIndentationLeft(40);
             para2.setIndentationLeft(40);
             para3.setIndentationLeft(40);
+            para4.setIndentationLeft(40);
+
             // para4.setIndentationLeft(40);
             document.add(para1);
             document.add(para2);
             document.add(para3);
+            document.add(para4);
             // document.add(para4);
-            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach
+            document.add(Chunk.NEWLINE);// add hang trong de tao khoang cach
 
-            //Tao table cho cac chi tiet cua hoa don
+            // Tao table cho cac chi tiet cua hoa don
             PdfPTable pdfTable = new PdfPTable(5);
-            pdfTable.setWidths(new float[]{10f, 30f, 15f, 5f, 15f});
+            pdfTable.setWidths(new float[] { 10f, 30f, 15f, 5f, 15f });
             PdfPCell cell;
 
-            //Set headers cho table chi tiet
+            // Set headers cho table chi tiet
             pdfTable.addCell(new PdfPCell(new Phrase("Mã máy", fontHeader)));
             pdfTable.addCell(new PdfPCell(new Phrase("Tên máy", fontHeader)));
             pdfTable.addCell(new PdfPCell(new Phrase("Đơn giá", fontHeader)));
@@ -161,13 +190,13 @@ public class WritePDF {
                 pdfTable.addCell(cell);
             }
 
-            ImportDetailsBUS indebus= new ImportDetailsBUS();
+            ImportDetailsBUS indebus = new ImportDetailsBUS();
             ArrayList<ImportDetails> list = indebus.getImportDetailsByMaHD(imp.getMaPN());
-            //Truyen thong tin tung chi tiet vao table
+            // Truyen thong tin tung chi tiet vao table
             ProductBUS pr = new ProductBUS();
             for (ImportDetails ctpn : list) {
 
-                Product prd= pr.getProduct(ctpn.getMaSP());
+                Product prd = pr.getProduct(ctpn.getMaSP());
                 pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getMa(), fontData)));
                 pdfTable.addCell(new PdfPCell(new Phrase(prd.getTenSP(), fontData)));
                 pdfTable.addCell(new PdfPCell(new Phrase(PriceFormatter.format(prd.getDonGia()), fontData)));
@@ -177,7 +206,8 @@ public class WritePDF {
             }
             document.add(pdfTable);
             document.add(Chunk.NEWLINE);
-            Paragraph paraTongThanhToan = new Paragraph(new Phrase("Tổng thanh toán: " + PriceFormatter.format(imp.getTongTien()), fontData));
+            Paragraph paraTongThanhToan = new Paragraph(
+                    new Phrase("Tổng thanh toán: " + PriceFormatter.format(imp.getTongTien()), fontData));
             paraTongThanhToan.setIndentationLeft(300);
             document.add(paraTongThanhToan);
             document.close();
@@ -215,35 +245,40 @@ public class WritePDF {
 
             setTitle("THÔNG TIN PHIẾU XUẤT");
 
-
             Paragraph para1 = new Paragraph(new Phrase("Mã phiếu: " + invoice.getMaHoaDon(), fontData));
             Paragraph para2 = new Paragraph(new Phrase("Thời gian tạo: " + invoice.getNgayLap(), fontData));
             StaffBUS stbus = new StaffBUS();
+            CustomerBUS customerBUS = new CustomerBUS();
+            Customer customer = customerBUS.getCustomer(invoice.getMaKhachHang());
             Staff st = stbus.getStaff(invoice.getMaNhanVien());
             Paragraph para3 = new Paragraph(new Phrase("Người tạo: " + st.getTenNV(), fontData));
-            PromotionBUS prom= new PromotionBUS();
-            Promotion pro= prom.getKhuyenMai(invoice.getMaKhuyenMai());
-            Paragraph para4 = new Paragraph(new Phrase("Thông tin khuyến mãi : " +pro.getTenKhuyenMai()+" + Phần trăm khuyến mãi: " +pro.getPhanTramKhuyenMai(), fontData));
+            Paragraph para5 = new Paragraph(new Phrase("Khách hàng: " + customer.getTenKh(), fontData));
+            PromotionBUS prom = new PromotionBUS();
+            Promotion pro = prom.getKhuyenMai(invoice.getMaKhuyenMai());
+            Paragraph para4 = new Paragraph(new Phrase("Thông tin khuyến mãi : " + pro.getTenKhuyenMai()
+                    + " + Phần trăm khuyến mãi: " + pro.getPhanTramKhuyenMai(), fontData));
             para1.setIndentationLeft(40);
             para2.setIndentationLeft(40);
             para3.setIndentationLeft(40);
             para4.setIndentationLeft(40);
+            para5.setIndentationLeft(40);
             document.add(para1);
             document.add(para2);
             document.add(para3);
+            document.add(para5);
             document.add(para4);
-            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach
+            document.add(Chunk.NEWLINE);// add hang trong de tao khoang cach
 
-            //Tao table cho cac chi tiet cua hoa don
+            // Tao table cho cac chi tiet cua hoa don
             PdfPTable pdfTable = new PdfPTable(5);
-            pdfTable.setWidths(new float[]{10f, 30f, 15f, 5f, 15f});
+            pdfTable.setWidths(new float[] { 10f, 30f, 15f, 5f, 15f });
             PdfPCell cell;
 
-            //Set headers cho table chi tiet
+            // Set headers cho table chi tiet
             pdfTable.addCell(new PdfPCell(new Phrase("Mã máy", fontHeader)));
             pdfTable.addCell(new PdfPCell(new Phrase("Tên máy", fontHeader)));
             pdfTable.addCell(new PdfPCell(new Phrase("Đơn giá", fontHeader)));
-            pdfTable.addCell(new PdfPCell(new Phrase("SL", fontHeader)));
+            pdfTable.addCell(new PdfPCell(new Phrase("số lượng", fontHeader)));
             pdfTable.addCell(new PdfPCell(new Phrase("Tổng tiền", fontHeader)));
 
             for (int i = 0; i < 5; i++) {
@@ -251,22 +286,24 @@ public class WritePDF {
                 pdfTable.addCell(cell);
             }
 
-            InvoiceDetailBUS indebus= new InvoiceDetailBUS();
+            InvoiceDetailBUS indebus = new InvoiceDetailBUS();
             ArrayList<InvoiceDetail> list = indebus.getInvoiceDetailsByMaHD(invoice.getMaHoaDon());
-            //Truyen thong tin tung chi tiet vao table
+            // Truyen thong tin tung chi tiet vao table
             ProductBUS pr = new ProductBUS();
             for (InvoiceDetail cthd : list) {
 
-                Product prd= pr.getProduct(cthd.getMaSanPham());
+                Product prd = pr.getProduct(cthd.getMaSanPham());
                 pdfTable.addCell(new PdfPCell(new Phrase(cthd.getMaHoaDon(), fontData)));
                 pdfTable.addCell(new PdfPCell(new Phrase(prd.getTenSP(), fontData)));
                 pdfTable.addCell(new PdfPCell(new Phrase(PriceFormatter.format(prd.getDonGia()), fontData)));
                 pdfTable.addCell(new PdfPCell(new Phrase(String.valueOf(cthd.getSoLuong()), fontData)));
-                pdfTable.addCell(new PdfPCell(new Phrase(PriceFormatter.format(prd.getDonGia() * cthd.getSoLuong()), fontData)));
+                pdfTable.addCell(
+                        new PdfPCell(new Phrase(PriceFormatter.format(prd.getDonGia() * cthd.getSoLuong()), fontData)));
             }
             document.add(pdfTable);
             document.add(Chunk.NEWLINE);
-            Paragraph paraTongThanhToan = new Paragraph(new Phrase("Tổng thanh toán: " + PriceFormatter.format(invoice.getTongTien()), fontData));
+            Paragraph paraTongThanhToan = new Paragraph(
+                    new Phrase("Tổng thanh toán: " + PriceFormatter.format(invoice.getTongTien()), fontData));
             paraTongThanhToan.setIndentationLeft(300);
             document.add(paraTongThanhToan);
             document.close();
