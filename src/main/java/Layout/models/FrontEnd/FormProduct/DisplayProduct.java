@@ -53,6 +53,7 @@ import Layout.models.BackEnd.BUS.ProductBUS;
 import Layout.models.BackEnd.BUS.TypeProductBUS;
 import Layout.models.BackEnd.DTO.Product;
 import Layout.models.BackEnd.DTO.TypeProduct;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
 
 public class DisplayProduct extends JFrame {
 
@@ -574,11 +575,11 @@ public class DisplayProduct extends JFrame {
                 String tenSP = txtTenSP.getText();
                 String fileAnh = btnChooseImage.getText();
                 String trangThai = doitrangthai(cboTrangThai.getSelectedItem() + "");
-                String txtdonGia = txtDonGia.getText();
+                String formattedPrice = txtDonGia.getText();
                 String txtsoLuong = txtSoLuong.getText();
 
                 // Kiểm tra xem mã sản phẩm đã tồn tại trong bảng chưa
-                float donGia = Float.parseFloat(txtdonGia);
+                float donGia = PriceFormatter.parsePrice(formattedPrice);
                 int soLuong = Integer.parseInt(txtsoLuong);
                 if (checkinform(maSP, "addDialog", donGia, soLuong)) {
 
@@ -672,14 +673,20 @@ public class DisplayProduct extends JFrame {
         txtMaSP.setEditable(false);
         JLabel lblMaLSP = new JLabel("Mã lô sản phẩm");
         JTextField txtMaLSP = new JTextField(maLSP);
+        txtMaLSP.setEditable(false); // Khóa ô input
         JLabel lblTenSP = new JLabel("Tên sản phẩm:");
         JTextField txtTenSP = new JTextField(tenSP);
         JLabel lblDonGia = new JLabel("Đơn giá:");
+        txtTenSP.setEditable(false);
         JTextField txtDonGia = new JTextField(donGia + "");
+        txtDonGia.setEditable(false); // Khóa ô input cho đơn giá
+
         JLabel lblFileAnh = new JLabel("File ảnh:");
         JButton btnChooseImage = new JButton(fileAnh);
         JLabel lblSoLuong = new JLabel("Số lượng:");
+
         JTextField txtSoLuong = new JTextField(soLuong + "");
+        txtSoLuong.setEditable(false);
         JLabel lblTrangThai = new JLabel("Trạng thái:");
         JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang bán", "Đã xóa" });
         cboTrangThai.setSelectedItem(trangThai);
@@ -1028,7 +1035,8 @@ public class DisplayProduct extends JFrame {
     private void addRowToModel(Product product) {
 
         model.addRow(new Object[] {
-                product.getMaSP(), product.getMaLSP(), product.getTenSP(), product.getDonGia(), product.getSoLuong(),
+                product.getMaSP(), product.getMaLSP(), product.getTenSP(), PriceFormatter.format(product.getDonGia()),
+                product.getSoLuong(),
                 product.getHinhAnh(), doitrangthai(product.getTrangthai() + "")
         });
     }
@@ -1072,7 +1080,8 @@ public class DisplayProduct extends JFrame {
             for (Product pr : lispr) {
                 if (pr.getDonGia() >= tu1 && pr.getDonGia() <= toi1 && pr.getTrangthai() == trangthai) {
                     model.addRow(new Object[] { pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
-                            pr.getDonGia(), pr.getSoLuong(), pr.getHinhAnh(), pr.getTrangthai() });
+                            PriceFormatter.format(pr.getDonGia()), pr.getSoLuong(), pr.getHinhAnh(),
+                            pr.getTrangthai() });
                 }
             }
 

@@ -150,10 +150,9 @@ public class WritePDF {
             StaffBUS stbus = new StaffBUS();
             SupplierBUS nhaCungCapBus = new SupplierBUS();
             Supplier nhaCungCap = nhaCungCapBus.getsupplierDTO(imp.getMaNCC());
-
             Staff st = stbus.getStaff(imp.getMaNV());
             Paragraph para3 = new Paragraph(new Phrase("Người tạo: " + st.getTenNV(), fontData));
-            Paragraph para4 = new Paragraph(new Phrase(" Nhà cung cấp: " + st.getTenNV(), fontData));
+            Paragraph para4 = new Paragraph(new Phrase(" Nhà cung cấp: " + nhaCungCap.getTenNCC(), fontData));
 
             // PromotionBUS prom= new PromotionBUS();
             // Promotion pro= prom.getKhuyenMai(invoice.getMaKhuyenMai());

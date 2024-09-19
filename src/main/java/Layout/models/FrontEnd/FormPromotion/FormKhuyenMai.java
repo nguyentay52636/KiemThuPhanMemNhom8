@@ -4,19 +4,11 @@
 
 package Layout.models.FrontEnd.FormPromotion;
 
-import Layout.models.BackEnd.BUS.PromotionBUS;
-import Layout.models.BackEnd.DTO.Permission;
-import Layout.models.BackEnd.DTO.Product;
-import Layout.models.BackEnd.DTO.Promotion;
-import org.apache.commons.compress.archivers.ar.ArArchiveEntry;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -28,11 +20,33 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.PromotionBUS;
+import Layout.models.BackEnd.DTO.Promotion;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
 
 /**
  * @author master
@@ -224,11 +238,12 @@ public class FormKhuyenMai extends JPanel {
         }
 
         // add item for comboBox
-        String[] items = {"Tất cả", "Mã khuyến mãi", "Tên khuyến mãi", "Điều kiện", "Giảm giá", "Ngày bắt đầu", "Ngày kết thúc"};
+        String[] items = { "Tất cả", "Mã khuyến mãi", "Tên khuyến mãi", "Điều kiện", "Giảm giá", "Ngày bắt đầu",
+                "Ngày kết thúc" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
-        String[] itemss = {"Tất cả", "Đang diễn ra", "Chưa bắt đầu", "Đã kết thúc"};
+        String[] itemss = { "Tất cả", "Đang diễn ra", "Chưa bắt đầu", "Đã kết thúc" };
         for (String item : itemss) {
             comboBox2.addItem(item);
         }
@@ -296,18 +311,23 @@ public class FormKhuyenMai extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-                    int comfirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa khuyến mãi này không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                    int comfirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa khuyến mãi này không?",
+                            "Xác nhận", JOptionPane.YES_NO_OPTION);
                     if (comfirm == JOptionPane.YES_OPTION) {
                         String makm = (String) table1.getValueAt(selectedRow, 1);
                         if (qlkm.delete(makm)) {
                             ((DefaultTableModel) table1.getModel()).removeRow(selectedRow);
-                            JOptionPane.showOptionDialog(null, "Xóa thành công", "Thông báo", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                            JOptionPane.showOptionDialog(null, "Xóa thành công", "Thông báo",
+                                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
+                                    null);
                         } else {
-                            JOptionPane.showOptionDialog(null, "Xóa thất bại", "Thông báo", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
+                            JOptionPane.showOptionDialog(null, "Xóa thất bại", "Thông báo", JOptionPane.DEFAULT_OPTION,
+                                    JOptionPane.ERROR_MESSAGE, null, new Object[] {}, null);
                         }
                     }
                 } else {
-                    JOptionPane.showOptionDialog(null, "Chưa chọn khuyến mãi nào để xóa", "Thông báo", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
+                    JOptionPane.showOptionDialog(null, "Chưa chọn khuyến mãi nào để xóa", "Thông báo",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, new Object[] {}, null);
                 }
             }
         });
@@ -325,7 +345,8 @@ public class FormKhuyenMai extends JPanel {
                         String ngayBatDau = selectedPromotion.getNgayBatDau().toString();
                         String ngayKetThuc = selectedPromotion.getNgayKetThuc().toString();
 
-                        AddButtonKhuyenMai addButtonKhuyenMai = new AddButtonKhuyenMai("Sửa", maKhuyenMai, FormKhuyenMai.this);
+                        AddButtonKhuyenMai addButtonKhuyenMai = new AddButtonKhuyenMai("Sửa", maKhuyenMai,
+                                FormKhuyenMai.this);
                         addButtonKhuyenMai.txNgayBD.setText(ngayBatDau);
                         addButtonKhuyenMai.txNgayKT.setText(ngayKetThuc);
                         addButtonKhuyenMai.setVisible(true);
@@ -349,13 +370,15 @@ public class FormKhuyenMai extends JPanel {
                     Promotion selectedPromotion = qlkm.getKhuyenMai(makm);
                     if (selectedPromotion != null && "Đang diễn ra".equals(selectedPromotion.getTrangThai())) {
                         selectedPromotion.setTrangThai("Đã kết thúc");
-                        if (qlkm.update(selectedPromotion.getMaKhuyenMai(), selectedPromotion.getTenKhuyenMai(), selectedPromotion.getDieuKienKhuyenMai(), selectedPromotion.getPhanTramKhuyenMai(), selectedPromotion.getNgayBatDau(), selectedPromotion.getNgayKetThuc())) {
+                        if (qlkm.update(selectedPromotion.getMaKhuyenMai(), selectedPromotion.getTenKhuyenMai(),
+                                selectedPromotion.getDieuKienKhuyenMai(), selectedPromotion.getPhanTramKhuyenMai(),
+                                selectedPromotion.getNgayBatDau(), selectedPromotion.getNgayKetThuc())) {
                             table1.setValueAt("Đã kết thúc", selectedRow, 7);
                             JOptionPane.showMessageDialog(null, "Kết thúc khuyến mãi thành công");
                         } else {
                             JOptionPane.showMessageDialog(null, "Kết thúc khuyến mãi thất bại");
                         }
-                    }  else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Không thể kết thúc khuyến mãi này");
                     }
                 } else {
@@ -445,7 +468,8 @@ public class FormKhuyenMai extends JPanel {
                             LocalDate ngayKetThuc = LocalDate.parse(row.getCell(6).getStringCellValue());
                             String trangThai = row.getCell(7).getStringCellValue();
 
-                            Promotion promotion = new Promotion(maKhuyenMai, tenKhuyenMai, dieuKienKhuyenMai, phanTramKhuyenMai, ngayBatDau, ngayKetThuc, trangThai);
+                            Promotion promotion = new Promotion(maKhuyenMai, tenKhuyenMai, dieuKienKhuyenMai,
+                                    phanTramKhuyenMai, ngayBatDau, ngayKetThuc, trangThai);
 
                             // add to the database
                             qlkm.add(promotion);
@@ -492,7 +516,7 @@ public class FormKhuyenMai extends JPanel {
             private void performSearch() {
                 String value = textField1.getText();
                 String type = (String) comboBox1.getSelectedItem();
-                ArrayList<Promotion> result = qlkm.search(value, type, -1, -1, -1, 0-1, null, null);
+                ArrayList<Promotion> result = qlkm.search(value, type, -1, -1, -1, 0 - 1, null, null);
                 setDataToTable(result);
             }
         });
@@ -529,13 +553,14 @@ public class FormKhuyenMai extends JPanel {
 
         int stt = 1;
         for (Promotion promotion : data) {
-            if (promotion.getTrangThai().equals("Đang diễn ra") || promotion.getTrangThai().equals("Chưa bắt đầu") || promotion.getTrangThai().equals("Đã kết thúc")) {
+            if (promotion.getTrangThai().equals("Đang diễn ra") || promotion.getTrangThai().equals("Chưa bắt đầu")
+                    || promotion.getTrangThai().equals("Đã kết thúc")) {
                 tableModel.addRow(new Object[] {
                         stt++,
                         promotion.getMaKhuyenMai(),
                         promotion.getTenKhuyenMai(),
-                        promotion.getDieuKienKhuyenMai(),
-                        promotion.getPhanTramKhuyenMai(),
+                        PriceFormatter.format(promotion.getDieuKienKhuyenMai()),
+                        PriceFormatter.format(promotion.getPhanTramKhuyenMai()),
                         promotion.getNgayBatDau(),
                         promotion.getNgayKetThuc(),
                         promotion.getTrangThai()

@@ -87,8 +87,6 @@ public class FormNhapHang extends JPanel {
         // TODO: add custom component creation code here
     }
 
-
-
     private void initComponents() {
 
         panel1 = new JPanel();
@@ -339,35 +337,35 @@ public class FormNhapHang extends JPanel {
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 String nextInvoiceID = importBUS.getNextID();
                 txtMaPhieuNhap.setText(nextInvoiceID);
-//                panel9.add(txtMaPhieuNhap);
+                // panel9.add(txtMaPhieuNhap);
 
                 // ---- textField10 ----
                 textField10.setPreferredSize(new Dimension(0, 55));
-//                panel9.add(textField10);
+                // panel9.add(textField10);
 
                 // ---- txtTongTien ----
                 txtTongTien.setPreferredSize(new Dimension(200, 55));
                 txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)",
                         TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtTongTien);
+                // panel9.add(txtTongTien);
 
                 // ---- txt nha cung cap ----
                 txtNhaCungCap.setPreferredSize(new Dimension(200, 55));
                 txtNhaCungCap.setBorder(new TitledBorder(null, "Nhà cung cấp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtNhaCungCap);
+                // panel9.add(txtNhaCungCap);
 
                 // ===== btnchoose =====
                 btnChoose.setText("");
                 btnChoose.setIcon(new ImageIcon(getClass().getResource("/images/icons8_company_30px.png")));
                 btnChoose.setPreferredSize(new Dimension(50, 50));
-//                panel9.add(btnChoose);
+                // panel9.add(btnChoose);
 
                 // ---- txtNhanvien ----
                 txtNhanvien.setPreferredSize(new Dimension(200, 55));
                 txtNhanvien.setBorder(new TitledBorder(null, "Nh\u00e2n vi\u00ean", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtNhanvien);
+                // panel9.add(txtNhanvien);
                 Staff staff = new Staff();
                 staff = staffBUS.getStaff(FormLogin.loggedInMaNV);
                 if (staff != null) {
@@ -381,14 +379,14 @@ public class FormNhapHang extends JPanel {
                 txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtNgayLap.setText(currentDate);
-//                panel9.add(txtNgayLap);
+                // panel9.add(txtNgayLap);
 
                 // ===== txtGioLap =====
                 txtGioLap.setPreferredSize(new Dimension(200, 55));
                 txtGioLap.setBorder(new TitledBorder(null, "Giờ lập", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtGioLap.setText(currentTime);
-//                panel9.add(txtGioLap);
+                // panel9.add(txtGioLap);
 
                 JPanel jPanelTextField = new JPanel(new GridLayout(2, 4));
                 jPanelTextField.add(txtMaPhieuNhap);
@@ -571,7 +569,6 @@ public class FormNhapHang extends JPanel {
             }
         });
 
-
         btnReset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -581,7 +578,7 @@ public class FormNhapHang extends JPanel {
 
         });
 
-//         su kien khi nhan chon nha cung cap
+        // su kien khi nhan chon nha cung cap
         btnChoose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -687,9 +684,9 @@ public class FormNhapHang extends JPanel {
             public void performSearch() {
                 String keyWord = txtSearch.getText();
                 System.out.println(keyWord);
-                String type = (String)comboBox.getSelectedItem();
+                String type = (String) comboBox.getSelectedItem();
                 System.out.println(type);
-                ArrayList<Product> result = productBUS.searchProduct(keyWord,type);
+                ArrayList<Product> result = productBUS.searchProduct(keyWord, type);
                 System.out.println(result);
                 setDataTable(result);
             }
@@ -735,7 +732,9 @@ public class FormNhapHang extends JPanel {
                     importDetailsDAO.add(detail);
                 }
 
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Nhập hàng thành công! Bạn có muốn in phiếu nhập không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                int dialogResult = JOptionPane.showConfirmDialog(null,
+                        "Nhập hàng thành công! Bạn có muốn in phiếu nhập không?", "Xác nhận",
+                        JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     WritePDF writePDF = new WritePDF();
                     writePDF.writePhieuNhap(newImport);
@@ -821,6 +820,7 @@ public class FormNhapHang extends JPanel {
         txtSoLuong.setText("");
         image.setIcon(null);
     }
+
     public void showInfo(String maSP, int soLuong) {
         if (maSP != null) {
             for (Product product : productBUS.getList()) {
@@ -860,7 +860,7 @@ public class FormNhapHang extends JPanel {
                     i.getMaSP(),
                     i.getMaLSP(),
                     i.getTenSP(),
-                    i.getDonGia(),
+                    PriceFormatter.format(i.getDonGia()),
                     i.getSoLuong()
             });
         }
@@ -902,7 +902,6 @@ public class FormNhapHang extends JPanel {
         }
         tableSell2.setModel(model);
     }
-
 
     private JPanel panel1;
     private JPanel panel4;
@@ -949,5 +948,3 @@ public class FormNhapHang extends JPanel {
 
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
-
-

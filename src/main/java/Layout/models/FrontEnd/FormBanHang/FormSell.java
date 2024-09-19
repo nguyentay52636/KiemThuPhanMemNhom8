@@ -1,43 +1,42 @@
 package Layout.models.FrontEnd.FormBanHang;
 
-/*
- * Created by JFormDesigner on Mon Apr 15 21:55:53 ICT 2024
- */
-
-import Layout.models.BackEnd.BUS.*;
-import Layout.models.BackEnd.DAO.InvoiceDAO;
-import Layout.models.BackEnd.DAO.InvoiceDetailDAO;
-import Layout.models.BackEnd.DTO.*;
-import Layout.models.FrontEnd.FormInvoice.FormInvoice;
-import Layout.models.FrontEnd.FormLogin.FormLogin;
-import Layout.models.FrontEnd.FormPermission.FormChoosePermission;
-import Layout.models.FrontEnd.FormPermission.FormPermission;
-import Layout.models.FrontEnd.FormPromotion.FormChoosePromotion;
-import Layout.models.FrontEnd.Formatter.PriceFormatter;
-import Layout.models.WritePDF.WritePDF;
-import com.itextpdf.text.*;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.CMYKColor;
-import com.itextpdf.text.pdf.PdfWriter;
-import org.openxmlformats.schemas.drawingml.x2006.chart.CTRotY;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 //import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import javax.print.Doc;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
@@ -48,6 +47,37 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+
+/*
+ * Created by JFormDesigner on Mon Apr 15 21:55:53 ICT 2024
+ */
+import Layout.models.BackEnd.BUS.CustomerBUS;
+import Layout.models.BackEnd.BUS.InvoiceBUS;
+import Layout.models.BackEnd.BUS.ProductBUS;
+import Layout.models.BackEnd.BUS.PromotionBUS;
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.BUS.TypeProductBUS;
+import Layout.models.BackEnd.DAO.InvoiceDAO;
+import Layout.models.BackEnd.DAO.InvoiceDetailDAO;
+import Layout.models.BackEnd.DTO.Customer;
+import Layout.models.BackEnd.DTO.Invoice;
+import Layout.models.BackEnd.DTO.InvoiceDetail;
+import Layout.models.BackEnd.DTO.Product;
+import Layout.models.BackEnd.DTO.Promotion;
+import Layout.models.BackEnd.DTO.Staff;
+import Layout.models.FrontEnd.FormInvoice.FormInvoice;
+import Layout.models.FrontEnd.FormLogin.FormLogin;
+import Layout.models.FrontEnd.FormPromotion.FormChoosePromotion;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
+import Layout.models.WritePDF.WritePDF;
 
 /**
  * @author m1lt43
@@ -136,45 +166,53 @@ public class FormSell extends JPanel {
 
         java.awt.Font font = new java.awt.Font("Segoe UI", 0, 16);
         java.awt.Font fontHeader = new java.awt.Font("Segoe UI", Font.BOLD, 16);
-        //======== this ========
-        setBorder ( new javax . swing. border .CompoundBorder ( new TitledBorder ( new javax . swing.
-                border .EmptyBorder ( 0, 0 ,0 , 0) ,  "" , TitledBorder. CENTER
-                , TitledBorder . BOTTOM, new java.awt.Font ( "D\u0069al\u006fg", Font
-                . BOLD ,12 ) , Color .red ) , getBorder () ) );  addPropertyChangeListener(
-                new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062or\u0064er"
-                        .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+        // ======== this ========
+        setBorder(new javax.swing.border.CompoundBorder(
+                new TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0), "", TitledBorder.CENTER,
+                        TitledBorder.BOTTOM, new java.awt.Font("D\u0069al\u006fg", Font.BOLD, 12), Color.red),
+                getBorder()));
+        addPropertyChangeListener(
+                new java.beans.PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
+                        if ("\u0062or\u0064er"
+                                .equals(e.getPropertyName()))
+                            throw new RuntimeException();
+                    }
+                });
         setLayout(new BorderLayout());
 
-        //======== panel1 ========
+        // ======== panel1 ========
         {
             panel1.setLayout(new BorderLayout());
         }
         add(panel1, BorderLayout.NORTH);
 
-        //======== panel4 ========
+        // ======== panel4 ========
         {
             panel4.setMinimumSize(new Dimension(600, 132));
             panel4.setPreferredSize(new Dimension(650, 631));
             panel4.setLayout(new BorderLayout());
 
-            //======== panel2 ========
+            // ======== panel2 ========
             {
                 panel2.setLayout(new FlowLayout());
 
-                //===== comboBox =====
+                // ===== comboBox =====
                 comboBox.setPreferredSize(new Dimension(110, 35));
-                String items[] = {"Tất cả", "Mã sản phẩm", "Mã loại", "Tên", "Đơn giá", "Số lượng"};
+                String items[] = { "Tất cả", "Mã sản phẩm", "Mã loại", "Tên", "Đơn giá", "Số lượng" };
                 for (String item : items) {
                     comboBox.addItem(item);
                 }
                 panel2.add(comboBox);
 
-                //---- txtSearch ----
+                // ---- txtSearch ----
                 txtSearch.setPreferredSize(new Dimension(180, 60));
-                txtSearch.setBorder(new TitledBorder(null, "T\u00ecm ki\u1ebfm:", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                txtSearch.setBorder(new TitledBorder(null, "T\u00ecm ki\u1ebfm:", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
                 panel2.add(txtSearch);
 
-                //---- btnReset ----
+                // ---- btnReset ----
                 btnReset.setText("L\u00e0m m\u1edbi");
                 btnReset.setIcon(new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png")));
                 btnReset.setPreferredSize(new Dimension(120, 40));
@@ -182,11 +220,10 @@ public class FormSell extends JPanel {
             }
             panel4.add(panel2, BorderLayout.NORTH);
 
-            //======== scrollPane2 ========
+            // ======== scrollPane2 ========
             {
 
-
-                //---- tableSell ---
+                // ---- tableSell ---
                 tableSell.setFont(font);
                 tableSell.getTableHeader().setFont(fontHeader);
                 tableSell.setRowHeight(30);
@@ -195,13 +232,12 @@ public class FormSell extends JPanel {
                     columnModel.getColumn(i).setPreferredWidth(150);
                 }
                 tableSell.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                //  tableSell.setCellSelectionEnabled(true);
+                // tableSell.setCellSelectionEnabled(true);
                 tableSell.setModel(new DefaultTableModel(
                         new Object[][] {
-                                {null, null, null, null, null},
+                                { null, null, null, null, null },
                         },
-                        getHeaderSell1()
-                ));
+                        getHeaderSell1()));
 
                 tableSell.setFillsViewportHeight(true);
                 tableSell.setSurrendersFocusOnKeystroke(true);
@@ -217,7 +253,7 @@ public class FormSell extends JPanel {
                                 Object value = tableSell.getValueAt(selectedRow, 1);
                                 String maSP = value.toString();
 
-                                showInfo(maSP,1);
+                                showInfo(maSP, 1);
                             }
                         }
                     }
@@ -227,41 +263,46 @@ public class FormSell extends JPanel {
             }
             panel4.add(scrollPane2, BorderLayout.CENTER);
 
-            //======== panel5 ========
+            // ======== panel5 ========
             {
                 panel5.setPreferredSize(new Dimension(400, 200));
                 panel5.setLayout(new BorderLayout());
 
-                //======== panel6 ========
+                // ======== panel6 ========
                 {
                     panel6.setPreferredSize(new Dimension(200, 40));
                     panel6.setAutoscrolls(true);
                     panel6.setBorder(new EtchedBorder());
                     panel6.setLayout(new FlowLayout(FlowLayout.CENTER, 7, 7));
 
-                    //---- txtMaSP ----
+                    // ---- txtMaSP ----
                     txtMaSP.setPreferredSize(new Dimension(140, 60));
-                    txtMaSP.setBorder(new TitledBorder(null, "M\u00e3 s\u1ea3n ph\u1ea9m:", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                    txtMaSP.setBorder(new TitledBorder(null, "M\u00e3 s\u1ea3n ph\u1ea9m:", TitledBorder.LEADING,
+                            TitledBorder.DEFAULT_POSITION, null, Color.black));
                     panel6.add(txtMaSP);
 
-                    //---- txtLoaiSP ----
+                    // ---- txtLoaiSP ----
                     txtLoaiSP.setPreferredSize(new Dimension(140, 60));
-                    txtLoaiSP.setBorder(new TitledBorder(null, "Lo\u1ea1i s\u1ea3n ph\u1ea9m:", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                    txtLoaiSP.setBorder(new TitledBorder(null, "Lo\u1ea1i s\u1ea3n ph\u1ea9m:", TitledBorder.LEADING,
+                            TitledBorder.DEFAULT_POSITION, null, Color.black));
                     panel6.add(txtLoaiSP);
 
-                    //---- txtTenSP ----
+                    // ---- txtTenSP ----
                     txtTenSP.setPreferredSize(new Dimension(140, 60));
-                    txtTenSP.setBorder(new TitledBorder(null, "T\u00ean s\u1ea3n ph\u1ea9m", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                    txtTenSP.setBorder(new TitledBorder(null, "T\u00ean s\u1ea3n ph\u1ea9m", TitledBorder.LEADING,
+                            TitledBorder.DEFAULT_POSITION, null, Color.black));
                     panel6.add(txtTenSP);
 
-                    //---- txtDonGia ----
+                    // ---- txtDonGia ----
                     txtDonGia.setPreferredSize(new Dimension(140, 60));
-                    txtDonGia.setBorder(new TitledBorder(null, "\u0110\u01a1n gi\u00e1:", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                    txtDonGia.setBorder(new TitledBorder(null, "\u0110\u01a1n gi\u00e1:", TitledBorder.LEADING,
+                            TitledBorder.DEFAULT_POSITION, null, Color.black));
                     panel6.add(txtDonGia);
 
-                    //---- txtSoLuong ----
+                    // ---- txtSoLuong ----
                     txtSoLuong.setPreferredSize(new Dimension(140, 60));
-                    txtSoLuong.setBorder(new TitledBorder(null, "S\u1ed1 l\u01b0\u1ee3ng", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                    txtSoLuong.setBorder(new TitledBorder(null, "S\u1ed1 l\u01b0\u1ee3ng", TitledBorder.LEADING,
+                            TitledBorder.DEFAULT_POSITION, null, Color.black));
 
                     // nhap tu ban phim la so nguyen duong
                     txtSoLuong.addKeyListener(new KeyAdapter() {
@@ -281,7 +322,7 @@ public class FormSell extends JPanel {
                 }
                 panel5.add(panel6, BorderLayout.CENTER);
 
-                //---- image ----
+                // ---- image ----
                 image.setPreferredSize(new Dimension(160, 100));
                 image.setForeground(Color.black);
                 image.setFocusTraversalPolicyProvider(true);
@@ -289,7 +330,7 @@ public class FormSell extends JPanel {
                 image.setBorder(LineBorder.createBlackLineBorder());
                 panel5.add(image, BorderLayout.WEST);
 
-                //---- btnAdd ----
+                // ---- btnAdd ----
                 btnAdd.setText("Th\u00eam");
                 btnAdd.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_30px.png")));
                 btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -299,54 +340,58 @@ public class FormSell extends JPanel {
         }
         add(panel4, BorderLayout.WEST);
 
-        //======== panel7 ========
+        // ======== panel7 ========
         {
             panel7.setLayout(new BorderLayout());
         }
         add(panel7, BorderLayout.EAST);
 
-        //======== panel8 ========
+        // ======== panel8 ========
         {
             panel8.setPreferredSize(new Dimension(550, 526));
             panel8.setLayout(new BorderLayout());
 
-            //======== panel9 ========
+            // ======== panel9 ========
             {
                 panel9.setPreferredSize(new Dimension(630, 200));
                 panel9.setAutoscrolls(true);
                 panel9.setLayout(new FlowLayout(FlowLayout.LEFT, 9, 9));
 
-                //---- txtMaHoaDon ----
+                // ---- txtMaHoaDon ----
                 txtMaHoaDon.setPreferredSize(new Dimension(200, 55));
-                txtMaHoaDon.setBorder(new TitledBorder(null, "M\u00e3 ho\u00e1 \u0111\u01a1n", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                txtMaHoaDon.setBorder(new TitledBorder(null, "M\u00e3 ho\u00e1 \u0111\u01a1n", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
                 String nextInvoiceID = invoiceBUS.getNextID();
                 txtMaHoaDon.setText(nextInvoiceID);
-//                panel9.add(txtMaHoaDon);
+                // panel9.add(txtMaHoaDon);
 
-                //---- textField10 ----
+                // ---- textField10 ----
                 textField10.setPreferredSize(new Dimension(0, 55));
-//                panel9.add(textField10);
+                // panel9.add(textField10);
 
-                //---- txtTongTien ----
+                // ---- txtTongTien ----
                 txtTongTien.setPreferredSize(new Dimension(380, 55));
-                txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtTongTien);
+                txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)",
+                        TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                // panel9.add(txtTongTien);
 
-//                ---- txtKhachHang ----
+                // ---- txtKhachHang ----
                 txtKhachHang.setPreferredSize(new Dimension(200, 55));
-                txtKhachHang.setBorder(new TitledBorder(null, "Kh\u00e1ch h\u00e0ng", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtKhachHang);
+                txtKhachHang.setBorder(new TitledBorder(null, "Kh\u00e1ch h\u00e0ng", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
+                // panel9.add(txtKhachHang);
 
-                //===== btnchoose =====
+                // ===== btnchoose =====
                 btnChoose.setText("");
                 btnChoose.setIcon(new ImageIcon(getClass().getResource("/images/icons8_user_30px.png")));
                 btnChoose.setPreferredSize(new Dimension(50, 50));
-//                panel9.add(btnChoose);
+                // panel9.add(btnChoose);
 
-                //---- txtNhanvien ----
+                // ---- txtNhanvien ----
                 txtNhanvien.setPreferredSize(new Dimension(200, 55));
-                txtNhanvien.setBorder(new TitledBorder(null, "Nh\u00e2n vi\u00ean", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtNhanvien);
+                txtNhanvien.setBorder(new TitledBorder(null, "Nh\u00e2n vi\u00ean", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
+                // panel9.add(txtNhanvien);
                 Staff staff = new Staff();
                 staff = staffBUS.getStaff(FormLogin.loggedInMaNV);
                 if (staff != null) {
@@ -355,28 +400,31 @@ public class FormSell extends JPanel {
                     txtNhanvien.setText("Không tìm thấy nhân viên");
                 }
 
-                //---- txtNgayLap ----
+                // ---- txtNgayLap ----
                 txtNgayLap.setPreferredSize(new Dimension(200, 55));
-                txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtNgayLap.setText(currentDate);
-//                panel9.add(txtNgayLap);
+                // panel9.add(txtNgayLap);
 
-                //===== txtGioLap =====
+                // ===== txtGioLap =====
                 txtGioLap.setPreferredSize(new Dimension(200, 55));
-                txtGioLap.setBorder(new TitledBorder(null, "Giờ lập", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                txtGioLap.setBorder(new TitledBorder(null, "Giờ lập", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtGioLap.setText(currentTime);
-//                panel9.add(txtGioLap);
+                // panel9.add(txtGioLap);
 
-                //---- txtMaKhuyenMai ----
+                // ---- txtMaKhuyenMai ----
                 txtMaKhuyenMai.setPreferredSize(new Dimension(200, 55));
-                txtMaKhuyenMai.setBorder(new TitledBorder(null, "Mã khuyến mãi", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                panel9.add(txtMaKhuyenMai);
+                txtMaKhuyenMai.setBorder(new TitledBorder(null, "Mã khuyến mãi", TitledBorder.LEADING,
+                        TitledBorder.DEFAULT_POSITION, null, Color.black));
+                // panel9.add(txtMaKhuyenMai);
 
-                //===== btnChooseKm =======
+                // ===== btnChooseKm =======
                 btnChooseKm.setText("");
                 btnChooseKm.setIcon(new ImageIcon(getClass().getResource("/images/icons8_gift_30px.png")));
                 btnChooseKm.setPreferredSize(new Dimension(50, 50));
-//                panel9.add(btnChooseKm);
+                // panel9.add(btnChooseKm);
 
                 // Tạo JPanel mới với GridLayout
                 JPanel textFieldPanel = new JPanel(new GridLayout(2, 4));
@@ -398,41 +446,41 @@ public class FormSell extends JPanel {
             }
             panel8.add(panel9, BorderLayout.NORTH);
 
-            //======== panel10 ========
+            // ======== panel10 ========
             {
                 panel10.setLayout(new BorderLayout());
 
-                //======== panel11 ========
+                // ======== panel11 ========
                 {
                     panel11.setLayout(new FlowLayout());
 
-                    //---- btnXoa ----
+                    // ---- btnXoa ----
                     btnXoa.setText("Xo\u00e1");
                     btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_forever_30px_1.png")));
                     panel11.add(btnXoa);
 
-                    //---- btnSua ----
+                    // ---- btnSua ----
                     btnSua.setText("S\u1eeda");
                     btnSua.setIcon(new ImageIcon(getClass().getResource("/images/icons8_support_30px.png")));
-//                    panel11.add(btnSua);
+                    // panel11.add(btnSua);
 
-                    //---- btnReset2 ----
+                    // ---- btnReset2 ----
                     btnReset2.setText("L\u00e0m m\u01a1i");
                     btnReset2.setIcon(new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png")));
                     panel11.add(btnReset2);
 
-                    //---- textField2 ----
+                    // ---- textField2 ----
                     textField2.setPreferredSize(new Dimension(360, 40));
-                    textField2.setBorder(new TitledBorder(null, "T\u00ecm ki\u1ebfm:", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
-//                    panel11.add(textField2);
+                    textField2.setBorder(new TitledBorder(null, "T\u00ecm ki\u1ebfm:", TitledBorder.LEADING,
+                            TitledBorder.DEFAULT_POSITION, null, Color.black));
+                    // panel11.add(textField2);
                 }
                 panel10.add(panel11, BorderLayout.PAGE_END);
 
-                //======== scrollPane1 ========
+                // ======== scrollPane1 ========
                 {
 
-                    //---- tableSell2 ----
-
+                    // ---- tableSell2 ----
 
                     // set font for the table
                     tableSell2.setFont(font);
@@ -443,39 +491,38 @@ public class FormSell extends JPanel {
                         columnModel.getColumn(i).setPreferredWidth(150);
                     }
                     tableSell2.setBorder(new BevelBorder(BevelBorder.LOWERED));
-//                     tableSell2.setCellSelectionEnabled(true);
+                    // tableSell2.setCellSelectionEnabled(true);
                     tableSell2.setModel(new DefaultTableModel(
                             new Object[][] {
-                                    {null, null, null, null, null},
+                                    { null, null, null, null, null },
                             },
-                            getHeaderSell2()
-                    ));
-                    //  tableSell2.setFillsViewportHeight(true);
-                    //  tableSell2.setSurrendersFocusOnKeystroke(true);
-                    //  tableSell2.setShowVerticalLines(true);
-                    //  tableSell2.setShowHorizontalLines(true);
+                            getHeaderSell2()));
+                    // tableSell2.setFillsViewportHeight(true);
+                    // tableSell2.setSurrendersFocusOnKeystroke(true);
+                    // tableSell2.setShowVerticalLines(true);
+                    // tableSell2.setShowHorizontalLines(true);
                     scrollPane1.setViewportView(tableSell2);
                 }
                 panel10.add(scrollPane1, BorderLayout.CENTER);
             }
             panel8.add(panel10, BorderLayout.CENTER);
 
-            //======== panel12 ========
+            // ======== panel12 ========
             {
                 panel12.setLayout(new FlowLayout());
             }
             panel8.add(panel12, BorderLayout.WEST);
 
-            //======== panel13 ========
+            // ======== panel13 ========
             {
                 panel13.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-                //---- btnHuy ----
+                // ---- btnHuy ----
                 btnHuy.setText("Hu\u1ef7");
                 btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_30px_1.png")));
-//                panel13.add(btnHuy);
+                // panel13.add(btnHuy);
 
-                //---- btnTong ----
+                // ---- btnTong ----
                 btnTong.setText("Thanh toán");
                 btnTong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_us_dollar_30px.png")));
                 panel13.add(btnTong);
@@ -483,7 +530,7 @@ public class FormSell extends JPanel {
             panel8.add(panel13, BorderLayout.SOUTH);
         }
         add(panel8, BorderLayout.CENTER);
-        //btn Add
+        // btn Add
 
         btnAdd.addActionListener(new ActionListener() {
             @Override
@@ -585,9 +632,9 @@ public class FormSell extends JPanel {
             public void performSearch() {
                 String keyWord = txtSearch.getText();
                 System.out.println(keyWord);
-                String type = (String)comboBox.getSelectedItem();
+                String type = (String) comboBox.getSelectedItem();
                 System.out.println(type);
-                ArrayList<Product> result = productBUS.searchProduct(keyWord,type);
+                ArrayList<Product> result = productBUS.searchProduct(keyWord, type);
                 System.out.println(result);
                 setDataTable(result);
             }
@@ -693,7 +740,8 @@ public class FormSell extends JPanel {
                 }
                 if (i + 1 <= currentInvoiceId.length()) {
                     String prefix = currentInvoiceId.substring(0, i + 1); // Lấy phần tiền tố
-                    int nextInvoiceId = Integer.parseInt(currentInvoiceId.substring(i + 1)) + 1; // Tách phần số và tăng lên 1
+                    int nextInvoiceId = Integer.parseInt(currentInvoiceId.substring(i + 1)) + 1; // Tách phần số và tăng
+                                                                                                 // lên 1
                     txtMaHoaDon.setText(prefix + String.valueOf(nextInvoiceId)); // Ghép lại thành mã hóa đơn mới
                 }
 
@@ -754,8 +802,8 @@ public class FormSell extends JPanel {
                 newInvoice.setGioLap(LocalTime.parse(txtGioLap.getText(), timeFormatter));
 
                 // Thêm đối tượng Invoice mới vào danh sách hóa đơn trong FormInvoice
-//                FormInvoice formInvoice = new FormInvoice();
-//                ArrayList<Invoice> invoiceList = new ArrayList<>();
+                // FormInvoice formInvoice = new FormInvoice();
+                // ArrayList<Invoice> invoiceList = new ArrayList<>();
                 InvoiceDAO invoiceDAO = new InvoiceDAO();
                 invoiceDAO.addInvoice(newInvoice);
 
@@ -774,7 +822,9 @@ public class FormSell extends JPanel {
                 }
 
                 // in hóa đơn
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Thanh toán thành công! Bạn có muốn in hóa đơn không?", "In hóa đơn", JOptionPane.YES_NO_OPTION);
+                int dialogResult = JOptionPane.showConfirmDialog(null,
+                        "Thanh toán thành công! Bạn có muốn in hóa đơn không?", "In hóa đơn",
+                        JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     WritePDF writePDF = new WritePDF();
                     writePDF.writePhieuXuat(newInvoice);
@@ -787,7 +837,7 @@ public class FormSell extends JPanel {
                 }
                 setDataTable(productBUS.getList());
 
-//                formInvoice.refresh();
+                // formInvoice.refresh();
             }
         });
     }
@@ -890,6 +940,7 @@ public class FormSell extends JPanel {
         return new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Thành tiền",
         };
     }
+
     private int getRowCount() {
         return tableSell2.getRowCount();
     }
@@ -908,18 +959,20 @@ public class FormSell extends JPanel {
             if (cthd.getMaSanPham().equals(maSP)) {
                 int tongSoLuong = soLuong + cthd.getSoLuong();
                 if (tongSoLuong > product.getSoLuong()) {
-                    JOptionPane.showMessageDialog(this, "Số lượng sản phẩm trong kho không đủ (" + product.getSoLuong() + ")");
+                    JOptionPane.showMessageDialog(this,
+                            "Số lượng sản phẩm trong kho không đủ (" + product.getSoLuong() + ")");
                     return;
                 } else {
                     cthd.setSoLuong(tongSoLuong);
                     checkSoLuong = true;
                 }
             }
-//            setDataToTableInvoiceDetais(dscthd);
+            // setDataToTableInvoiceDetais(dscthd);
         }
         if (!checkSoLuong) {
-            if(soLuong > product.getSoLuong()) {
-                JOptionPane.showMessageDialog(this, "Số lượng sản phẩm trong kho không đủ (" + product.getSoLuong() + ")");
+            if (soLuong > product.getSoLuong()) {
+                JOptionPane.showMessageDialog(this,
+                        "Số lượng sản phẩm trong kho không đủ (" + product.getSoLuong() + ")");
                 return;
             }
             InvoiceDetail invoiceDetail = new InvoiceDetail(invoiceBUS.getNextID(), maSP, soLuong, product.getDonGia());
@@ -975,12 +1028,13 @@ public class FormSell extends JPanel {
                     txtLoaiSP.setText(loai + "-" + product.getMaLSP());
                     txtDonGia.setText(PriceFormatter.format(product.getDonGia()));
                     txtSoLuong.setText(String.valueOf(soLuong));
-                    return ;
+                    return;
 
                 }
 
             }
-        }}
+        }
+    }
 
     public void setDataTable(ArrayList<Product> data) {
         DefaultTableModel model = new DefaultTableModel();
@@ -1001,18 +1055,18 @@ public class FormSell extends JPanel {
                     i.getMaSP(),
                     i.getMaLSP(),
                     i.getTenSP(),
-                    i.getDonGia(),
+                    PriceFormatter.format(i.getDonGia()),
                     i.getSoLuong()
             });
         }
         tableSell.setModel(model);
     }
 
-    // hiẹn thị danh sách đã thêm vào tableSell2  dscthd
+    // hiẹn thị danh sách đã thêm vào tableSell2 dscthd
     public void setDataToTableInvoiceDetais(ArrayList<InvoiceDetail> data) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("STT");
-        model.addColumn("Mã sản phẩm");
+    model.addColumn("Mã sản phẩm");
         model.addColumn("Tên sản phẩm");
         model.addColumn("Số lượng");
         model.addColumn("Đơn giá");
@@ -1029,7 +1083,7 @@ public class FormSell extends JPanel {
             float dongia = cthd.getDonGia();
             float thanhtien = soluong * dongia;
 
-            model.addRow(new String[]{
+            model.addRow(new String[] {
                     String.valueOf(stt),
                     masp,
                     tensp,
@@ -1116,4 +1170,3 @@ public class FormSell extends JPanel {
     private JComboBox comboBox;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
-

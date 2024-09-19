@@ -106,7 +106,9 @@ public class AddButtonAccount extends JFrame {
             String emailAdmin = "admin@expamle.com";
             String getTxtEmail = txtEmail.getText();
             if (getTxtEmail.equals(emailAdmin)) {
-                txtEmail.setEnabled(false);  // Khóa ô input
+                txtEmail.setEnabled(false); // Khóa ô input
+            } else {
+                txtEmail.setEnabled(true);
             }
             txUsername.setText(this.tkSua.getUsername());
             txUsername.setEditable(false);
