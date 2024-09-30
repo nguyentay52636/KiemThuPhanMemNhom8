@@ -363,10 +363,12 @@ public class FormSell extends JPanel {
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 String nextInvoiceID = invoiceBUS.getNextID();
                 txtMaHoaDon.setText(nextInvoiceID);
+                txtMaHoaDon.setEnabled(false);
                 // panel9.add(txtMaHoaDon);
 
                 // ---- textField10 ----
                 textField10.setPreferredSize(new Dimension(0, 55));
+
                 // panel9.add(textField10);
 
                 // ---- txtTongTien ----
@@ -374,12 +376,14 @@ public class FormSell extends JPanel {
                 txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)",
                         TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtTongTien);
+                txtTongTien.setEnabled(false);
 
                 // ---- txtKhachHang ----
                 txtKhachHang.setPreferredSize(new Dimension(200, 55));
                 txtKhachHang.setBorder(new TitledBorder(null, "Kh\u00e1ch h\u00e0ng", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtKhachHang);
+                txtKhachHang.setEnabled(false);
 
                 // ===== btnchoose =====
                 btnChoose.setText("");
@@ -400,11 +404,13 @@ public class FormSell extends JPanel {
                     txtNhanvien.setText("Không tìm thấy nhân viên");
                 }
 
+                txtNhanvien.setEnabled(false);
                 // ---- txtNgayLap ----
                 txtNgayLap.setPreferredSize(new Dimension(200, 55));
                 txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtNgayLap.setText(currentDate);
+                txtNgayLap.setEnabled(false);
                 // panel9.add(txtNgayLap);
 
                 // ===== txtGioLap =====
@@ -412,6 +418,7 @@ public class FormSell extends JPanel {
                 txtGioLap.setBorder(new TitledBorder(null, "Giờ lập", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtGioLap.setText(currentTime);
+                txtGioLap.setEnabled(false);
                 // panel9.add(txtGioLap);
 
                 // ---- txtMaKhuyenMai ----
@@ -419,6 +426,7 @@ public class FormSell extends JPanel {
                 txtMaKhuyenMai.setBorder(new TitledBorder(null, "Mã khuyến mãi", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtMaKhuyenMai);
+                txtMaKhuyenMai.setEnabled(false);
 
                 // ===== btnChooseKm =======
                 btnChooseKm.setText("");
@@ -716,6 +724,7 @@ public class FormSell extends JPanel {
         btnReset2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 // xoa tat ca cac san pham
                 dscthd.clear();
                 txtMaSP.setText("");
@@ -733,17 +742,6 @@ public class FormSell extends JPanel {
                 updateTotalPrice();
 
                 // Tăng mã hóa đơn lên 1 đơn vị
-                String currentInvoiceId = txtMaHoaDon.getText();
-                int i = currentInvoiceId.length() - 1;
-                while (i >= 0 && Character.isDigit(currentInvoiceId.charAt(i))) {
-                    i--;
-                }
-                if (i + 1 <= currentInvoiceId.length()) {
-                    String prefix = currentInvoiceId.substring(0, i + 1); // Lấy phần tiền tố
-                    int nextInvoiceId = Integer.parseInt(currentInvoiceId.substring(i + 1)) + 1; // Tách phần số và tăng
-                                                                                                 // lên 1
-                    txtMaHoaDon.setText(prefix + String.valueOf(nextInvoiceId)); // Ghép lại thành mã hóa đơn mới
-                }
 
                 // tạo định dạng ngày và giờ
                 // Tạo định dạng ngày và giờ
@@ -774,7 +772,20 @@ public class FormSell extends JPanel {
                 // kiem tra hoa don co trung hay khong
                 String maHoaDon = txtMaHoaDon.getText();
                 if (invoiceBUS.checkInvoiceExist(maHoaDon)) {
-                    JOptionPane.showMessageDialog(null, "Mã hóa đơn đã tồn tại! Vui lòng thay mã hóa đơn mới!");
+                    JOptionPane.showMessageDialog(null, "Mã hóa đơn đã tồn tại! ");
+                    String currentInvoiceId = txtMaHoaDon.getText();
+                    int i = currentInvoiceId.length() - 1;
+                    while (i >= 0 && Character.isDigit(currentInvoiceId.charAt(i))) {
+                        i--;
+                    }
+                    if (i + 1 <= currentInvoiceId.length()) {
+                        String prefix = currentInvoiceId.substring(0, i + 1); // Lấy phần tiền tố
+                        int nextInvoiceId = Integer.parseInt(currentInvoiceId.substring(i + 1)) + 1;
+                        // Tăng số
+                        txtMaHoaDon.setText(prefix + nextInvoiceId); // Gán mã hóa đơn mới
+                    }
+                    JOptionPane.showMessageDialog(null, "Mã hóa đơn mới đã được cập! ");
+
                     return;
                 }
 
@@ -801,43 +812,65 @@ public class FormSell extends JPanel {
                 newInvoice.setNgayLap(LocalDate.parse(txtNgayLap.getText(), dateFormatter));
                 newInvoice.setGioLap(LocalTime.parse(txtGioLap.getText(), timeFormatter));
 
-                // Thêm đối tượng Invoice mới vào danh sách hóa đơn trong FormInvoice
-                // FormInvoice formInvoice = new FormInvoice();
-                // ArrayList<Invoice> invoiceList = new ArrayList<>();
-                InvoiceDAO invoiceDAO = new InvoiceDAO();
-                invoiceDAO.addInvoice(newInvoice);
-
-                // Thêm chi tiết hóa đơn
-                InvoiceDetailDAO invoiceDetailDAO = new InvoiceDetailDAO();
-                DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    InvoiceDetail detail = new InvoiceDetail();
-                    detail.setMaHoaDon(newInvoice.getMaHoaDon());
-                    detail.setMaSanPham(model.getValueAt(i, 1).toString()); // Mã sản phẩm
-                    detail.setSoLuong(Integer.parseInt(model.getValueAt(i, 3).toString())); // Số lượng
-                    String formattedPrice = tableSell2.getValueAt(i, 4).toString();
-                    float price = PriceFormatter.parsePrice(formattedPrice); // bỏ format
-                    detail.setDonGia(price);
-                    invoiceDetailDAO.add(detail);
-                }
-
-                // in hóa đơn
-                int dialogResult = JOptionPane.showConfirmDialog(null,
-                        "Thanh toán thành công! Bạn có muốn in hóa đơn không?", "In hóa đơn",
+                // **Thêm hộp thoại xác nhận trước khi thanh toán**
+                int confirmResult = JOptionPane.showConfirmDialog(null,
+                        "Bạn có chắc chắn muốn thanh toán không?", "Xác nhận thanh toán",
                         JOptionPane.YES_NO_OPTION);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    WritePDF writePDF = new WritePDF();
-                    writePDF.writePhieuXuat(newInvoice);
-                }
 
-                for (InvoiceDetail cthd : dscthd) {
-                    Product product = productBUS.getProduct(cthd.getMaSanPham());
-                    product.setSoLuong(product.getSoLuong() - cthd.getSoLuong());
-                    productBUS.update(product);
-                }
-                setDataTable(productBUS.getList());
+                if (confirmResult == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng chọn "Yes", tiếp tục thanh toán
 
-                // formInvoice.refresh();
+                    // Thêm đối tượng Invoice mới vào danh sách hóa đơn
+                    InvoiceDAO invoiceDAO = new InvoiceDAO();
+                    invoiceDAO.addInvoice(newInvoice);
+
+                    // Thêm chi tiết hóa đơn
+                    InvoiceDetailDAO invoiceDetailDAO = new InvoiceDetailDAO();
+                    DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        InvoiceDetail detail = new InvoiceDetail();
+                        detail.setMaHoaDon(newInvoice.getMaHoaDon());
+                        detail.setMaSanPham(model.getValueAt(i, 1).toString()); // Mã sản phẩm
+                        detail.setSoLuong(Integer.parseInt(model.getValueAt(i, 3).toString())); // Số lượng
+                        String formattedPrice = tableSell2.getValueAt(i, 4).toString();
+                        float price = PriceFormatter.parsePrice(formattedPrice); // bỏ format
+                        detail.setDonGia(price);
+                        invoiceDetailDAO.add(detail);
+                    }
+
+                    // In hóa đơn
+                    int dialogResult = JOptionPane.showConfirmDialog(null,
+                            "Thanh toán thành công! Bạn có muốn in hóa đơn không?", "In hóa đơn",
+                            JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        WritePDF writePDF = new WritePDF();
+                        writePDF.writePhieuXuat(newInvoice);
+                    }
+
+                    for (InvoiceDetail cthd : dscthd) {
+                        Product product = productBUS.getProduct(cthd.getMaSanPham());
+                        product.setSoLuong(product.getSoLuong() - cthd.getSoLuong());
+                        productBUS.update(product);
+                    }
+                    setDataTable(productBUS.getList());
+
+                    // Tạo mã hóa đơn mới
+                    String currentInvoiceId = txtMaHoaDon.getText();
+                    int i = currentInvoiceId.length() - 1;
+                    while (i >= 0 && Character.isDigit(currentInvoiceId.charAt(i))) {
+                        i--;
+                    }
+                    if (i + 1 <= currentInvoiceId.length()) {
+                        String prefix = currentInvoiceId.substring(0, i + 1); // Lấy phần tiền tố
+                        int nextInvoiceId = Integer.parseInt(currentInvoiceId.substring(i + 1)) + 1; // Tăng số
+                        txtMaHoaDon.setText(prefix + nextInvoiceId); // Gán mã hóa đơn mới
+                    }
+
+                } else {
+                    // Nếu người dùng chọn "No", không thực hiện hành động nào
+                    JOptionPane.showMessageDialog(null, "Thanh toán đã bị hủy.", "Thông báo",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
     }
@@ -1024,10 +1057,16 @@ public class FormSell extends JPanel {
                     image.setIcon(new ImageIcon(imageScaled));
                     String loai = typeProductBUS.getLoaiSanPham(product.getMaLSP()).getTenLoaiSanPham();
                     txtMaSP.setText(product.getMaSP());
+                    txtMaSP.setEnabled(false);
                     txtTenSP.setText(product.getTenSP());
+                    txtTenSP.setEnabled(false);
                     txtLoaiSP.setText(loai + "-" + product.getMaLSP());
+                    txtLoaiSP.setEnabled(false);
                     txtDonGia.setText(PriceFormatter.format(product.getDonGia()));
+                    txtDonGia.setEnabled(false);
                     txtSoLuong.setText(String.valueOf(soLuong));
+                    txtSoLuong.setEnabled(false);
+                    txtSoLuong.requestFocus();
                     return;
 
                 }
@@ -1066,7 +1105,7 @@ public class FormSell extends JPanel {
     public void setDataToTableInvoiceDetais(ArrayList<InvoiceDetail> data) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("STT");
-    model.addColumn("Mã sản phẩm");
+
         model.addColumn("Tên sản phẩm");
         model.addColumn("Số lượng");
         model.addColumn("Đơn giá");
@@ -1099,7 +1138,9 @@ public class FormSell extends JPanel {
 
     // getter cho cac phuong thuc nhap lieu de co the truy cap ngoai lop
     public String getMaHoaDon() {
+
         return txtMaHoaDon.getText();
+
     }
 
     public String getTongTien() {

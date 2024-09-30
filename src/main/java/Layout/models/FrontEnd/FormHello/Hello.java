@@ -4,8 +4,12 @@
 
 package Layout.models.FrontEnd.FormHello;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * @author master
@@ -29,7 +33,7 @@ public class Hello extends JPanel {
         .beans .PropertyChangeEvent e) {if ("bord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException
         ( ); }} );
         setLayout(new BorderLayout());
-
+        
         //---- label1 ----
         label1.setText("Xin Chào");
         label1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -39,13 +43,13 @@ public class Hello extends JPanel {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
-//    public JLabel getLabel1() {
-//        return label1;
-//    }
+    // public JLabel getLabel1() {
+    // return label1;
+    // }
 
-//    public void setEmployeeName(String name) {
-//        label1.setText("Xin chào " + name);
-//    }
+    // public void setEmployeeName(String name) {
+    // label1.setText("Xin chào " + name);
+    // }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     // Generated using JFormDesigner Evaluation license - Master

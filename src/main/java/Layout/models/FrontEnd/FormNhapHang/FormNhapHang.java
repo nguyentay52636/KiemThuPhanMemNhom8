@@ -338,7 +338,7 @@ public class FormNhapHang extends JPanel {
                 String nextInvoiceID = importBUS.getNextID();
                 txtMaPhieuNhap.setText(nextInvoiceID);
                 // panel9.add(txtMaPhieuNhap);
-
+                txtMaPhieuNhap.setEnabled(false);
                 // ---- textField10 ----
                 textField10.setPreferredSize(new Dimension(0, 55));
                 // panel9.add(textField10);
@@ -347,6 +347,7 @@ public class FormNhapHang extends JPanel {
                 txtTongTien.setPreferredSize(new Dimension(200, 55));
                 txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)",
                         TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
+                txtTongTien.setEnabled(false);
                 // panel9.add(txtTongTien);
 
                 // ---- txt nha cung cap ----
@@ -354,11 +355,12 @@ public class FormNhapHang extends JPanel {
                 txtNhaCungCap.setBorder(new TitledBorder(null, "Nhà cung cấp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtNhaCungCap);
-
+                txtNhaCungCap.setEnabled(false);
                 // ===== btnchoose =====
                 btnChoose.setText("");
                 btnChoose.setIcon(new ImageIcon(getClass().getResource("/images/icons8_company_30px.png")));
                 btnChoose.setPreferredSize(new Dimension(50, 50));
+
                 // panel9.add(btnChoose);
 
                 // ---- txtNhanvien ----
@@ -370,16 +372,18 @@ public class FormNhapHang extends JPanel {
                 staff = staffBUS.getStaff(FormLogin.loggedInMaNV);
                 if (staff != null) {
                     txtNhanvien.setText(staff.getTenNV() + "-" + staff.getMaNV());
+                    txtNhanvien.setEnabled(false);
                 } else {
                     txtNhanvien.setText("Không tìm thấy nhân viên");
                 }
-
+                txtNgayLap.setEnabled(false);
                 // ---- txtNgayLap ----
                 txtNgayLap.setPreferredSize(new Dimension(200, 55));
                 txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtNgayLap.setText(currentDate);
                 // panel9.add(txtNgayLap);
+                txtNgayLap.setEnabled(false);
 
                 // ===== txtGioLap =====
                 txtGioLap.setPreferredSize(new Dimension(200, 55));
@@ -387,7 +391,7 @@ public class FormNhapHang extends JPanel {
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtGioLap.setText(currentTime);
                 // panel9.add(txtGioLap);
-
+                txtGioLap.setEnabled(false);
                 JPanel jPanelTextField = new JPanel(new GridLayout(2, 4));
                 jPanelTextField.add(txtMaPhieuNhap);
                 jPanelTextField.add(txtNhanvien);
@@ -833,10 +837,16 @@ public class FormNhapHang extends JPanel {
                     image.setIcon(new ImageIcon(imageScaled));
                     String loai = typeProductBUS.getLoaiSanPham(product.getMaLSP()).getTenLoaiSanPham();
                     txtMaSP.setText(product.getMaSP());
+                    txtMaSP.setEnabled(false);
                     txtTenSP.setText(product.getTenSP());
+                    txtTenSP.setEnabled(false);
                     txtLoaiSP.setText(loai + "-" + product.getMaLSP());
+                    txtLoaiSP.setEnabled(false);
                     txtDonGia.setText(PriceFormatter.format(product.getDonGia()));
+                    txtDonGia.setEnabled(false);
                     txtSoLuong.setText(String.valueOf(soLuong));
+                    txtSoLuong.setEnabled(false);
+                    txtSoLuong.requestFocus();
                     return;
 
                 }

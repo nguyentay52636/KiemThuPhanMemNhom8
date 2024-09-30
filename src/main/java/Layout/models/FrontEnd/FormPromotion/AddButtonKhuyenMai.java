@@ -288,8 +288,6 @@
 //
 //}
 
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -297,21 +295,21 @@
  */
 package Layout.models.FrontEnd.FormPromotion;
 
-import Layout.models.BackEnd.BUS.PromotionBUS;
-import Layout.models.BackEnd.DTO.Product;
-import Layout.models.BackEnd.DTO.Promotion;
-import org.jdatepicker.JDatePicker;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Properties;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -319,6 +317,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import Layout.models.BackEnd.BUS.PromotionBUS;
+import Layout.models.BackEnd.DTO.Promotion;
 
 /**
  *
@@ -350,7 +355,6 @@ public class AddButtonKhuyenMai extends JFrame {
         this.formKhuyenMai = formKhuyenMai;
         initComponents();
     }
-
 
     public void initComponents() {
         this.setLayout(new BorderLayout());
@@ -411,7 +415,7 @@ public class AddButtonKhuyenMai extends JFrame {
         if (this.type.equals("Thêm")) {
             this.setTitle("Thêm khuyến mãi");
             txMaKM.setText(qlkhBUS.getNextID());
-
+            txMaKM.setEnabled(false);
             btnThem.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_add_30px.png")));
             plButton.add(btnThem);
 
@@ -488,7 +492,8 @@ public class AddButtonKhuyenMai extends JFrame {
                         Date selectedDate = (Date) datePicker.getModel().getValue();
                         // kiem tra rong
                         if (selectedDate == null) {
-                            JOptionPane.showOptionDialog(null, "Chưa chọn ngày", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new Object[]{}, null);
+                            JOptionPane.showOptionDialog(null, "Chưa chọn ngày", "Warning", JOptionPane.DEFAULT_OPTION,
+                                    JOptionPane.WARNING_MESSAGE, null, new Object[] {}, null);
                             return;
                         }
                         // chuyen ve String
@@ -517,7 +522,8 @@ public class AddButtonKhuyenMai extends JFrame {
                     public void actionPerformed(ActionEvent actionEvent) {
                         Date selectedDate = (Date) datePicker.getModel().getValue();
                         if (selectedDate == null) {
-                            JOptionPane.showOptionDialog(null, "Chưa chọn ngày", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new Object[]{}, null);
+                            JOptionPane.showOptionDialog(null, "Chưa chọn ngày", "Warning", JOptionPane.DEFAULT_OPTION,
+                                    JOptionPane.WARNING_MESSAGE, null, new Object[] {}, null);
                             return;
                         }
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -543,6 +549,7 @@ public class AddButtonKhuyenMai extends JFrame {
     }
 
     private void btnThemMouseClicked() {
+        txTenKM.setEnabled(false);
         if (checkEmpty()) {
             String makm = txMaKM.getText();
             String tenkm = txTenKM.getText();
@@ -600,7 +607,8 @@ public class AddButtonKhuyenMai extends JFrame {
             try {
                 Float.parseFloat(dieukien);
             } catch (NumberFormatException e) {
-                return showErrorTx(txDieuKienKhuyenMai, "Điều kiện khuyến mãi là giá hóa đơn tối thiểu để được khuyến mãi, phải là số thực");
+                return showErrorTx(txDieuKienKhuyenMai,
+                        "Điều kiện khuyến mãi là giá hóa đơn tối thiểu để được khuyến mãi, phải là số thực");
             }
             try {
                 float fPhanTram = Float.parseFloat(phantram);

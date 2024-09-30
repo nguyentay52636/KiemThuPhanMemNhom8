@@ -1,11 +1,28 @@
 package Layout.models.FrontEnd.ThongKe;
 
-import Layout.models.BackEnd.BUS.*;
-import Layout.models.BackEnd.DTO.*;
-import Layout.models.FrontEnd.Formatter.PriceFormatter;
-import com.toedter.calendar.JDateChooser;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -13,14 +30,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.toedter.calendar.JDateChooser;
+
+import Layout.models.BackEnd.BUS.CustomerBUS;
+import Layout.models.BackEnd.BUS.ImportBUS;
+import Layout.models.BackEnd.BUS.InvoiceBUS;
+import Layout.models.BackEnd.BUS.ProductBUS;
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.BUS.SupplierBUS;
+import Layout.models.BackEnd.DTO.Customer;
+import Layout.models.BackEnd.DTO.Import;
+import Layout.models.BackEnd.DTO.Invoice;
+import Layout.models.BackEnd.DTO.Product;
+import Layout.models.BackEnd.DTO.Staff;
+import Layout.models.BackEnd.DTO.Supplier;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
 
 public class ThongKeForm extends JFrame {
 
@@ -258,7 +282,8 @@ public class ThongKeForm extends JFrame {
 		panel_14.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 50));
 
 		thongketonghop();
-
+		//char thong ke
+		
 		return panel;
 	}
 

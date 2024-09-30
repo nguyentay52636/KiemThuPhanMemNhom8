@@ -1,6 +1,7 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormHello/Hello.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormLogin/FormLogin.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/com/yourcompany/Main.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/ThongKeCharGoogle/google/ModelPieChart.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormStaff/DisplayStaffDisableButton.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Promotion.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/ProductDAO.java
@@ -9,6 +10,7 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormStaff/FormChooseEmployee.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Account.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/TypeProductDAO.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/ThongKeCharGoogle/test/Main.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormPromotion/AddButtonKhuyenMai.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/MainFrame/MainFrame.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Supplier.java
@@ -18,6 +20,7 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormPromotion/DateLabelFormatter.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormNhapHang/FormNhapHang.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Product.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/ThongKe/components/PieChart.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/AccountDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormBanHang/FormSell.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/BUS/ProductBUS.java
@@ -29,6 +32,7 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormTypeProduct/FormTypeProduct.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormStaff/DisplayStaff.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/PromotionDAO.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormLogin/checkEmailExists.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormSupplier/FormChonNCC.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/NavBar/NewNavBar.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormInvoice/FormInvoiceDisableButton.java
@@ -41,6 +45,8 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Permission.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/CustomerDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Invoice.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/ThongKe/components/ModelPieChart.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormLogin/PasswordResetUI.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/InvoiceDetail.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/BUS/CustomerBUS.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/BUS/PromotionBUS.java
@@ -55,12 +61,16 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/ImportDetailsDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormProduct/DisplayProductDisableButton.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Customer.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/ThongKeCharGoogle/google/WebPanel.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormProduct/DisplayProduct.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormInvoiceDetails/FormInvoiceDetails.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/InvoiceDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/PermissionDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormSupplier/DisplaySupplier.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormAccount/FormAccount.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormLogin/PasswordResetForm.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/ThongKe/components/Test.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/Services/EmailService.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormCustomer/FormKhachHang.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/Staff.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/BUS/InvoiceBUS.java
@@ -70,6 +80,7 @@
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/SupplierDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormPromotion/FormKhuyenMai.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DTO/TypeProduct.java
+/Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormLogin/CodeVerificationForm.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormBanHang/FormSellDisable.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/BackEnd/DAO/ImportDAO.java
 /Users/m1lt43/Desktop/QuanLyBanDienThoai/src/main/java/Layout/models/FrontEnd/FormPermission/ThemSuaQuyen.java

@@ -5,7 +5,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import Layout.models.FrontEnd.FormLogin.FormLogin;
 
 public class Main {
-    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException,
+            InstantiationException, IllegalAccessException {
         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
                 .getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {

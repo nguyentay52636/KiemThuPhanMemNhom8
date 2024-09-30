@@ -169,11 +169,13 @@ public class DisplayProduct extends JFrame {
                     String maLSP = (String) table.getValueAt(selectedRow, 1);
                     String tenSP = (String) table.getValueAt(selectedRow, 2);
                     Float donGia = (Float) table.getValueAt(selectedRow, 3);
+
                     int soLuong = (int) table.getValueAt(selectedRow, 4);
                     String fileAnh = (String) table.getValueAt(selectedRow, 5);
                     String trangThai = (String) table.getValueAt(selectedRow, 6);
 
-                    showDialogToEditProduct(maSP, maLSP, tenSP, donGia, fileAnh, soLuong, trangThai);
+                    showDialogToEditProduct(maSP, maLSP, tenSP, donGia, fileAnh, soLuong,
+                            trangThai);
 
                 } else {
                     // Nếu không có hàng nào được chọn, hiển thị thông báo cho người dùng
@@ -462,8 +464,6 @@ public class DisplayProduct extends JFrame {
     }
 
     private void showDialogToAddProduct() {
-        // Tăng giá trị mã sản phẩm cuối cùng
-
         // Tạo một dialog mới
         JDialog addDialog = new JDialog(this, "Thêm sản phẩm", true);
         addDialog.setSize(450, 400);
@@ -476,6 +476,22 @@ public class DisplayProduct extends JFrame {
         // Các thành phần trong dialog
         JLabel lblMaSP = new JLabel("Mã sản phẩm:");
         JTextField txtMaSP = new JTextField();
+        txtMaSP.setEditable(false); // Make txtMaSP non-editable
+
+        // Get the next available product ID and set it to txtMaSP
+        ProductBUS productBus = new ProductBUS();
+        String nextID = productBus.getNextID();
+
+        // Check if the ID has been retrieved and display it using JOptionPane
+        if (nextID != null && !nextID.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Next Product ID: " + nextID, "ID Retrieved",
+                    JOptionPane.INFORMATION_MESSAGE);
+            txtMaSP.setText(nextID);
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to retrieve the next Product ID.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
         JLabel lblMaLSP = new JLabel("Mã lô hàng sản phẩm: ");
 
         ArrayList<TypeProduct> listlsp = tpbus.getDslsp();
@@ -492,13 +508,17 @@ public class DisplayProduct extends JFrame {
         JLabel lblTenSP = new JLabel("Tên sản phẩm:");
         JTextField txtTenSP = new JTextField();
         JLabel lblDonGia = new JLabel("Đơn giá:");
+
         JTextField txtDonGia = new JTextField();
+        txtDonGia.setEditable(false); // Set txtDonGia to be non-editable
         JLabel lblFileAnh = new JLabel("File ảnh:");
         JButton btnChooseImage = new JButton("Chọn ảnh");
         JLabel lblSoLuong = new JLabel("Số lượng:");
+
         JTextField txtSoLuong = new JTextField();
+        txtSoLuong.setEditable(false); // Set txtSoLuong to be non-editable
         JLabel lblTrangThai = new JLabel("Trạng thái:");
-        JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang bán", "Đã xóa" });
+        JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang bán", "Đã xóa", "Chờ nhập hàng " });
 
         // thêm sự kiên cho nút chọn ảnh
         btnChooseImage.addActionListener(new ActionListener() {
@@ -550,7 +570,7 @@ public class DisplayProduct extends JFrame {
         panel.add(lblFileAnh);
         panel.add(btnChooseImage);
         panel.add(lblSoLuong);
-        panel.add(txtSoLuong);
+        panel.add(txtSoLuong); // Add txtSoLuong to the panel
         panel.add(lblTrangThai);
         panel.add(cboTrangThai);
 
@@ -578,14 +598,34 @@ public class DisplayProduct extends JFrame {
                 String formattedPrice = txtDonGia.getText();
                 String txtsoLuong = txtSoLuong.getText();
 
-                // Kiểm tra xem mã sản phẩm đã tồn tại trong bảng chưa
-                float donGia = PriceFormatter.parsePrice(formattedPrice);
-                int soLuong = Integer.parseInt(txtsoLuong);
-                if (checkinform(maSP, "addDialog", donGia, soLuong)) {
+                // Validate input fields
+                if (!ValidateInput.isNotEmpty(maSP) || !ValidateInput.isNotEmpty(maLSP)
+                        || !ValidateInput.isNotEmpty(tenSP)
+                        || !ValidateInput.isValidNumber(formattedPrice) || !ValidateInput.isValidInteger(txtsoLuong)) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields correctly.", "Validation Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
+                // Kiểm tra xem mã sản phẩm đã tồn tại trong bảng chưa
+                float donGia;
+                int soLuong;
+                try {
+                    donGia = Float.parseFloat(formattedPrice); // Chuyển từ chuỗi sang float để tính toán
+                    soLuong = Integer.parseInt(txtsoLuong);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Đơn giá và số lượng phải là số.", "Validation Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (checkinform(maSP, "addDialog", donGia, soLuong)) {
                     model = (DefaultTableModel) table.getModel();
+                    String formattedPriceForDisplay = PriceFormatter.format(donGia);
+
                     // Thêm hàng mới vào bảng với thông tin sản phẩm vừa nhập
-                    model.addRow(new Object[] { maSP, maLSP, tenSP, donGia, fileAnh, soLuong, trangThai });
+                    model.addRow(
+                            new Object[] { maSP, maLSP, tenSP, formattedPriceForDisplay, fileAnh, soLuong, trangThai });
 
                     // Tạo đối tượng Typeproduct
                     Product product = new Product(maSP, maLSP, tenSP, donGia, soLuong, fileAnh,
@@ -624,21 +664,32 @@ public class DisplayProduct extends JFrame {
             }
 
             private void checkFields() {
-                // Kiểm tra xem các trường dữ liệu có đầy đủ không
-                boolean allFieldsFilled = !txtMaSP.getText().isEmpty() &&
-                        !txtTenSP.getText().isEmpty() &&
-                        !txtDonGia.getText().isEmpty() &&
-                        !btnChooseImage.getText().isEmpty() &&
-                        !txtSoLuong.getText().isEmpty();
+                // Kiểm tra xem các trường dữ liệu có đầy đủ không và hợp lệ không
+                boolean allFieldsFilled = ValidateInput.isNotEmpty(txtMaSP.getText()) &&
+                        ValidateInput.isNotEmpty(txtTenSP.getText()) &&
+                        ValidateInput.isNotEmpty(btnChooseImage.getText());
+
+                boolean validDonGia = ValidateInput.isValidNumber(txtDonGia.getText());
+                boolean validSoLuong = ValidateInput.isValidInteger(txtSoLuong.getText());
+
+                // Show error messages if DonGia or SoLuong are invalid
+                if (!validDonGia && !txtDonGia.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Đơn giá phải là số.", "Validation Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+                if (!validSoLuong && !txtSoLuong.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Số lượng phải là số.", "Validation Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
 
                 // Kích hoạt hoặc vô hiệu hóa nút "OK" tùy thuộc vào việc các trường đã được
-                // nhập đầy đủ hay không
-                btnOK.setEnabled(allFieldsFilled);
+                // nhập đầy đủ hay không và hợp lệ không
+                btnOK.setEnabled(allFieldsFilled && validDonGia && validSoLuong);
             }
         };
 
         // Thêm trình nghe sự kiện cho các trường dữ liệu nhập vào
-
         txtTenSP.getDocument().addDocumentListener(documentListener);
         txtDonGia.getDocument().addDocumentListener(documentListener);
         txtSoLuong.getDocument().addDocumentListener(documentListener);
@@ -670,16 +721,17 @@ public class DisplayProduct extends JFrame {
         // Các thành phần trong dialog (tương tự như phương thức showDialogToAddProduct)
         JLabel lblMaSP = new JLabel("Mã sản phẩm:");
         JTextField txtMaSP = new JTextField(maSP);
-        txtMaSP.setEditable(false);
+        txtMaSP.setEnabled(false);
         JLabel lblMaLSP = new JLabel("Mã lô sản phẩm");
         JTextField txtMaLSP = new JTextField(maLSP);
-        txtMaLSP.setEditable(false); // Khóa ô input
+        txtMaLSP.setEnabled(false);
         JLabel lblTenSP = new JLabel("Tên sản phẩm:");
         JTextField txtTenSP = new JTextField(tenSP);
+        txtTenSP.setEnabled(false);
         JLabel lblDonGia = new JLabel("Đơn giá:");
-        txtTenSP.setEditable(false);
-        JTextField txtDonGia = new JTextField(donGia + "");
-        txtDonGia.setEditable(false); // Khóa ô input cho đơn giá
+
+        JTextField txtDonGia = new JTextField(PriceFormatter.format(donGia) + "");
+        txtDonGia.setEnabled(false);
 
         JLabel lblFileAnh = new JLabel("File ảnh:");
         JButton btnChooseImage = new JButton(fileAnh);
@@ -759,17 +811,28 @@ public class DisplayProduct extends JFrame {
             }
 
             private void checkFields() {
-                // Kiểm tra xem các trường dữ liệu có đầy đủ không
-                boolean allFieldsFilled = !txtMaSP.getText().isEmpty() &&
-                        !txtTenSP.getText().isEmpty() &&
-                        !txtMaLSP.getText().isEmpty() &&
-                        !txtDonGia.getText().isEmpty() &&
-                        !btnChooseImage.getText().isEmpty() &&
-                        !txtSoLuong.getText().isEmpty();
+                // Kiểm tra xem các trường dữ liệu có đầy đủ không và hợp lệ không
+                boolean allFieldsFilled = ValidateInput.isNotEmpty(txtMaSP.getText()) &&
+                        ValidateInput.isNotEmpty(txtTenSP.getText()) &&
+                        ValidateInput.isNotEmpty(btnChooseImage.getText());
+
+                boolean validDonGia = ValidateInput.isValidNumber(txtDonGia.getText());
+                boolean validSoLuong = ValidateInput.isValidInteger(txtSoLuong.getText());
+
+                // Show error messages if DonGia or SoLuong are invalid
+                if (!validDonGia) {
+                    JOptionPane.showMessageDialog(null, "Đơn giá phải là số.", "Validation Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+                if (!validSoLuong) {
+                    JOptionPane.showMessageDialog(null, "Số lượng phải là số.", "Validation Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
 
                 // Kích hoạt hoặc vô hiệu hóa nút "OK" tùy thuộc vào việc các trường đã được
-                // nhập đầy đủ hay không
-                btnOK.setEnabled(allFieldsFilled);
+                // nhập đầy đủ hay không và hợp lệ không
+                btnOK.setEnabled(allFieldsFilled && validDonGia && validSoLuong);
             }
         };
 
@@ -1078,9 +1141,11 @@ public class DisplayProduct extends JFrame {
             float tu1 = Integer.parseInt(tu);
             float toi1 = Integer.parseInt(toi);
             for (Product pr : lispr) {
+                String fotmatPrice = PriceFormatter.format(pr.getDonGia());
+
                 if (pr.getDonGia() >= tu1 && pr.getDonGia() <= toi1 && pr.getTrangthai() == trangthai) {
                     model.addRow(new Object[] { pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
-                            PriceFormatter.format(pr.getDonGia()), pr.getSoLuong(), pr.getHinhAnh(),
+                            fotmatPrice, pr.getSoLuong(), pr.getHinhAnh(),
                             pr.getTrangthai() });
                 }
             }
@@ -1094,7 +1159,8 @@ public class DisplayProduct extends JFrame {
             for (Product pr : lispr) {
                 if (pr.getSoLuong() >= tu1 && pr.getSoLuong() <= toi1 && pr.getTrangthai() == trangthai) {
                     model.addRow(new Object[] { pr.getMaSP(), pr.getMaLSP(), pr.getTenSP(),
-                            pr.getDonGia(), pr.getSoLuong(), pr.getHinhAnh(), pr.getTrangthai() });
+                            PriceFormatter.format(pr.getDonGia()), pr.getSoLuong(), pr.getHinhAnh(),
+                            pr.getTrangthai() });
                 }
             }
 

@@ -1,10 +1,22 @@
 package Layout.models.FrontEnd.FormCustomer;
 
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import Layout.models.BackEnd.BUS.CustomerBUS;
 import Layout.models.BackEnd.DTO.Customer;
-
-import java.awt.*;
-import javax.swing.*;
 
 public class AddButtonCustomer extends JFrame {
     private String title;
@@ -44,7 +56,7 @@ public class AddButtonCustomer extends JFrame {
         txTenkh.setBorder(BorderFactory.createTitledBorder("Tên khách hàng"));
         txDiachi.setBorder(BorderFactory.createTitledBorder("Địa chỉ"));
         txSDT.setBorder(BorderFactory.createTitledBorder("Số điện thoại"));
-        cbChonTrangThai = new JComboBox<>(new String[]{"Ẩn", "Hiện"});
+        cbChonTrangThai = new JComboBox<>(new String[] { "Ẩn", "Hiện" });
 
         // chon trang thai
         JPanel plChonTT = new JPanel();
@@ -67,6 +79,7 @@ public class AddButtonCustomer extends JFrame {
         if (this.type.equals("Thêm")) {
             this.setTitle("Thêm khách hàng");
             txMakh.setText(qlkhBUS.getNextID());
+            txMakh.setEnabled(false);
 
             cbChonTrangThai.setSelectedItem("Hiện");
 
@@ -87,11 +100,12 @@ public class AddButtonCustomer extends JFrame {
 
             cbChonTrangThai.setSelectedItem(this.khSua.getTrangThai() == 0 ? "Hiện" : "Ẩn");
             txMakh.setText(this.khSua.getMaKH());
+            txMakh.setEnabled(false);
             txTenkh.setText(this.khSua.getTenKh());
             txDiachi.setText(this.khSua.getDiaChi());
             txSDT.setText(this.khSua.getSdt());
 
-            txMakh.setEditable(false);
+            // txMakh.setEditable(false);
 
             btnSua.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_support_30px.png")));
             plButton.add(btnSua);
@@ -138,6 +152,7 @@ public class AddButtonCustomer extends JFrame {
     private void btnThemMouseClicked() {
         if (checkEmpty()) {
             String makh = txMakh.getText();
+            txMakh.setEnabled(false);
             String tenkh = txTenkh.getText();
             String diachi = txDiachi.getText();
             String sdt = txSDT.getText();
@@ -152,6 +167,7 @@ public class AddButtonCustomer extends JFrame {
     }
 
     private void btnSuaMouseClicked() {
+        txMakh.setEnabled(false);
         if (checkEmpty()) {
             String makh = txMakh.getText();
             String tenkh = txTenkh.getText();

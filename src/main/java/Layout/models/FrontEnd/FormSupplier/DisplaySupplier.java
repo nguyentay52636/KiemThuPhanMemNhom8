@@ -17,12 +17,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
@@ -30,13 +41,14 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import Layout.models.BackEnd.BUS.SupplierBUS;
-import Layout.models.BackEnd.DTO.Supplier;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.SupplierBUS;
+import Layout.models.BackEnd.DTO.Supplier;
 
 
 
@@ -138,7 +150,7 @@ public class DisplaySupplier extends JFrame {
                 } else {
                     // Nếu không có hàng nào được chọn, hiển thị thông báo cho người dùng
                     JOptionPane.showMessageDialog(DisplaySupplier.this, "Vui lòng chọn một nhân viên để xem", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                }
+            }
 
 
 

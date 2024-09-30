@@ -250,7 +250,7 @@ public class WritePDF {
             CustomerBUS customerBUS = new CustomerBUS();
             Customer customer = customerBUS.getCustomer(invoice.getMaKhachHang());
             Staff st = stbus.getStaff(invoice.getMaNhanVien());
-            Paragraph para3 = new Paragraph(new Phrase("Người tạo: " + st.getTenNV(), fontData));
+            Paragraph para3 = new Paragraph(new Phrase("Người tạo: "+ st.getTenNV(), fontData));
             Paragraph para5 = new Paragraph(new Phrase("Khách hàng: " + customer.getTenKh(), fontData));
             PromotionBUS prom = new PromotionBUS();
             Promotion pro = prom.getKhuyenMai(invoice.getMaKhuyenMai());
