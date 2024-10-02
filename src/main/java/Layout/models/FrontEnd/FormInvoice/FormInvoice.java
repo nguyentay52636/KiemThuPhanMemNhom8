@@ -1,26 +1,22 @@
 
 package Layout.models.FrontEnd.FormInvoice;
 
-import Layout.models.BackEnd.BUS.*;
-import Layout.models.BackEnd.DTO.Invoice;
-import Layout.models.BackEnd.DTO.InvoiceDetail;
-import Layout.models.FrontEnd.FormInvoiceDetails.FormInvoiceDetails;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -31,13 +27,39 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.CustomerBUS;
+import Layout.models.BackEnd.BUS.InvoiceBUS;
+import Layout.models.BackEnd.BUS.InvoiceDetailBUS;
+import Layout.models.BackEnd.BUS.PromotionBUS;
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.DTO.Invoice;
+import Layout.models.FrontEnd.FormInvoiceDetails.FormInvoiceDetails;
 
 /**
  * @author m1lt43
@@ -567,26 +589,26 @@ public class FormInvoice extends JPanel {
     public void refresh() {
         invoiceBUS.readDB();
         setDataToTable(invoiceBUS.getListInvoice());
-        checkTable();
+        // checkTable();
     }
-    public void checkTable() {
-        // Lấy số hàng và số cột của bảng
-        int rowCount = table1.getRowCount();
-        int columnCount = table1.getColumnCount();
+    // public void checkTable() {
+    //     // Lấy số hàng và số cột của bảng
+    //     int rowCount = table1.getRowCount();
+    //     int columnCount = table1.getColumnCount();
 
-        // In ra số hàng và số cột của bảng
-        System.out.println("Number of rows: " + rowCount);
-        System.out.println("Number of columns: " + columnCount);
+    //     // In ra số hàng và số cột của bảng
+    //     System.out.println("Number of rows: " + rowCount);
+    //     System.out.println("Number of columns: " + columnCount);
 
-        // Duyệt qua từng ô của bảng và in ra giá trị của từng ô
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < columnCount; j++) {
-                Object value = table1.getValueAt(i, j);
-                System.out.print(value + "\t");
-            }
-            System.out.println();
-        }
-    }
+    //     // Duyệt qua từng ô của bảng và in ra giá trị của từng ô
+    //     for (int i = 0; i < rowCount; i++) {
+    //         for (int j = 0; j < columnCount; j++) {
+    //             Object value = table1.getValueAt(i, j);
+    //             System.out.print(value + "\t");
+    //         }
+    //         System.out.println();
+    //     }
+    // }
 
     public void setDataToTable(ArrayList<Invoice> data) {
         DefaultTableModel model = new DefaultTableModel();
@@ -672,12 +694,19 @@ public class FormInvoice extends JPanel {
                     System.out.println(tenKM);
                     // tra du lieu vao o textfiled
                     txtMaHoaDon.setText(i.getMaHoaDon()) ;
+                     txtMaHoaDon.setEnabled(false);
                     txtNhanVien.setText(tenNV+ "-" + i.getMaNhanVien());
+                    txtNhanVien.setEnabled(false);
                     txtKhachHang.setText(tenKH+"-" +i.getMaKhachHang());
+                    txtKhachHang.setEnabled(false);
                     txtKhuyenMai.setText(tenKM + "-" + i.getMaKhuyenMai());
+                    txtKhuyenMai.setEnabled(false);
                     txtTongTien.setText(i.getNgayLap().toString());
+                    txtTongTien.setEnabled(false);
                     txtGioLap.setText(i.getGioLap().toString());
+                    txtGioLap.setEnabled(false);    
                     txtNgayLap.setText(format(i.getTongTien()));
+                    txtNgayLap.setEnabled(false);
                     return ;
                 }
             }

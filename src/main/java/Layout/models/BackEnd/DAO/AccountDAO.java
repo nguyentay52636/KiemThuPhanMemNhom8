@@ -47,9 +47,11 @@ public class AccountDAO {
 
     public Boolean add(Account tk) {
         qltkConnectiion = new ConnectionDB();
-        Boolean ok = qltkConnectiion.sqlUpdate("INSERT INTO account (TenTaiKhoan, MatKhau, MaNV, MAQuyen) VALUES ('"
-                + tk.getUsername() + "', '" + tk.getPassword() + "', '" + tk.getMaNV() + "', '" + tk.getMaQuyen()
-                + "');");
+        Boolean ok = qltkConnectiion.sqlUpdate(
+                "INSERT INTO account ( email, TenTaiKhoan, MatKhau, MaNV, MAQuyen) VALUES ('" + tk.getEmail() + "', '"
+                        + tk.getUsername() + "', '" + tk.getPassword() + "', '" + tk.getMaNV() + "', '"
+                        + tk.getMaQuyen()
+                        + "');");
         qltkConnectiion.closeConnection();
         return ok;
     }

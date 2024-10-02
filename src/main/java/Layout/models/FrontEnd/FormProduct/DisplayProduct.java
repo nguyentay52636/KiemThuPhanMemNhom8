@@ -476,21 +476,12 @@ public class DisplayProduct extends JFrame {
         // Các thành phần trong dialog
         JLabel lblMaSP = new JLabel("Mã sản phẩm:");
         JTextField txtMaSP = new JTextField();
-        txtMaSP.setEditable(false); // Make txtMaSP non-editable
+        ProductBUS productBus = new ProductBUS();
+        txtMaSP.setText(productBus.getNextID());
+
+        txtMaSP.setEnabled(false);
 
         // Get the next available product ID and set it to txtMaSP
-        ProductBUS productBus = new ProductBUS();
-        String nextID = productBus.getNextID();
-
-        // Check if the ID has been retrieved and display it using JOptionPane
-        if (nextID != null && !nextID.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Next Product ID: " + nextID, "ID Retrieved",
-                    JOptionPane.INFORMATION_MESSAGE);
-            txtMaSP.setText(nextID);
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to retrieve the next Product ID.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
 
         JLabel lblMaLSP = new JLabel("Mã lô hàng sản phẩm: ");
 

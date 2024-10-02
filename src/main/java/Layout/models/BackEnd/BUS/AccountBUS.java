@@ -19,17 +19,17 @@ public class AccountBUS {
         dstk = qltkDAO.readDB();
     }
 
-    public void showConsole() {
-        dstk.forEach((tk) -> {
-            System.out.print(tk.getUsername() + " ");
-            System.out.print(tk.getPassword() + " ");
-            System.out.println(tk.getMaNV() + " ");
-            System.out.println(tk.getMaQuyen());
-        });
-    }
+    // public void showConsole() {
+    // dstk.forEach((tk) -> {
+    // System.out.print(tk.getUsername() + " ");
+    // System.out.print(tk.getPassword() + " ");
+    // System.out.println(tk.getMaNV() + " ");
+    // System.out.println(tk.getMaQuyen());
+    // });
+    // }
 
     public String[] getHeaders() {
-        return new String[] { "Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
+        return new String[] { "Email","Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
     }
 
     public void readDB() {
@@ -58,6 +58,10 @@ public class AccountBUS {
                 }
             } else {
                 switch (type) {
+                    case "Email":
+                        if (tk.getEmail().toLowerCase().contains(value.toLowerCase())) {
+                            result.add(tk);
+                        }
                     case "Tên tài khoản":
                         if (tk.getUsername().toLowerCase().contains(value.toLowerCase())) {
                             result.add(tk);

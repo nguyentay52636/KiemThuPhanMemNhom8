@@ -1,13 +1,23 @@
 package Layout.models.FrontEnd.FormPermission;
 
-import Layout.models.BackEnd.BUS.PermissionBUS;
-import Layout.models.BackEnd.DTO.Permission;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import Layout.models.BackEnd.BUS.PermissionBUS;
+import Layout.models.BackEnd.DTO.Permission;
 
 public class ThemSuaQuyen extends JDialog {
     private boolean isSuccess = false;
@@ -17,28 +27,28 @@ public class ThemSuaQuyen extends JDialog {
     private String maQuyen;
     private FormPermission formPermission;
 
-
     String type;
     PermissionBUS qlqBUS = new PermissionBUS();
     Permission qSua;
 
-    JTextField txMaQuyen = new JTextField(15);private
-    JTextField txTenQuyen = new JTextField(15);
+    JTextField txMaQuyen = new JTextField(15);
+    private JTextField txTenQuyen = new JTextField(15);
     ChiTietQuyenForm chitietForm = new ChiTietQuyenForm();
 
     JButton btnThem = new JButton("Thêm");
     JButton btnSua = new JButton("Sửa");
     JButton btnHuy = new JButton("Hủy");
 
-//    public boolean showDialog() {
-//        this.setModal(true);
-//        this.setVisible(true);
-//        return this.isSuccess;
-//    }
+    // public boolean showDialog() {
+    // this.setModal(true);
+    // this.setVisible(true);
+    // return this.isSuccess;
+    // }
 
-//    public void setPermissionListener(FormPermission.PermissionAddedListener listener) {
-//        this.permissionAddedListener = listener;
-//    }
+    // public void setPermissionListener(FormPermission.PermissionAddedListener
+    // listener) {
+    // this.permissionAddedListener = listener;
+    // }
 
     public ThemSuaQuyen(String title, String maQuyen, FormPermission formPermission) {
         this.title = title;
@@ -87,10 +97,12 @@ public class ThemSuaQuyen extends JDialog {
             }
 
             txMaQuyen.setText(this.qSua.getMaQuyen());
+            txTenQuyen.setEnabled(false);
             txTenQuyen.setText(this.qSua.getTenQuyen());
+            txTenQuyen.setEnabled(false);
             chitietForm.setQuyen(this.qSua.getChiTietQuyen());
 
-            txMaQuyen.setEditable(false);
+            // txMaQuyen.setEditable(false);
 
             btnSua.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_support_30px.png")));
             plButton.add(btnSua);
@@ -174,7 +186,7 @@ public class ThemSuaQuyen extends JDialog {
 
 class ChiTietQuyenForm extends JPanel {
 
-    final String[] type = {"Chỉ xem", "Xem và Quản lý"};
+    final String[] type = { "Chỉ xem", "Xem và Quản lý" };
     ArrayList<PanelChooseQuyen> dsPanel = new ArrayList<>();
 
     public ChiTietQuyenForm() {
@@ -182,18 +194,25 @@ class ChiTietQuyenForm extends JPanel {
         setLayout(new FlowLayout());
         setBorder(BorderFactory.createTitledBorder("Chi tiết quyền: "));
 
-        dsPanel.add(new PanelChooseQuyen("Bán Hàng", new String[]{"Bán hàng,"}, new String[]{"quản lý bán hàng,"}));
-        dsPanel.add(new PanelChooseQuyen("Nhập Hàng", new String[]{"Nhập hàng,"}, new String[]{"quản lý nhập hàng,"}));
-        dsPanel.add(new PanelChooseQuyen("Sản Phẩm", type, new String[]{"xem sản phẩm,", "quản lý sản phẩm,"}));
-        dsPanel.add(new PanelChooseQuyen("Loại Sản Phẩm", type, new String[]{"xem loại sản phẩm,", "quản lý loại sản phẩm,"}));
-        dsPanel.add(new PanelChooseQuyen("Hóa Đơn", type, new String[]{"xem hóa đơn,", "quản lý hóa đơn,"}));
-        dsPanel.add(new PanelChooseQuyen("Khuyến Mãi", type, new String[]{"xem khuyến mãi,", "quản lý khuyến mãi,"}));
-        dsPanel.add(new PanelChooseQuyen("Nhân Viên", type, new String[]{"xem nhân viên,", "quản lý nhân viên,"}));
-        dsPanel.add(new PanelChooseQuyen("Khách Hàng", type, new String[]{"xem khách hàng,", "quản lý khách hàng,"}));
-        dsPanel.add(new PanelChooseQuyen("Phiếu Nhập", type, new String[]{"xem phiếu nhập,", "quản lý phiếu nhập,"}));
-        dsPanel.add(new PanelChooseQuyen("Nhà Cung Cấp", type, new String[]{"xem nhà cung cấp,", "quản lý nhà cung cấp,"}));
-        dsPanel.add(new PanelChooseQuyen("Tài Khoản", type, new String[]{"xem tài khoản,", "quản lý tài khoản,"}));
-        dsPanel.add(new PanelChooseQuyen("Quyền", type, new String[]{"xem quyền,", "quản lý quyền,"}));
+        dsPanel.add(
+                new PanelChooseQuyen("Bán Hàng", new String[] { "Bán hàng," }, new String[] { "quản lý bán hàng," }));
+        dsPanel.add(new PanelChooseQuyen("Nhập Hàng", new String[] { "Nhập hàng," },
+                new String[] { "quản lý nhập hàng," }));
+        dsPanel.add(new PanelChooseQuyen("Sản Phẩm", type, new String[] { "xem sản phẩm,", "quản lý sản phẩm," }));
+        dsPanel.add(new PanelChooseQuyen("Loại Sản Phẩm", type,
+                new String[] { "xem loại sản phẩm,", "quản lý loại sản phẩm," }));
+        dsPanel.add(new PanelChooseQuyen("Hóa Đơn", type, new String[] { "xem hóa đơn,", "quản lý hóa đơn," }));
+        dsPanel.add(
+                new PanelChooseQuyen("Khuyến Mãi", type, new String[] { "xem khuyến mãi,", "quản lý khuyến mãi," }));
+        dsPanel.add(new PanelChooseQuyen("Nhân Viên", type, new String[] { "xem nhân viên,", "quản lý nhân viên," }));
+        dsPanel.add(
+                new PanelChooseQuyen("Khách Hàng", type, new String[] { "xem khách hàng,", "quản lý khách hàng," }));
+        dsPanel.add(
+                new PanelChooseQuyen("Phiếu Nhập", type, new String[] { "xem phiếu nhập,", "quản lý phiếu nhập," }));
+        dsPanel.add(new PanelChooseQuyen("Nhà Cung Cấp", type,
+                new String[] { "xem nhà cung cấp,", "quản lý nhà cung cấp," }));
+        dsPanel.add(new PanelChooseQuyen("Tài Khoản", type, new String[] { "xem tài khoản,", "quản lý tài khoản," }));
+        dsPanel.add(new PanelChooseQuyen("Quyền", type, new String[] { "xem quyền,", "quản lý quyền," }));
 
         for (PanelChooseQuyen p : dsPanel) {
             this.add(p);

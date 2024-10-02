@@ -114,8 +114,9 @@ public class AddButtonAccount extends JFrame {
             txUsername.setEditable(false);
             txPassword.setText(this.tkSua.getPassword());
             txMaNV.setText(this.tkSua.getMaNV());
+            txMaNV.setEnabled(false);
             txMaQuyen.setText(this.tkSua.getMaQuyen());
-
+            txMaQuyen.setEnabled(false);
             btnSua.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_support_30px.png")));
             plButton.add(btnSua);
         }

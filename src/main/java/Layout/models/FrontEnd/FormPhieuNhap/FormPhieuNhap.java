@@ -4,7 +4,11 @@
 
 package Layout.models.FrontEnd.FormPhieuNhap;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,9 +21,23 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -28,28 +46,25 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import Layout.models.BackEnd.BUS.ImportBUS;
-import Layout.models.BackEnd.BUS.StaffBUS;
-import Layout.models.BackEnd.DTO.Import;
-import Layout.models.BackEnd.DTO.Invoice;
-import Layout.models.BackEnd.DTO.Supplier;
-import Layout.models.FrontEnd.FormImportDetails.FormImportDetails;
-import Layout.models.FrontEnd.FormPromotion.DateLabelFormatter;
-import Layout.models.FrontEnd.Formatter.PriceFormatter;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import static java.awt.SystemColor.text;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import Layout.models.BackEnd.BUS.ImportBUS;
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.DTO.Import;
+import Layout.models.BackEnd.DTO.Supplier;
+import Layout.models.FrontEnd.FormImportDetails.FormImportDetails;
+import Layout.models.FrontEnd.FormPromotion.DateLabelFormatter;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
 
 /**
  * @author master
@@ -264,7 +279,8 @@ public class FormPhieuNhap extends JPanel {
         // JFormDesigner - End of compnvonent initialization  //GEN-END:initComponents  @formatter:on
 
         // add item in comboBox
-        String[] items = { "Tất cả", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã nhân viên", "Ngày lập", "Giờ lập","Tổng tiền" };
+        String[] items = { "Tất cả", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã nhân viên", "Ngày lập", "Giờ lập",
+                "Tổng tiền" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
@@ -418,7 +434,8 @@ public class FormPhieuNhap extends JPanel {
                             LocalDate localDate = LocalDate.parse(ngayLap, dateTimeFormatter);
                             LocalTime localTime = LocalTime.parse(gioLap, timeFormatter);
 
-                            Import anImport = new Import(maPhieuNhap, maNhaCungCap, maNhanVien, localDate, localTime, tongTien);
+                            Import anImport = new Import(maPhieuNhap, maNhaCungCap, maNhanVien, localDate, localTime,
+                                    tongTien);
 
                             // add to the database
                             importBUS.add(maPhieuNhap, maNhaCungCap, maNhanVien, localDate, localTime, tongTien);
@@ -462,7 +479,7 @@ public class FormPhieuNhap extends JPanel {
                         PdfPTable table = new PdfPTable(table1.getColumnCount());
 
                         // Điều chỉnh kích thước cột
-                        float[] columnWidths = new float[] {30f, 30f, 40f, 50f, 50f, 60f, 70f};
+                        float[] columnWidths = new float[] { 30f, 30f, 40f, 50f, 50f, 60f, 70f };
                         table.setWidths(columnWidths);
 
                         // Thêm tiêu đề cột vào PdfPTable
@@ -754,7 +771,6 @@ public class FormPhieuNhap extends JPanel {
         importBUS.readDB() ;
         setDataImport(importBUS.getDspn());
     }
-
     private void displayInfo(String maPN) {
         if(maPN != null) {
             for(Import i : importBUS.getDspn()) {
@@ -762,11 +778,17 @@ public class FormPhieuNhap extends JPanel {
                     String tenNhanVien = staffBUS.getStaff(i.getMaNV()).getTenNV() ;
                     String tenNhaCungCap = "Nha cung cap" ;
                     textField6.setText(i.getMaPN()) ;
+                    textField6.setEnabled(false);
                     textField7.setText(tenNhaCungCap + "-" +i.getMaNCC());
+                    textField7.setEnabled(false);
                     textField8.setText(tenNhanVien + "-" + i.getMaNV());
+                    textField8.setEnabled(false);
                     textField9.setText(i.getNgayNhap().toString());
+                    textField9.setEnabled(false);
                     textField10.setText(i.getGioNhap().toString());
+                    textField10.setEnabled(false);
                     textField11.setText( PriceFormatter.format(i.getTongTien()));
+                    textField11.setEnabled(false);
 
 
 
