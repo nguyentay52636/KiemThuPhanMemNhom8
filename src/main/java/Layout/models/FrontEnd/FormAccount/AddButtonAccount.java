@@ -46,7 +46,7 @@ public class AddButtonAccount extends JFrame {
 
     public AddButtonAccount(String _type, String _username) {
         this.setLayout(new BorderLayout());
-        this.setSize(450, 400);
+        this.setSize(450, 450);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.type = _type;
@@ -120,7 +120,6 @@ public class AddButtonAccount extends JFrame {
             btnSua.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_support_30px.png")));
             plButton.add(btnSua);
         }
-
         btnHuy.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_cancel_30px_1.png")));
         plButton.add(btnHuy);
 
@@ -182,8 +181,9 @@ public class AddButtonAccount extends JFrame {
             String username = txUsername.getText();
             String pass = txPassword.getText();
             String manv = txMaNV.getText();
+            txMaNV.setEnabled(false);
             String maquyen = txMaQuyen.getText();
-
+            txMaQuyen.setEnabled(false);
             Account newAccount = new Account(email, username, pass, manv, maquyen);
             if (qltkBUS.add(email, username, pass, manv, maquyen)) {
                 JOptionPane.showMessageDialog(this, "Thêm " + username + " thành công!");

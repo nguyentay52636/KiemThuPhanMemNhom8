@@ -29,7 +29,7 @@ public class AccountBUS {
     // }
 
     public String[] getHeaders() {
-        return new String[] { "Email","Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
+        return new String[] { "Email", "Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
     }
 
     public void readDB() {
@@ -50,7 +50,9 @@ public class AccountBUS {
 
         dstk.forEach((tk) -> {
             if (type.equals("Tất cả")) {
-                if (tk.getUsername().toLowerCase().contains(value.toLowerCase())
+
+                if (tk.getEmail().toLowerCase().contains(value.toLowerCase())
+                        || tk.getUsername().toLowerCase().contains(value.toLowerCase())
                         || tk.getPassword().toLowerCase().contains(value.toLowerCase())
                         || tk.getMaNV().toLowerCase().contains(value.toLowerCase())
                         || tk.getMaQuyen().toLowerCase().contains(value.toLowerCase())) {

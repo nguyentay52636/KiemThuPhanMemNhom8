@@ -1,5 +1,7 @@
 package Layout.models.FrontEnd.FormLogin;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -23,7 +25,7 @@ public class PasswordResetUI extends JFrame {
 
     public PasswordResetUI() {
         setTitle("Lấy lại mật khẩu");
-        setSize(600, 400); // Set kích thước frame mới
+        setSize(600, 400); // Set kích thước frame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridBagLayout());
 
@@ -31,19 +33,34 @@ public class PasswordResetUI extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10); // Padding giữa các thành phần
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Đặt màu nền tối cho form
+        getContentPane().setBackground(new Color(60, 63, 65));
+
         // Khởi tạo các thành phần
         JLabel newPasswordLabel = new JLabel("Nhập mật khẩu mới:");
-        newPasswordLabel.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 18));
+        newPasswordLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        newPasswordLabel.setForeground(Color.WHITE); // Màu chữ trắng
+
         newPasswordField = new JPasswordField(20);
-        newPasswordField.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 18));
+        newPasswordField.setFont(new Font("Arial", Font.PLAIN, 18));
+        newPasswordField.setBackground(new Color(43, 43, 43)); // Màu nền text field
+        newPasswordField.setForeground(Color.WHITE); // Màu chữ trắng
+        newPasswordField.setCaretColor(Color.WHITE); // Màu con trỏ
 
         JLabel confirmPasswordLabel = new JLabel("Xác nhận mật khẩu mới:");
-        confirmPasswordLabel.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 18));
+        confirmPasswordLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        confirmPasswordLabel.setForeground(Color.WHITE); // Màu chữ trắng
+
         confirmPasswordField = new JPasswordField(20);
-        confirmPasswordField.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 18));
+        confirmPasswordField.setFont(new Font("Arial", Font.PLAIN, 18));
+        confirmPasswordField.setBackground(new Color(43, 43, 43)); // Màu nền text field
+        confirmPasswordField.setForeground(Color.WHITE); // Màu chữ trắng
+        confirmPasswordField.setCaretColor(Color.WHITE); // Màu con trỏ
 
         resetButton = new JButton("Đặt lại mật khẩu");
-        resetButton.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 18));
+        resetButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        resetButton.setBackground(new Color(50, 120, 255)); // Màu nền xanh
+        resetButton.setForeground(Color.WHITE); // Màu chữ trắng
 
         // Add các thành phần vào frame
 
@@ -75,6 +92,7 @@ public class PasswordResetUI extends JFrame {
                 String newPassword = new String(newPasswordField.getPassword());
                 String confirmPassword = new String(confirmPasswordField.getPassword());
 
+                // Validate kiểm tra 2 password
                 if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
                     JOptionPane.showMessageDialog(PasswordResetUI.this,
                             "Vui lòng điền đầy đủ thông tin.",
@@ -86,10 +104,8 @@ public class PasswordResetUI extends JFrame {
                             "Lỗi",
                             JOptionPane.ERROR_MESSAGE);
                 } else {
-
                     try {
                         Account account = new Account();
-                        System.out.println(account);
                         AccountDAO accountDAO = new AccountDAO();
                         String email = "admin@example.com";
 
@@ -113,11 +129,8 @@ public class PasswordResetUI extends JFrame {
                                 "Đã xảy ra lỗi: " + ex.getMessage(),
                                 "Lỗi",
                                 JOptionPane.ERROR_MESSAGE);
-                        ex.printStackTrace(); // In ra chi tiết lỗi (tùy chọn)
                     }
-
                 }
-
             }
         });
 

@@ -4,29 +4,44 @@
 
 package Layout.models.FrontEnd.FormTypeProduct;
 
-import Layout.models.BackEnd.BUS.TypeProductBUS;
-import Layout.models.BackEnd.DTO.Permission;
-import Layout.models.BackEnd.DTO.TypeProduct;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.TypeProductBUS;
+import Layout.models.BackEnd.DTO.TypeProduct;
 
 /**
  * @author master
@@ -173,35 +188,35 @@ public class FormTypeProduct extends JPanel {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
 
         // combobox
-        String[] items = {"Tất cả", "Mã loại", "Tên loại", "Mô tả"};
+        String[] items = { "Tất cả", "Mã loại", "Tên loại", "Mô tả" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
 
         // lắng nghe sự kiện khi nhần vào trong item
-        textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-        comboBox1.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                String selectedItem = (String) comboBox1.getSelectedItem();
-                if (selectedItem.equals("Tất cả")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-                } else if (selectedItem.equals("Mã loại")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mã loại"));
-                } else if (selectedItem.equals("Tên loại")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tên loại"));
-                } else if (selectedItem.equals("Mô tả")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mô tả"));
-                }
-            }
-        });
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // comboBox1.addItemListener(e -> {
+        // if (e.getStateChange() == ItemEvent.SELECTED) {
+        // String selectedItem = (String) comboBox1.getSelectedItem();
+        // if (selectedItem.equals("Tất cả")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // } else if (selectedItem.equals("Mã loại")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mã loại"));
+        // } else if (selectedItem.equals("Tên loại")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tên loại"));
+        // } else if (selectedItem.equals("Mô tả")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mô tả"));
+        // }
+        // }
+        // });
 
         // set color for button
-//        button2.setBackground(Color.white);
-//        button3.setBackground(Color.white);
-//        button4.setBackground(Color.white);
-//        button5.setBackground(Color.white);
-//        button6.setBackground(Color.white);
-//        button1.setBackground(new Color(135, 206, 250));
+        // button2.setBackground(Color.white);
+        // button3.setBackground(Color.white);
+        // button4.setBackground(Color.white);
+        // button5.setBackground(Color.white);
+        // button6.setBackground(Color.white);
+        // button1.setBackground(new Color(135, 206, 250));
 
         // set size for button
         Dimension sizeButton = new Dimension(144, 35);
@@ -252,11 +267,13 @@ public class FormTypeProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa loại sản phẩm này chứ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa loại sản phẩm này chứ?",
+                            "Xác nhận", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.YES_OPTION) {
-                        String maLoai = (String) table1.getValueAt(selectedRow, 1); // Assuming the MaLoai is in the second column
+                        String maLoai = (String) table1.getValueAt(selectedRow, 1); // Assuming the MaLoai is in the
+                                                                                    // second column
                         if (qllsp.delete(maLoai)) { // Assuming you have a delete method in your TypeProductBUS class
-                            ((DefaultTableModel)table1.getModel()).removeRow(selectedRow);
+                            ((DefaultTableModel) table1.getModel()).removeRow(selectedRow);
                             JOptionPane.showMessageDialog(null, "Xóa thành công!");
                         } else {
                             JOptionPane.showMessageDialog(null, "Xóa không thành công!");
@@ -275,7 +292,8 @@ public class FormTypeProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-                    String maLoai = (String) table1.getValueAt(selectedRow, 1); // Assuming the MaLoai is in the second column
+                    String maLoai = (String) table1.getValueAt(selectedRow, 1); // Assuming the MaLoai is in the second
+                                                                                // column
                     // Open the AddButton window with the title "Sửa" and the selected MaLoai
                     AddButton addButton = new AddButton("Sửa", maLoai, FormTypeProduct.this);
                     addButton.setVisible(true);
@@ -413,7 +431,7 @@ public class FormTypeProduct extends JPanel {
         setDataToTable(qllsp.getDslsp());
     }
 
-     //set data to table
+    // set data to table
     public void setDataToTable(ArrayList<TypeProduct> data) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("STT");
@@ -423,7 +441,7 @@ public class FormTypeProduct extends JPanel {
 
         for (int i = 0; i < data.size(); i++) {
             TypeProduct typeProduct = data.get(i);
-            model.addRow(new Object[]{
+            model.addRow(new Object[] {
                     i + 1,
                     typeProduct.getMaLoaiSanPham(),
                     typeProduct.getTenLoaiSanPham(),
@@ -465,16 +483,16 @@ public class FormTypeProduct extends JPanel {
     }
 }
 
-//class Main {
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            FormTypeProduct form = new FormTypeProduct();
-//            JFrame frame = new JFrame("LOẠI SẢN PHÂM");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.getContentPane().add(form);
-//            frame.pack();
-//            frame.setLocationRelativeTo(null); // Đưa cửa sổ vào trung tâm màn hình
-//            frame.setVisible(true);
-//        });
-//    }
-//}
+// class Main {
+// public static void main(String[] args) {
+// SwingUtilities.invokeLater(() -> {
+// FormTypeProduct form = new FormTypeProduct();
+// JFrame frame = new JFrame("LOẠI SẢN PHÂM");
+// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+// frame.getContentPane().add(form);
+// frame.pack();
+// frame.setLocationRelativeTo(null); // Đưa cửa sổ vào trung tâm màn hình
+// frame.setVisible(true);
+// });
+// }
+// }

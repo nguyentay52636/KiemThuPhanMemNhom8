@@ -197,7 +197,7 @@ public class FormInvoice extends JPanel {
 //                                panel3.setMinimumSize(new Dimension(500, 49));
 //                                panel3.setPreferredSize(new Dimension(220, 49));
                                 panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-                                String[] items = { "Tất cả", "Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Mã khuyến mãi", "Ngày lập","Giờ lập","Tổng kết" };
+                                String[] items = { "Tất cả", "Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Mã khuyến mãi", "Ngày lập","Giờ lập","Tổng tiền" };
                                 for (String item : items) {
                                     comboBox1.addItem(item);
                                 }

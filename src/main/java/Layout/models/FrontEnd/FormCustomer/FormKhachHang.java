@@ -4,17 +4,11 @@
 
 package Layout.models.FrontEnd.FormCustomer;
 
-import Layout.models.BackEnd.BUS.CustomerBUS;
-import Layout.models.BackEnd.DTO.Customer;
-import Layout.models.BackEnd.DTO.Permission;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -25,12 +19,29 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.prefs.Preferences;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.CustomerBUS;
+import Layout.models.BackEnd.DTO.Customer;
 
 /**
  * @author master
@@ -40,7 +51,7 @@ public class FormKhachHang extends JPanel {
 
     public FormKhachHang() {
         initComponents();
-//        setDataToTable(qlkh.getDskh());
+        // setDataToTable(qlkh.getDskh());
     }
 
     private void initComponents() {
@@ -185,12 +196,12 @@ public class FormKhachHang extends JPanel {
         button8.setIcon(refreshIcon);
 
         // set background for button
-//        button1.setBackground(Color.white);
-//        button2.setBackground(Color.white);
-//        button3.setBackground(Color.white);
-//        button4.setBackground(Color.white);
-//        button5.setBackground(Color.white);
-//        button8.setBackground(new Color(135, 206, 250));
+        // button1.setBackground(Color.white);
+        // button2.setBackground(Color.white);
+        // button3.setBackground(Color.white);
+        // button4.setBackground(Color.white);
+        // button5.setBackground(Color.white);
+        // button8.setBackground(new Color(135, 206, 250));
 
         // set font
         Font font = new Font("Segoe UI", 0, 16);
@@ -208,36 +219,36 @@ public class FormKhachHang extends JPanel {
         }
 
         // add item for combobox
-        String[] items = {"Tất cả", "Mã khách hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại", "Trạng thái"};
+        String[] items = { "Tất cả", "Mã khách hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại", "Trạng thái" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
 
-        String[] items2 = {"Tất cả", "Đang hoạt động", "Đã khóa"};
+        String[] items2 = { "Tất cả", "Đang hoạt động", "Đã khóa" };
         for (String item : items2) {
             comboBox2.addItem(item);
         }
 
-//        // lang nghe su kien khi nhan vao item
-        textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-        comboBox1.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                String selectedItem = (String) comboBox1.getSelectedItem();
-                if (selectedItem.equals("Tất cả")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-                } else if (selectedItem.equals("Mã khách hàng")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mã khách hàng"));
-                } else if (selectedItem.equals("Tên khách hàng")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tên khách hàng"));
-                } else if (selectedItem.equals("Địa chỉ")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Địa chỉ"));
-                } else if (selectedItem.equals("Số điện thoại")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Số điện thoại"));
-                } else if (selectedItem.equals("Trạng thái")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Trạng thái"));
-                }
-            }
-        });
+        // // lang nghe su kien khi nhan vao item
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // comboBox1.addItemListener(e -> {
+        // if (e.getStateChange() == ItemEvent.SELECTED) {
+        // String selectedItem = (String) comboBox1.getSelectedItem();
+        // if (selectedItem.equals("Tất cả")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // } else if (selectedItem.equals("Mã khách hàng")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mã khách hàng"));
+        // } else if (selectedItem.equals("Tên khách hàng")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tên khách hàng"));
+        // } else if (selectedItem.equals("Địa chỉ")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Địa chỉ"));
+        // } else if (selectedItem.equals("Số điện thoại")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Số điện thoại"));
+        // } else if (selectedItem.equals("Trạng thái")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Trạng thái"));
+        // }
+        // }
+        // });
 
         comboBox2.addItemListener(new ItemListener() {
             @Override
@@ -286,7 +297,8 @@ public class FormKhachHang extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-                    int comfirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                    int comfirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa không?", "Xác nhận",
+                            JOptionPane.YES_NO_OPTION);
                     if (comfirm == JOptionPane.YES_OPTION) {
                         String makh = (String) table1.getValueAt(selectedRow, 1);
                         if (qlkh.delete(makh)) {

@@ -1,5 +1,7 @@
 package Layout.models.FrontEnd.FormLogin;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -30,11 +32,22 @@ public class CodeVerificationForm extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10); // Padding around components
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Đặt màu nền cho form
+        getContentPane().setBackground(new Color(60, 63, 65));
+
         // Khởi tạo các thành phần
         JLabel codeLabel = new JLabel("Nhập mã xác thực:");
-        codeField = new JTextField(6); // Ô nhập mã xác thực (6 chữ số)
-        verifyButton = new JButton("Xác minh mã");
+        codeLabel.setForeground(Color.WHITE); // Màu chữ trắng
 
+        codeField = new JTextField(6); // Ô nhập mã xác thực (6 chữ số)
+        codeField.setBackground(new Color(43, 43, 43)); // Màu nền của text field
+        codeField.setForeground(Color.WHITE); // Màu chữ trắng
+        codeField.setCaretColor(Color.WHITE); // Màu con trỏ trong text field
+
+        verifyButton = new JButton("Xác minh mã");
+        verifyButton.setBackground(new Color(50, 120, 255)); // Màu nền của nút
+        verifyButton.setForeground(Color.WHITE); // Màu chữ trắng
+        verifyButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         // Add code label
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -59,7 +72,19 @@ public class CodeVerificationForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String inputCode = codeField.getText();
-                if (inputCode.equals(codeVerify)) {
+
+                // Kiểm tra validate
+                if (inputCode.isEmpty()) {
+                    JOptionPane.showMessageDialog(CodeVerificationForm.this,
+                            "Vui lòng nhập mã xác thực.",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (!inputCode.matches("\\d{1,6}")) { // Chỉ chấp nhận tối đa 6 số
+                    JOptionPane.showMessageDialog(CodeVerificationForm.this,
+                            "Mã xác thực chỉ được phép chứa tối đa 6 số và không được có ký tự chữ cái.",
+                            "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                } else if (inputCode.equals(codeVerify)) {
                     JOptionPane.showMessageDialog(CodeVerificationForm.this,
                             "Mã xác thực đúng. Bạn có thể đặt lại mật khẩu.",
                             "Thông báo",

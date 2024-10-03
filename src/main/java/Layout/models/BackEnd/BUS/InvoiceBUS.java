@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import Layout.models.BackEnd.DAO.InvoiceDAO;
-import Layout.models.BackEnd.DAO.InvoiceDetailDAO;
 import Layout.models.BackEnd.DTO.Invoice;
 
 public class InvoiceBUS {
@@ -49,7 +48,7 @@ public class InvoiceBUS {
     }
 
     public Boolean add(String maHoaDon, String maNhanVien, String maKhachHang, String makm, LocalDate ngayNhap,
-                       LocalTime gioNhap, float tongTien) {
+            LocalTime gioNhap, float tongTien) {
         Invoice hd = new Invoice(maHoaDon, maNhanVien, maKhachHang, makm, ngayNhap, gioNhap, tongTien);
         return addInvoiceBUS(hd);
     }
@@ -76,7 +75,7 @@ public class InvoiceBUS {
     }
 
     public Boolean update(String maHoaDon, String maNhanVien, String maKhachHang, String makm, LocalDate ngayNhap,
-                          LocalTime gioNhap, float tongTien) {
+            LocalTime gioNhap, float tongTien) {
         Invoice hd = new Invoice(maHoaDon, maNhanVien, maKhachHang, makm, ngayNhap, gioNhap, tongTien);
 
         return updateInvoiceBUS(hd);
@@ -120,7 +119,7 @@ public class InvoiceBUS {
         ArrayList<Invoice> result = new ArrayList<>();
         for (Invoice invoice : listInvoice) {
             if ((invoice.getNgayLap().isEqual(from)) || (invoice.getNgayLap().isAfter(from))
-            && (invoice.getNgayLap().isEqual(to)) || (invoice.getNgayLap().isBefore(to))) {
+                    && (invoice.getNgayLap().isEqual(to)) || (invoice.getNgayLap().isBefore(to))) {
                 result.add(invoice);
             }
         }
@@ -135,6 +134,7 @@ public class InvoiceBUS {
                     if (hd.getMaHoaDon().toLowerCase().contains(keyword.toLowerCase())
                             || hd.getMaNhanVien().toLowerCase().contains(keyword.toLowerCase())
                             || hd.getMaKhachHang().toLowerCase().contains(keyword.toLowerCase())
+                            || hd.getMaKhuyenMai().toLowerCase().contains(keyword.toLowerCase())
                             || hd.getNgayLap().toString().toLowerCase().contains(keyword.toLowerCase())
                             || hd.getGioLap().toString().toLowerCase().contains(keyword.toLowerCase())
                             || String.valueOf(hd.getTongTien()).toLowerCase().contains(keyword.toLowerCase())) {
@@ -166,7 +166,7 @@ public class InvoiceBUS {
                         result.add(hd);
                     }
                     break;
-                case"Giờ lập" :
+                case "Giờ lập":
                     if (hd.getGioLap().toString().toLowerCase().contains(keyword.toLowerCase())) {
                         result.add(hd);
                     }

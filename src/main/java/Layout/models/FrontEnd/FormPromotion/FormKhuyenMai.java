@@ -249,27 +249,27 @@ public class FormKhuyenMai extends JPanel {
         }
 
         // su kienj khi nhan chon item
-        textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-        comboBox1.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                String selectedItem = (String) comboBox1.getSelectedItem();
-                if (selectedItem.equals("Tất cả")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-                } else if (selectedItem.equals("Mã khuyến mãi")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mã khuyến mãi"));
-                } else if (selectedItem.equals("Tên khuyến mãi")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tên khuyến mãi"));
-                } else if (selectedItem.equals("Điều kiện")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Điều kiện"));
-                } else if (selectedItem.equals("Giảm giá")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Giảm giá"));
-                } else if (selectedItem.equals("Ngày bắt đầu")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Ngày bắt đầu"));
-                } else if (selectedItem.equals("Ngày kết thúc")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Ngày kết thúc"));
-                }
-            }
-        });
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // comboBox1.addItemListener(e -> {
+        // if (e.getStateChange() == ItemEvent.SELECTED) {
+        // String selectedItem = (String) comboBox1.getSelectedItem();
+        // if (selectedItem.equals("Tất cả")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // } else if (selectedItem.equals("Mã khuyến mãi")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mã khuyến mãi"));
+        // } else if (selectedItem.equals("Tên khuyến mãi")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tên khuyến mãi"));
+        // } else if (selectedItem.equals("Điều kiện")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Điều kiện"));
+        // } else if (selectedItem.equals("Giảm giá")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Giảm giá"));
+        // } else if (selectedItem.equals("Ngày bắt đầu")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Ngày bắt đầu"));
+        // } else if (selectedItem.equals("Ngày kết thúc")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Ngày kết thúc"));
+        // }
+        // }
+        // });
 
         comboBox2.addItemListener(new ItemListener() {
             @Override

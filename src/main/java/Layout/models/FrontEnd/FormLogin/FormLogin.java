@@ -156,7 +156,7 @@ public class FormLogin extends JFrame {
                 //---- label2 ----
                 label2.setText("Đăng nhập");
                 label2.setHorizontalAlignment(SwingConstants.CENTER);
-                label2.setFont(new Font("Luminari", Font.BOLD | Font.ITALIC, 28));
+                label2.setFont(new Font("Luminari", Font.BOLD| Font.ITALIC, 28));
                 label2.setForeground(new Color(255, 255, 255, 203));
                 label2.setIconTextGap(10);
                 panel2.add(label2);
@@ -267,6 +267,8 @@ public class FormLogin extends JFrame {
                     //---- btnLogin ----
                     btnLogin.setText("ĐĂNG NHẬP");
                     btnLogin.setBackground((new Color(56, 112, 176, 255)));
+                    btnLogin.setForeground(new Color(255, 255, 255)); // Màu chữ trắng
+
                     btnLogin.setFont(new Font("Oriya MN", Font.BOLD, 18));
                     btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     panel3.add(btnLogin);

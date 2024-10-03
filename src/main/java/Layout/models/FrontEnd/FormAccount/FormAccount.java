@@ -227,23 +227,23 @@ public class FormAccount extends JPanel {
             comboBox2.addItem(item);
         }
         // su kien khi nhan chon item
-        textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-        comboBox1.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                String selectedItem = (String) comboBox1.getSelectedItem();
-                if (selectedItem.equals("Tất cả")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
-                } else if (selectedItem.equals("Tên tài khoản")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tên tài khoản"));
-                } else if (selectedItem.equals("Mật khẩu")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mật khẩu"));
-                } else if (selectedItem.equals("Mã nhân viên")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mã nhân viên"));
-                } else if (selectedItem.equals("Mã quyền")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Mã quyền"));
-                }
-            }
-        });
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // comboBox1.addItemListener(e -> {
+        // if (e.getStateChange() == ItemEvent.SELECTED) {
+        // String selectedItem = (String) comboBox1.getSelectedItem();
+        // if (selectedItem.equals("Tất cả")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
+        // } else if (selectedItem.equals("Tên tài khoản")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Tên tài khoản"));
+        // } else if (selectedItem.equals("Mật khẩu")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mật khẩu"));
+        // } else if (selectedItem.equals("Mã nhân viên")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mã nhân viên"));
+        // } else if (selectedItem.equals("Mã quyền")) {
+        // textField1.setBorder(BorderFactory.createTitledBorder("Mã quyền"));
+        // }
+        // }
+        // });
 
         comboBox2.addItemListener(new ItemListener() {
             @Override
@@ -474,7 +474,15 @@ public class FormAccount extends JPanel {
 
     // set data for table1
     public void setDataToTable(ArrayList<Account> data) {
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Debug statement to check row index
+                System.out.println("Checking if row " + row + " is editable");
+                // Make the row with sequence number 1 (index 1) non-editable
+                return row != 1;
+            }
+        };
 
         tableModel.addColumn("STT");
         tableModel.addColumn("Email");

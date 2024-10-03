@@ -59,7 +59,7 @@ public class ThemSuaQuyen extends JDialog {
 
     public void initComponents() {
         this.setLayout(new BorderLayout());
-        this.setSize(450, 750);
+        this.setSize(450, 820);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.type = this.title;
@@ -132,6 +132,7 @@ public class ThemSuaQuyen extends JDialog {
         if (checkEmpty()) {
             String maquyen = txMaQuyen.getText();
             String tenquyen = txTenQuyen.getText();
+
             String chitietquyen = chitietForm.getQuyen();
 
             if (qlqBUS.add(maquyen, tenquyen, chitietquyen)) {
@@ -190,7 +191,7 @@ class ChiTietQuyenForm extends JPanel {
     ArrayList<PanelChooseQuyen> dsPanel = new ArrayList<>();
 
     public ChiTietQuyenForm() {
-        setPreferredSize(new Dimension(300, 600));
+        setPreferredSize(new Dimension(400, 800));
         setLayout(new FlowLayout());
         setBorder(BorderFactory.createTitledBorder("Chi tiết quyền: "));
 

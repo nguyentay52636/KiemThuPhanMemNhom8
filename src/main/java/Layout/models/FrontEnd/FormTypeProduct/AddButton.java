@@ -4,11 +4,19 @@
 
 package Layout.models.FrontEnd.FormTypeProduct;
 
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import Layout.models.BackEnd.BUS.TypeProductBUS;
 import Layout.models.BackEnd.DTO.TypeProduct;
-
-import java.awt.*;
-import javax.swing.*;
 
 /**
  * @author master
@@ -78,6 +86,7 @@ public class AddButton extends JFrame {
             }
 
             txMalsp.setText(this.lspSua.getMaLoaiSanPham());
+            txMalsp.setEnabled(false);
             txTenlsp.setText(this.lspSua.getTenLoaiSanPham());
             txMota.setText(this.lspSua.getMoTa());
 
@@ -113,7 +122,7 @@ public class AddButton extends JFrame {
             String tenlsp = txTenlsp.getText();
             String mota = txMota.getText();
 
-//            JOptionPane.showMessageDialog(this, "Thêm " + tenlsp + " thành công!");
+            // JOptionPane.showMessageDialog(this, "Thêm " + tenlsp + " thành công!");
 
             if (qllspBUS.add(malsp, tenlsp, mota)) {
                 JOptionPane.showMessageDialog(this, "Thêm " + tenlsp + " thành công!");
