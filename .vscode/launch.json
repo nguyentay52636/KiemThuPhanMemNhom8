@@ -1,0 +1,167 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Java",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ]
+        },
+        {
+            "name": "Java Console App",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ],
+            "externalConsole": true
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "StaffBUS",
+            "request": "launch",
+            "mainClass": "Layout.models.BackEnd.BUS.StaffBUS",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "SupplierBUS",
+            "request": "launch",
+            "mainClass": "Layout.models.BackEnd.BUS.SupplierBUS",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "ConnectionDB",
+            "request": "launch",
+            "mainClass": "Layout.models.BackEnd.ConnectDataBasee.ConnectionDB",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "SupplierDAO",
+            "request": "launch",
+            "mainClass": "Layout.models.BackEnd.DAO.SupplierDAO",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "AddButtonAccount",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormAccount.AddButtonAccount",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormAccount.Main",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "FormChooseCustomer",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormBanHang.FormChooseCustomer",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "PasswordResetForm",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormLogin.PasswordResetForm",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "FormChoosePermission",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormPermission.FormChoosePermission",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "DisplayProductDisableButton",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormProduct.DisplayProductDisableButton",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "FormChoosePromotion",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormPromotion.FormChoosePromotion",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "DisplayStaff",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormStaff.DisplayStaff",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "FormChooseEmployee",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormStaff.FormChooseEmployee",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "DisplaySupplier",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormSupplier.DisplaySupplier",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "FormTypeProduct",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormTypeProduct.FormTypeProduct",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "ThongKeForm",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.ThongKe.ThongKeForm",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "Main(1)",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.ThongKeCharGoogle.test.Main",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "Main(2)",
+            "request": "launch",
+            "mainClass": "com.yourcompany.Main",
+            "projectName": "your-artifact-id"
+        }
+    ]
+}

@@ -69,7 +69,7 @@ public class AddButton extends JFrame {
         if (this.type.equals("Thêm")) {
             this.setTitle("Thêm loại sản phẩm");
             txMalsp.setText(qllspBUS.getNextID());
-
+            txMalsp.setEnabled(false);
             btnThem.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_add_30px.png")));
             plButton.add(btnThem);
 
@@ -119,6 +119,7 @@ public class AddButton extends JFrame {
     private void btnThemMouseClicked() {
         if (checkEmpty()) {
             String malsp = txMalsp.getText();
+            txMalsp.setEnabled(false);
             String tenlsp = txTenlsp.getText();
             String mota = txMota.getText();
 

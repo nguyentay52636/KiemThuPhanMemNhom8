@@ -53,16 +53,16 @@ public class ThongKeForm extends JFrame {
 	private JTabbedPane tabbedPane;
 
 	private ArrayList<Object[]> dshd;
-	private ArrayList<Object[]> dspn= new ArrayList<>();
+	private ArrayList<Object[]> dspn = new ArrayList<>();
 
 	private ProductBUS spbus = new ProductBUS();
 	private CustomerBUS cusbus = new CustomerBUS();
-	private StaffBUS stbus= new StaffBUS();
+	private StaffBUS stbus = new StaffBUS();
 	private SupplierBUS supbus = new SupplierBUS();
 
 	private InvoiceBUS invoice = new InvoiceBUS();
 	private ImportBUS phieunhap = new ImportBUS();
-	private ThongKe thongke= new ThongKe();
+	private ThongKe thongke = new ThongKe();
 	private HashMap<String, Object> tongKet;
 	private JTable table;
 	private JTable table_1;
@@ -107,22 +107,18 @@ public class ThongKeForm extends JFrame {
 
 		tabbedPane = new JTabbedPane();
 
-
-		dshd=thongke.ListHD();
-		dspn=thongke.ListPN();
+		dshd = thongke.ListHD();
+		dspn = thongke.ListPN();
 		tabbedPane.addTab("Tổng quát", displaybai1()); // Thêm panel1 vào tab 1
-		tabbedPane.addTab("Bán ra", displaybai2(dshd,"hoaDon"));
-		tabbedPane.addTab("Nhập hàng",displaybai3(dspn,"Phieunhap") );
+		tabbedPane.addTab("Bán ra", displaybai2(dshd, "hoaDon"));
+		tabbedPane.addTab("Nhập hàng", displaybai3(dspn, "Phieunhap"));
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 	}
 
-
 	public JPanel getPanel() {
 		return contentPane;
 	}
-
-
 
 	public JPanel displaybai1() {
 
@@ -155,7 +151,7 @@ public class ThongKeForm extends JFrame {
 		panel_5.setBackground(new Color(186, 222, 254));
 		FlowLayout flowLayout_6 = (FlowLayout) panel_5.getLayout();
 		flowLayout_6.setVgap(50);
-		JLabel phone= new JLabel(new ImageIcon(getClass().getResource("/images/icons8_google_mobile_100px.png")));
+		JLabel phone = new JLabel(new ImageIcon(getClass().getResource("/images/icons8_google_mobile_100px.png")));
 		phone.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_5.add(phone);
 		sanpham.add(panel_5, BorderLayout.WEST);
@@ -192,7 +188,7 @@ public class ThongKeForm extends JFrame {
 		panel_4.setBackground(new Color(186, 222, 254));
 		FlowLayout flowLayout_7 = (FlowLayout) panel_4.getLayout();
 		flowLayout_7.setVgap(50);
-		JLabel lblnhanvien= new JLabel(new ImageIcon(getClass().getResource("/images/icons8_assistant_100px.png")));
+		JLabel lblnhanvien = new JLabel(new ImageIcon(getClass().getResource("/images/icons8_assistant_100px.png")));
 		panel_4.add(lblnhanvien);
 		nhanvien.add(panel_4, BorderLayout.WEST);
 
@@ -205,7 +201,6 @@ public class ThongKeForm extends JFrame {
 		lblnv = new JLabel();
 		lblnv.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel_7.add(lblnv);
-
 
 		JPanel khachhang = new JPanel();
 		khachhang.setPreferredSize(new Dimension(180, 200));
@@ -227,7 +222,7 @@ public class ThongKeForm extends JFrame {
 		panel_10.setBackground(new Color(186, 222, 254));
 		FlowLayout flowLayout_8 = (FlowLayout) panel_10.getLayout();
 		flowLayout_8.setVgap(25);
-		JLabel lblkhachhang= new JLabel(new ImageIcon(getClass().getResource("/images/icons8_person_male_100px.png")));
+		JLabel lblkhachhang = new JLabel(new ImageIcon(getClass().getResource("/images/icons8_person_male_100px.png")));
 		panel_10.add(lblkhachhang);
 		khachhang.add(panel_10, BorderLayout.WEST);
 
@@ -240,7 +235,6 @@ public class ThongKeForm extends JFrame {
 		lblkh = new JLabel();
 		lblkh.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel_12.add(lblkh);
-
 
 		JPanel NCC = new JPanel();
 		NCC.setPreferredSize(new Dimension(180, 200));
@@ -262,7 +256,7 @@ public class ThongKeForm extends JFrame {
 		panel_11.setBackground(new Color(186, 222, 254));
 		FlowLayout flowLayout_9 = (FlowLayout) panel_11.getLayout();
 		flowLayout_9.setVgap(50);
-		JLabel lblNCC= new JLabel(new ImageIcon(getClass().getResource("/images/icons8_company_100px.png")));
+		JLabel lblNCC = new JLabel(new ImageIcon(getClass().getResource("/images/icons8_company_100px.png")));
 		panel_11.add(lblNCC);
 		NCC.add(panel_11, BorderLayout.WEST);
 
@@ -282,14 +276,12 @@ public class ThongKeForm extends JFrame {
 		panel_14.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 50));
 
 		thongketonghop();
-		//char thong ke
-		
+		// char thong ke
+
 		return panel;
 	}
 
-
-
-	public JPanel displaybai2(ArrayList<Object[] > list,String type) {
+	public JPanel displaybai2(ArrayList<Object[]> list, String type) {
 
 		// Tạo panel chứa nội dung của tab 2
 		JPanel panel = new JPanel();
@@ -335,8 +327,8 @@ public class ThongKeForm extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if ("date".equals(evt.getPropertyName())) {
 					ArrayList<Object[]> timdc = thongke.timkiem(dateChooserFrom, dateChooserTo, list);
-					addrowtable1(timdc,type,table2);
-					addrowtable2(timdc,type,table_2);
+					addrowtable1(timdc, type, table2);
+					addrowtable2(timdc, type, table_2);
 				}
 			}
 		});
@@ -353,7 +345,7 @@ public class ThongKeForm extends JFrame {
 
 		panelloc.add(dateChooserTo);
 
-		JButton btnlammoi= new JButton("Làm mới");
+		JButton btnlammoi = new JButton("Làm mới");
 		btnlammoi.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnlammoi.setPreferredSize(new Dimension(80, 30));
 		panel3.add(btnlammoi);
@@ -384,7 +376,7 @@ public class ThongKeForm extends JFrame {
 		// Tạo JTable với DefaultTableModel
 		table2 = new JTable();
 		table2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		addrowtable1(list, type,table2);
+		addrowtable1(list, type, table2);
 		table2.setShowGrid(false); // Ẩn đường viền
 		table2.setShowHorizontalLines(false); // Ẩn đường kẻ ngang
 		table2.setShowVerticalLines(false); // Ẩn đường kẻ dọc
@@ -397,20 +389,19 @@ public class ThongKeForm extends JFrame {
 		panel_2.add(scrollPane);
 		panel.add(panel_2, BorderLayout.CENTER);
 
-
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3, BorderLayout.SOUTH);
 		panel_3.setLayout(new BorderLayout());
 
 		table_2 = new JTable();
-		addrowtable2(list, type,table_2);
+		addrowtable2(list, type, table_2);
 		panel_3.add(table_2);
 		tab2();
 		return panel;
 
 	}
 
-	public JPanel displaybai3(ArrayList<Object[] > list,String type) {
+	public JPanel displaybai3(ArrayList<Object[]> list, String type) {
 
 		// Tạo panel chứa nội dung của tab 2
 		JPanel panel = new JPanel();
@@ -454,8 +445,8 @@ public class ThongKeForm extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if ("date".equals(evt.getPropertyName())) {
 					ArrayList<Object[]> timdc = thongke.timkiem(dateChooserFrom, dateChooserTo, list);
-					addrowtable1(timdc,type,table);
-					addrowtable2(timdc,type,table_1);
+					addrowtable1(timdc, type, table);
+					addrowtable2(timdc, type, table_1);
 				}
 			}
 		});
@@ -472,7 +463,7 @@ public class ThongKeForm extends JFrame {
 
 		panelloc.add(dateChooserTo);
 
-		JButton btnlammoi= new JButton("Làm mới");
+		JButton btnlammoi = new JButton("Làm mới");
 		btnlammoi.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnlammoi.setPreferredSize(new Dimension(80, 30));
 		panel3.add(btnlammoi);
@@ -501,10 +492,9 @@ public class ThongKeForm extends JFrame {
 		});
 		JPanel panel_2 = new JPanel(new BorderLayout());
 
-
 		table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		addrowtable1(list, type,table);
+		addrowtable1(list, type, table);
 		table.setShowGrid(false); // Ẩn đường viền
 		table.setShowHorizontalLines(false); // Ẩn đường kẻ ngang
 		table.setShowVerticalLines(false); // Ẩn đường kẻ dọc
@@ -517,24 +507,19 @@ public class ThongKeForm extends JFrame {
 		panel_2.add(scrollPane);
 		panel.add(panel_2, BorderLayout.CENTER);
 
-
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3, BorderLayout.SOUTH);
 		panel_3.setLayout(new BorderLayout());
 
 		table_1 = new JTable();
-		addrowtable2(list, type,table_1);
+		addrowtable2(list, type, table_1);
 		panel_3.add(table_1);
 		tab3();
 		return panel;
 
 	}
 
-
-
-
-
-	public void addrowtable1(ArrayList<Object[]> list,String type,JTable a) {
+	public void addrowtable1(ArrayList<Object[]> list, String type, JTable a) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setRowCount(0);
 		Font font = new Font("Segoe", 0, 16);
@@ -553,16 +538,16 @@ public class ThongKeForm extends JFrame {
 		// Thêm các tên cột vào model
 		String[] columns;
 		if (type.equals("hoaDon")) {
-			columns = new String[]{"MaHD", "TenNV", "TenKH", "TenSP", "SoLuong", "DonGia", "ThanhTien", "NgayLap"};
+			columns = new String[] { "MaHD", "TenNV", "TenKH", "TenSP", "SoLuong", "DonGia", "ThanhTien", "NgayLap" };
 		} else {
-			columns = new String[]{"MaPN", "TenNV", "TenNCC", "TenSP", "SoLuong", "DonGia", "ThanhTien", "NgayNhap"};
+			columns = new String[] { "MaPN", "TenNV", "TenNCC", "TenSP", "SoLuong", "DonGia", "ThanhTien", "NgayNhap" };
 		}
 		for (String column : columns) {
 			model.addColumn(column);
 		}
 		// Thêm các dòng đối với mỗi hóa đơn
 		for (Object[] invoice : list) {
-			model.addRow(new Object[]{
+			model.addRow(new Object[] {
 					invoice[0], invoice[3], invoice[4], "", "", "", "", invoice[1]
 			});
 
@@ -576,7 +561,7 @@ public class ThongKeForm extends JFrame {
 				float tongTien = (float) (donGia * soLuong);
 				String formattedTongTien = PriceFormatter.format(tongTien);
 
-				model.addRow(new Object[]{
+				model.addRow(new Object[] {
 						"", "", "", chiTiet[1], chiTiet[3], chiTiet[2], formattedTongTien, ""
 				});
 			}
@@ -584,12 +569,12 @@ public class ThongKeForm extends JFrame {
 			String formattedTongTien1 = PriceFormatter.format((float) invoice[2]);
 
 			// Thêm hàng tổng tiền của mỗi hóa đơn vào cuối
-			model.addRow(new Object[]{
+			model.addRow(new Object[] {
 					"", "", "", "", "", "Tổng tiền:", formattedTongTien1, ""
 			});
 
 			// Thêm dòng trống để phân biệt giữa các đơn hàng
-			model.addRow(new Object[]{
+			model.addRow(new Object[] {
 					"", "", "", "", "", "", "", ""
 			});
 		}
@@ -598,7 +583,7 @@ public class ThongKeForm extends JFrame {
 
 	}
 
-	public void addrowtable2(ArrayList<Object[]> list, String type,JTable a) {
+	public void addrowtable2(ArrayList<Object[]> list, String type, JTable a) {
 		Font font = new Font("Segoe", 0, 16);
 		Font fontHeader = new Font("Segoe", Font.BOLD, 16);
 
@@ -618,20 +603,25 @@ public class ThongKeForm extends JFrame {
 		if (type.equals("hoaDon")) {
 			float tongTien = ((Number) tongKet.get("TongTien")).floatValue();
 			String formattedTongTien = PriceFormatter.format(tongTien);
-			newData = new Object[][]{
-					{"Tổng kết", null, null, null, null, null, "Tổng tiền", null},
-					{tongKet.get("TongSoHoaDon")+"hoadon", tongKet.get("TongSoNhanVien") + " nhân viên", tongKet.get("TongSoKhachHang") + " khách hàng",
-							tongKet.get("SoTenSanPham") + " mặt hàng", tongKet.get("TongSoSanPhamDaBan") + " sản phẩm", null, formattedTongTien, null}
+			newData = new Object[][] {
+					{ "Tổng kết", null, null, null, null, null, "Tổng tiền", null },
+					{ tongKet.get("TongSoHoaDon") + "hoadon", tongKet.get("TongSoNhanVien") + " nhân viên",
+							tongKet.get("TongSoKhachHang") + " khách hàng",
+							tongKet.get("SoTenSanPham") + " mặt hàng", tongKet.get("TongSoSanPhamDaBan") + " sản phẩm",
+							null, formattedTongTien, null }
 			};
 		} else {
-			newData = new Object[][]{
-					{"Tổng kết", null, null, null, null, null, "Tổng tiền", null},
-					{tongKet.get("TongSoHoaDon")+"phieunhap", tongKet.get("TongSoNhanVien") + " nhân viên", tongKet.get("TongSoKhachHang") + " NCC",
-							tongKet.get("SoTenSanPham") + " mặt hàng", tongKet.get("TongSoSanPhamDaBan") + " sản phẩm", null, tongKet.get("TongTien"), null}
+			newData = new Object[][] {
+					{ "Tổng kết", null, null, null, null, null, "Tổng tiền", null },
+					{ tongKet.get("TongSoHoaDon") + "phieunhap", tongKet.get("TongSoNhanVien") + " nhân viên",
+							tongKet.get("TongSoKhachHang") + " NCC",
+							tongKet.get("SoTenSanPham") + " mặt hàng", tongKet.get("TongSoSanPhamDaBan") + " sản phẩm",
+							null, tongKet.get("TongTien"), null }
 			};
 		}
 		// Tạo một mảng chứa tên của các cột
-		String[] columns = {"Tổng kết", "New column", "New column", "New column", "New column", "New column", "Tổng tiền", "New column"};
+		String[] columns = { "Tổng kết", "New column", "New column", "New column", "New column", "New column",
+				"Tổng tiền", "New column" };
 
 		// Tạo một model mới với dữ liệu và tên cột đã tính toán
 		DefaultTableModel newTableModel = new DefaultTableModel(newData, columns);
@@ -641,61 +631,60 @@ public class ThongKeForm extends JFrame {
 	}
 
 	public void reload(String tab) {
-		if(tab.equals("Phieunhap")) {
-			dspn=thongke.ListPN();
-			addrowtable1(dshd,"Phieunhap",table);
-			addrowtable2(dshd,"Phieunhap",table_1);
-		}else if(tab.equals("Hoadon")) {
+		if (tab.equals("Phieunhap")) {
+			dspn = thongke.ListPN();
+			addrowtable1(dshd, "Phieunhap", table);
+			addrowtable2(dshd, "Phieunhap", table_1);
+		} else if (tab.equals("Hoadon")) {
 
-			dshd=thongke.ListHD();
+			dshd = thongke.ListHD();
 			// Cập nhật dữ liệu cho tab 2
-			addrowtable1(dshd,"hoaDon",table2);
-			addrowtable2(dshd,"hoaDon",table_2);
+			addrowtable1(dshd, "hoaDon", table2);
+			addrowtable2(dshd, "hoaDon", table_2);
 		}
 	}
 
 	public void thongketonghop() {
-		int soluongsp=0;
-		for(Product pr: spbus.getList()) {
-			if(pr.getTrangthai()==0) {
+		int soluongsp = 0;
+		for (Product pr : spbus.getList()) {
+			if (pr.getTrangthai() == 0) {
 				soluongsp++;
 			}
 		}
-		lblsp.setText(soluongsp+"");
+		lblsp.setText(soluongsp + "");
 
-		ArrayList<Staff> dsnv= new ArrayList<>();
-		dsnv=stbus.getList();
-		int soluongnv=0;
-		for(Staff nv:dsnv) {
-			if(nv.getTrangThai()==0) {
+		ArrayList<Staff> dsnv = new ArrayList<>();
+		dsnv = stbus.getList();
+		int soluongnv = 0;
+		for (Staff nv : dsnv) {
+			if (nv.getTrangThai() == 0) {
 				soluongnv++;
 			}
 		}
-		lblnv.setText(soluongnv+"");
+		lblnv.setText(soluongnv + "");
 
 		ArrayList<Customer> dskh = new ArrayList<>();
-		dskh=cusbus.getDskh();
-		int soluongkh=0;
-		for(Customer kh:dskh) {
-			if(kh.getTrangThai()==0) {
+		dskh = cusbus.getDskh();
+		int soluongkh = 0;
+		for (Customer kh : dskh) {
+			if (kh.getTrangThai() == 0) {
 				soluongkh++;
 			}
 		}
-		lblkh.setText(soluongkh+"");
+		lblkh.setText(soluongkh + "");
 
-		ArrayList<Supplier> dsncc= new ArrayList<>();
-		dsncc=supbus.getList();
-		int soluongncc=0;
-		for(Supplier ncc:dsncc) {
-			if(ncc.getTrangThai()==0){
+		ArrayList<Supplier> dsncc = new ArrayList<>();
+		dsncc = supbus.getList();
+		int soluongncc = 0;
+		for (Supplier ncc : dsncc) {
+			if (ncc.getTrangThai() == 0) {
 				soluongncc++;
 			}
 		}
-		lblncc.setText(soluongncc+"");
-
-
+		lblncc.setText(soluongncc + "");
 
 	}
+
 	public void tab2() {
 
 		String tensp = ""; // Khởi tạo biến tensp trước khi sử dụng
@@ -706,9 +695,9 @@ public class ThongKeForm extends JFrame {
 		}
 		lblspnhieunhat.setText(tensp);
 
-		float tongtienthuduoc=0;
+		float tongtienthuduoc = 0;
 		ArrayList<Invoice> dsinvoice = invoice.getListInvoice();
-		for(Invoice invoi: dsinvoice) {
+		for (Invoice invoi : dsinvoice) {
 			tongtienthuduoc += invoi.getTongTien();
 			System.out.println(invoi.getTongTien());
 		}
@@ -718,7 +707,7 @@ public class ThongKeForm extends JFrame {
 
 	public void tab3() {
 
-		String tenspnhap="";
+		String tenspnhap = "";
 		for (Product pr : spbus.getList()) {
 			if (pr.getTrangthai() == 0 && pr.getMaSP().equals(thongke.findMostImportedProductID())) {
 				tenspnhap = pr.getTenSP();
@@ -726,23 +715,14 @@ public class ThongKeForm extends JFrame {
 		}
 		lblspnhapnhieunhat.setText(tenspnhap);
 
-
-
-		float tongtienchira=0;
-		ArrayList<Import> dsimport =phieunhap.getDspn() ;
-		for(Import inp: dsimport) {
+		float tongtienchira = 0;
+		ArrayList<Import> dsimport = phieunhap.getDspn();
+		for (Import inp : dsimport) {
 			tongtienchira += inp.getTongTien();
 
 		}
-		lbltongtienchira.setText(tongtienchira+"");
+		lbltongtienchira.setText(tongtienchira + "");
 
 	}
-
-
-
-
-
-
-
 
 }
