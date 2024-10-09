@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -118,7 +119,12 @@ public class DisplayProductDisableButton extends JFrame {
             // Tạo ImageIcon từ đường dẫn hình ảnh, xử lý lỗi nếu đường dẫn không hợp lệ
             ImageIcon imageIcon;
             if (i.getHinhAnh() != null && !i.getHinhAnh().isEmpty()) {
-                imageIcon = new ImageIcon(getClass().getResource("/images/Product Images/" + i.getHinhAnh()));
+                URL imageUrl = getClass().getResource("/images/Product Images/" + i.getHinhAnh());
+                if (imageUrl != null) {
+                    imageIcon = new ImageIcon(imageUrl);
+                } else {
+                    imageIcon = new ImageIcon(getClass().getResource("/images/default.png"));
+                }
             } else {
                 // Sử dụng một biểu tượng mặc định nếu không có hình ảnh
                 imageIcon = new ImageIcon(getClass().getResource("/images/default.png"));
@@ -228,7 +234,8 @@ public class DisplayProductDisableButton extends JFrame {
                     String maSP = (String) table.getValueAt(selectedRow, 0);
                     String maLSP = (String) table.getValueAt(selectedRow, 1);
                     String tenSP = (String) table.getValueAt(selectedRow, 2);
-                    Float donGia = (Float) table.getValueAt(selectedRow, 3);
+                    String formattedDonGia = (String) table.getValueAt(selectedRow, 3);
+                    Float donGia = PriceFormatter.parsePrice(formattedDonGia);
                     int soLuong = (int) table.getValueAt(selectedRow, 4);
                     String fileAnh = (String) table.getValueAt(selectedRow, 5);
                     String trangThai = (String) table.getValueAt(selectedRow, 6);
@@ -261,7 +268,8 @@ public class DisplayProductDisableButton extends JFrame {
                     String maSP = (String) table.getValueAt(selectedRow, 0);
                     String maLSP = (String) table.getValueAt(selectedRow, 1);
                     String tenSP = (String) table.getValueAt(selectedRow, 2);
-                    Float donGia = (Float) table.getValueAt(selectedRow, 3);
+                    String formattedDonGia = (String) table.getValueAt(selectedRow, 3);
+                    Float donGia = PriceFormatter.parsePrice(formattedDonGia);
                     int soLuong = (int) table.getValueAt(selectedRow, 4);
 
                     String fileAnh = (String) table.getValueAt(selectedRow, 5);
@@ -611,37 +619,41 @@ public class DisplayProductDisableButton extends JFrame {
                 String tenSP = txtTenSP.getText();
                 String fileAnh = btnChooseImage.getText();
                 String trangThai = doitrangthai(cboTrangThai.getSelectedItem() + "");
-                String formattedPrice = txtDonGia.getText();
-                String txtsoLuong = txtSoLuong.getText();
 
+                // Kiểm tra các trường bắt buộc
                 if (!ValidateInput.isNotEmpty(maSP) || !ValidateInput.isNotEmpty(maLSP)
-                        || !ValidateInput.isNotEmpty(tenSP)
-                        || !ValidateInput.isValidNumber(formattedPrice) || !ValidateInput.isValidInteger(txtsoLuong)) {
+                        || !ValidateInput.isNotEmpty(tenSP)) {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields correctly.", "Validation Error",
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                float donGia;
-                int soLuong;
-                try {
-                    donGia = Float.parseFloat(formattedPrice);
-                    soLuong = Integer.parseInt(txtsoLuong);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Đơn giá và số lượng phải là số.", "Validation Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // Giá trị đơn giá và số lượng đã mặc định là 0, không cần kiểm tra người dùng
+                // nhập
+                float donGia = 0.0f; // Giá trị mặc định
+                int soLuong = 0; // Giá trị mặc định
 
+                // Kiểm tra xem giá trị mã sản phẩm đã tồn tại hay không, và kiểm tra trạng
+                // thái.
                 if (checkinform(maSP, "addDialog", donGia, soLuong)) {
                     model = (DefaultTableModel) table.getModel();
+
+                    // Định dạng đơn giá để hiển thị
                     String formattedPriceForDisplay = PriceFormatter.format(donGia);
+
+                    // Thêm dữ liệu vào bảng
                     model.addRow(
                             new Object[] { maSP, maLSP, tenSP, formattedPriceForDisplay, fileAnh, soLuong, trangThai });
+
+                    // Tạo đối tượng Product và thêm vào danh sách
                     Product product = new Product(maSP, maLSP, tenSP, donGia, soLuong, fileAnh,
                             Integer.parseInt(trangThai));
                     prbus.addBus(product);
+
+                    // Làm mới bảng hiển thị
                     refreshTable();
+
+                    // Đóng dialog sau khi thêm thành công
                     addDialog.dispose();
                 }
             }
@@ -973,18 +985,6 @@ public class DisplayProductDisableButton extends JFrame {
             }
         }
 
-        if (donGiaStr < 0) {
-            JOptionPane.showMessageDialog(dialog, "Số lượng phải là số thực không âm", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // Thoát khỏi sự kiện nếu có lỗi
-        }
-
-        String soLuongStr1 = String.valueOf(soLuongStr);
-        if (!soLuongStr1.trim().matches("^[1-9]\\d*$")) {
-            JOptionPane.showMessageDialog(dialog, "Số lượng phải là số dương từ 1 đến 9", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // tôi muốn đổi chúng sang dạng chuỗi để làm cái này
-        }
         return true;
     }
 
@@ -994,6 +994,11 @@ public class DisplayProductDisableButton extends JFrame {
         comboBox1.setSelectedItem("MaSP");
         eventJTextfield("MaSP");
 
+    }
+
+    public JPanel getPanel_disable() {
+        disableButtons();
+        return contentPane;
     }
 
     // public void refresh() {
@@ -1075,7 +1080,8 @@ public class DisplayProductDisableButton extends JFrame {
     private void addRowToModel(Product product) {
 
         model.addRow(new Object[] {
-                product.getMaSP(), product.getMaLSP(), product.getTenSP(), product.getDonGia(), product.getSoLuong(),
+                product.getMaSP(), product.getMaLSP(), product.getTenSP(), PriceFormatter.format(product.getDonGia()),
+                product.getSoLuong(),
                 product.getHinhAnh(), doitrangthai(product.getTrangthai() + "")
         });
     }

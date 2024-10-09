@@ -4,8 +4,28 @@
 
 package Layout.models.FrontEnd.NavBar;
 
-import Layout.models.BackEnd.BUS.ProductBUS;
-import Layout.models.BackEnd.DTO.Product;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import Layout.models.FrontEnd.FormAccount.FormAccount;
 import Layout.models.FrontEnd.FormBanHang.FormSell;
 import Layout.models.FrontEnd.FormCustomer.FormKhachHang;
@@ -30,20 +50,13 @@ import Layout.models.FrontEnd.FormTypeProduct.FormTypeProduct;
 import Layout.models.FrontEnd.FormTypeProduct.FormTypeProductDisableButton;
 import Layout.models.FrontEnd.ThongKe.ThongKeForm;
 
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.*;
-
 /**
  * @author master
  */
 public class NewNavBar extends JPanel {
-    //    private FormSell formSell;
+    // private FormSell formSell;
     private String chiTietQuyen;
-//    private FormInvoice formInvoice = new FormInvoice();
+    // private FormInvoice formInvoice = new FormInvoice();
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
@@ -53,39 +66,39 @@ public class NewNavBar extends JPanel {
     private JLabel lastClickedLabel = null;
     Color mainColor = new Color(0x2B2B2B);
 
-    DisplayProduct displayProduct ;
-    DisplayProductDisableButton displayProductDisableButton ;
+    DisplayProduct displayProduct;
+    DisplayProductDisableButton displayProductDisableButton;
     Hello hello = new Hello();
 
-    FormInvoice formInvoice ;
+    FormInvoice formInvoice;
     FormSell formSell;
 
-    FormPhieuNhap formPhieuNhap ;
-    FormNhapHang formNhapHang ;
+    FormPhieuNhap formPhieuNhap;
+    FormNhapHang formNhapHang;
 
     FormTypeProduct formTypeProduct;
-    FormTypeProductDisableButton formTypeProductDisableButton ;
+    FormTypeProductDisableButton formTypeProductDisableButton;
 
-    FormKhuyenMai formKhuyenMai ;
-    FormKhuyenMaiDisableButton formKhuyenMaiDisableButton ;
+    FormKhuyenMai formKhuyenMai;
+    FormKhuyenMaiDisableButton formKhuyenMaiDisableButton;
 
-    FormKhachHang formKhachHang ;
-    FormKhachHangDisableButton formKhachHangDisableButton ;
+    FormKhachHang formKhachHang;
+    FormKhachHangDisableButton formKhachHangDisableButton;
 
     DisplayStaff displayStaff;
-    DisplayStaffDisableButton displayStaffDisableButton ;
+    DisplayStaffDisableButton displayStaffDisableButton;
 
-    FormAccount formAccount = new FormAccount() ;
+    FormAccount formAccount = new FormAccount();
 
-    FormInvoiceDisableButton formInvoiceDisableButton ;
+    FormInvoiceDisableButton formInvoiceDisableButton;
 
-    FormPhieuNhapDisableButton formPhieuNhapDisableButton ;
+    FormPhieuNhapDisableButton formPhieuNhapDisableButton;
 
     FormPermission formPermission;
-    DisplaySupplier displaySupplier ;
+    DisplaySupplier displaySupplier;
     DisplaySupplierDisableButton displaySupplierDisableButton;
 
-    ThongKeForm formThongKe ;
+    ThongKeForm formThongKe;
 
     public void setChiTietQuyen(String chiTietQuyen) {
         this.chiTietQuyen = chiTietQuyen;
@@ -146,7 +159,24 @@ public class NewNavBar extends JPanel {
         label17 = new JLabel();
         panel26 = new JPanel();
         label18 = new JLabel();
-
+        setCustomCursorAndHoverEffect(panel4);
+        setCustomCursorAndHoverEffect(panel5);
+        setCustomCursorAndHoverEffect(panel7);
+        setCustomCursorAndHoverEffect(panel6);
+        setCustomCursorAndHoverEffect(panel8);
+        setCustomCursorAndHoverEffect(panel9);
+        setCustomCursorAndHoverEffect(panel10);
+        setCustomCursorAndHoverEffect(panel11);
+        setCustomCursorAndHoverEffect(panel12);
+        setCustomCursorAndHoverEffect(panel13);
+        setCustomCursorAndHoverEffect(panel14);
+        setCustomCursorAndHoverEffect(panel15);
+        setCustomCursorAndHoverEffect(panel16);
+        setCustomCursorAndHoverEffect(panel17);
+        setCustomCursorAndHoverEffect(panel18);
+        setCustomCursorAndHoverEffect(panel19);
+        setCustomCursorAndHoverEffect(panel20);
+        setCustomCursorAndHoverEffect(panel21);
         //======== this ========
         setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
                 .EmptyBorder(0,0,0,0), "",javax.swing.border.TitledBorder.CENTER,javax
@@ -162,7 +192,7 @@ public class NewNavBar extends JPanel {
 
             //======== panel5 ========
             {
-                panel5.setForeground(Color.white);
+                panel5.setForeground(Color.black);
                 panel5.setBackground(mainColor);
                 panel5.setLayout(new FlowLayout());
 
@@ -206,10 +236,12 @@ public class NewNavBar extends JPanel {
                         label1.setText("");
                         label1.setIcon(new ImageIcon(getClass().getResource("/images/icons8_exit_30px.png")));
                         label1.setForeground(Color.white);
+                        label1.setCursor(new Cursor(Cursor.HAND_CURSOR));
                         panel10.add(label1);
 
                         //---- label3 ----
                         label3.setIcon(new ImageIcon(getClass().getResource("/images/icons8_settings_30px_1.png")));
+                        label3.setCursor(new Cursor(Cursor.HAND_CURSOR));
                         panel10.add(label3);
                     }
                     panel9.add(panel10);
@@ -523,8 +555,6 @@ public class NewNavBar extends JPanel {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-
-
         cardPanel.add(hello, "Hello");
 
         formSell = new FormSell(formInvoice);
@@ -534,8 +564,6 @@ public class NewNavBar extends JPanel {
         cardPanel.add(formNhapHang, "FormNhapHang");
 
         cardPanel.add(formAccount, "FormAccount");
-
-
 
         // them su kien khi nhan vao panel de chuyer background
         panel24.addMouseListener(new MouseAdapter() {
@@ -618,7 +646,7 @@ public class NewNavBar extends JPanel {
         String[] permissions = chiTietQuyen.split(" ");
         System.out.println("Permission: " + Arrays.toString(permissions));
 
-//        // duyet qua mang permission
+        // // duyet qua mang permission
         for (String permission : permissions) {
             if ("quanlybanhang".equals(permission)) {
                 panel12.setVisible(true);
@@ -680,8 +708,8 @@ public class NewNavBar extends JPanel {
                         panel14.setBackground(Color.WHITE);
                         label6.setForeground(Color.BLACK);
 
-                        displayProduct = new DisplayProduct();
-                        cardPanel.add(displayProduct.getPanel_disable(), "FormSanPham_disable");
+                        displayProductDisableButton = new DisplayProductDisableButton();
+                        cardPanel.add(displayProductDisableButton.getPanel_disable(), "FormSanPham_disable");
                         cardLayout.show(cardPanel, "FormSanPham_disable");
                     }
                 });
@@ -1074,6 +1102,23 @@ public class NewNavBar extends JPanel {
                 });
             }
         }
+    }
+
+    private void setCustomCursorAndHoverEffect(JPanel panel) {
+        panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // panel.addMouseListener(new MouseAdapter() {
+        // Color originalColor = panel.getBackground();
+
+        // @Override
+        // public void mouseEntered(MouseEvent e) {
+        // panel.setBackground(Color.BLACK);
+        // }
+
+        // @Override
+        // public void mouseExited(MouseEvent e) {
+        // panel.setBackground(originalColor);
+        // }
+        // });
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off

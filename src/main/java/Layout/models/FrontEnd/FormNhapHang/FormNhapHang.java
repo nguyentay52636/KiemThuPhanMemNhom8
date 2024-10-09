@@ -246,7 +246,7 @@ public class FormNhapHang extends JPanel {
 
                 // ======== panel6 ========
                 {
-                    panel6.setPreferredSize(new Dimension(200, 40));
+                    panel6.setPreferredSize(new Dimension(150, 40));
                     panel6.setAutoscrolls(true);
                     panel6.setBorder(new EtchedBorder());
                     panel6.setLayout(new FlowLayout(FlowLayout.CENTER, 7, 7));
@@ -332,7 +332,7 @@ public class FormNhapHang extends JPanel {
                 panel9.setLayout(new FlowLayout(FlowLayout.CENTER, 9, 9));
 
                 // ---- maPhieuNHap ----
-                txtMaPhieuNhap.setPreferredSize(new Dimension(200, 55));
+                txtMaPhieuNhap.setPreferredSize(new Dimension(150, 55));
                 txtMaPhieuNhap.setBorder(new TitledBorder(null, "Mã phiếu nhập", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 String nextInvoiceID = importBUS.getNextID();
@@ -344,14 +344,14 @@ public class FormNhapHang extends JPanel {
                 // panel9.add(textField10);
 
                 // ---- txtTongTien ----
-                txtTongTien.setPreferredSize(new Dimension(200, 55));
+                txtTongTien.setPreferredSize(new Dimension(150, 55));
                 txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)",
                         TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtTongTien.setEnabled(false);
                 // panel9.add(txtTongTien);
 
                 // ---- txt nha cung cap ----
-                txtNhaCungCap.setPreferredSize(new Dimension(200, 55));
+                txtNhaCungCap.setPreferredSize(new Dimension(150, 55));
                 txtNhaCungCap.setBorder(new TitledBorder(null, "Nhà cung cấp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtNhaCungCap);
@@ -364,7 +364,7 @@ public class FormNhapHang extends JPanel {
                 // panel9.add(btnChoose);
 
                 // ---- txtNhanvien ----
-                txtNhanvien.setPreferredSize(new Dimension(200, 55));
+                txtNhanvien.setPreferredSize(new Dimension(150, 55));
                 txtNhanvien.setBorder(new TitledBorder(null, "Nh\u00e2n vi\u00ean", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtNhanvien);
@@ -378,7 +378,7 @@ public class FormNhapHang extends JPanel {
                 }
                 txtNgayLap.setEnabled(false);
                 // ---- txtNgayLap ----
-                txtNgayLap.setPreferredSize(new Dimension(200, 55));
+                txtNgayLap.setPreferredSize(new Dimension(150, 55));
                 txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtNgayLap.setText(currentDate);
@@ -386,7 +386,7 @@ public class FormNhapHang extends JPanel {
                 txtNgayLap.setEnabled(false);
 
                 // ===== txtGioLap =====
-                txtGioLap.setPreferredSize(new Dimension(200, 55));
+                txtGioLap.setPreferredSize(new Dimension(150, 55));
                 txtGioLap.setBorder(new TitledBorder(null, "Giờ lập", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtGioLap.setText(currentTime);
@@ -845,7 +845,7 @@ public class FormNhapHang extends JPanel {
                     txtDonGia.setText(PriceFormatter.format(product.getDonGia()));
                     txtDonGia.setEnabled(false);
                     txtSoLuong.setText(String.valueOf(soLuong));
-                    txtSoLuong.setEnabled(false);
+                    // txtSoLuong.setEnabled(false);
                     txtSoLuong.requestFocus();
                     return;
 

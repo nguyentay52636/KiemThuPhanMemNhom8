@@ -358,7 +358,7 @@ public class FormSell extends JPanel {
                 panel9.setLayout(new FlowLayout(FlowLayout.LEFT, 9, 9));
 
                 // ---- txtMaHoaDon ----
-                txtMaHoaDon.setPreferredSize(new Dimension(200, 55));
+                txtMaHoaDon.setPreferredSize(new Dimension(150, 55));
                 txtMaHoaDon.setBorder(new TitledBorder(null, "M\u00e3 ho\u00e1 \u0111\u01a1n", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 String nextInvoiceID = invoiceBUS.getNextID();
@@ -372,14 +372,14 @@ public class FormSell extends JPanel {
                 // panel9.add(textField10);
 
                 // ---- txtTongTien ----
-                txtTongTien.setPreferredSize(new Dimension(380, 55));
+                txtTongTien.setPreferredSize(new Dimension(500, 55));
                 txtTongTien.setBorder(new TitledBorder(null, "T\u1ed5ng ti\u1ec1n(tri\u1ec7u VND)",
                         TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtTongTien);
                 txtTongTien.setEnabled(false);
 
                 // ---- txtKhachHang ----
-                txtKhachHang.setPreferredSize(new Dimension(200, 55));
+                txtKhachHang.setPreferredSize(new Dimension(150, 55));
                 txtKhachHang.setBorder(new TitledBorder(null, "Kh\u00e1ch h\u00e0ng", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtKhachHang);
@@ -392,7 +392,7 @@ public class FormSell extends JPanel {
                 // panel9.add(btnChoose);
 
                 // ---- txtNhanvien ----
-                txtNhanvien.setPreferredSize(new Dimension(200, 55));
+                txtNhanvien.setPreferredSize(new Dimension(150, 55));
                 txtNhanvien.setBorder(new TitledBorder(null, "Nh\u00e2n vi\u00ean", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtNhanvien);
@@ -406,7 +406,7 @@ public class FormSell extends JPanel {
 
                 txtNhanvien.setEnabled(false);
                 // ---- txtNgayLap ----
-                txtNgayLap.setPreferredSize(new Dimension(200, 55));
+                txtNgayLap.setPreferredSize(new Dimension(150, 55));
                 txtNgayLap.setBorder(new TitledBorder(null, "Ng\u00e0y l\u1eadp", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtNgayLap.setText(currentDate);
@@ -414,7 +414,7 @@ public class FormSell extends JPanel {
                 // panel9.add(txtNgayLap);
 
                 // ===== txtGioLap =====
-                txtGioLap.setPreferredSize(new Dimension(200, 55));
+                txtGioLap.setPreferredSize(new Dimension(150, 55));
                 txtGioLap.setBorder(new TitledBorder(null, "Giờ lập", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 txtGioLap.setText(currentTime);
@@ -422,7 +422,7 @@ public class FormSell extends JPanel {
                 // panel9.add(txtGioLap);
 
                 // ---- txtMaKhuyenMai ----
-                txtMaKhuyenMai.setPreferredSize(new Dimension(200, 55));
+                txtMaKhuyenMai.setPreferredSize(new Dimension(150, 55));
                 txtMaKhuyenMai.setBorder(new TitledBorder(null, "Mã khuyến mãi", TitledBorder.LEADING,
                         TitledBorder.DEFAULT_POSITION, null, Color.black));
                 // panel9.add(txtMaKhuyenMai);
@@ -532,14 +532,16 @@ public class FormSell extends JPanel {
 
                 // ---- btnTong ----
                 btnTong.setText("Thanh toán");
+                // btnTong.setEnabled(false);
                 btnTong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_us_dollar_30px.png")));
+                btnTong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel13.add(btnTong);
             }
             panel8.add(panel13, BorderLayout.SOUTH);
         }
         add(panel8, BorderLayout.CENTER);
         // btn Add
-
+        // updateBtnTongState();
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -560,7 +562,7 @@ public class FormSell extends JPanel {
 
             }
         });
-
+        updateBtnTongState();
         // lam moi
         btnReset.addActionListener(new ActionListener() {
             @Override
@@ -875,6 +877,14 @@ public class FormSell extends JPanel {
         });
     }
 
+    private void updateBtnTongState() {
+        DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+        btnTong.setEnabled(false);
+        if (model.getRowCount() > 0) {
+            btnTong.setEnabled(true);
+        }
+    }
+
     // hàm in hóa đơn
     public void printInvoice(Invoice invoice) {
         try {
@@ -1065,7 +1075,7 @@ public class FormSell extends JPanel {
                     txtDonGia.setText(PriceFormatter.format(product.getDonGia()));
                     txtDonGia.setEnabled(false);
                     txtSoLuong.setText(String.valueOf(soLuong));
-                    txtSoLuong.setEnabled(false);
+                    // txtSoLuong.setEnabled(false);
                     txtSoLuong.requestFocus();
                     return;
 

@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "ProductGUI",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormProduct.ProductGUI",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "ProductManagementApp",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.FormProduct.ProductManagementApp",
+            "projectName": "your-artifact-id"
+        },
+        {
             "name": "Java",
             "type": "java",
             "request": "launch",

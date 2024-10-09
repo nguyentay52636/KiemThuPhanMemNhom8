@@ -559,8 +559,8 @@ public class FormKhuyenMai extends JPanel {
                         stt++,
                         promotion.getMaKhuyenMai(),
                         promotion.getTenKhuyenMai(),
-                        PriceFormatter.format(promotion.getDieuKienKhuyenMai()),
-                        PriceFormatter.format(promotion.getPhanTramKhuyenMai()),
+                        "≥ " + PriceFormatter.format(promotion.getDieuKienKhuyenMai()),
+                        String.valueOf(promotion.getPhanTramKhuyenMai()) + " %",
                         promotion.getNgayBatDau(),
                         promotion.getNgayKetThuc(),
                         promotion.getTrangThai()

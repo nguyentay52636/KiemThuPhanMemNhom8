@@ -1,45 +1,13 @@
 package Layout.models.FrontEnd.FormStaff;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
-import Layout.models.BackEnd.BUS.StaffBUS;
-import Layout.models.BackEnd.DTO.Staff;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -54,8 +22,37 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.awt.event.ActionEvent;
 import java.util.Iterator;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.DTO.Staff;
 
 public class DisplayStaff extends JFrame {
 
@@ -78,6 +75,7 @@ public class DisplayStaff extends JFrame {
     private JComboBox comboBox;
     private JButton btnlammoi;
     private JComboBox cbhienthi;
+
     /**
      * Launch the application.
      */
@@ -108,12 +106,11 @@ public class DisplayStaff extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
-
         JPanel up = new JPanel();
-        up.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
+        up.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
 
         btnview = new JButton("Xem");
-//	        btnview.setBackground(new Color(255, 255, 255));
+        // btnview.setBackground(new Color(255, 255, 255));
         btnview.setBounds(278, 5, 57, 32);
         btnview.setPreferredSize(new Dimension(144, 43));
         btnview.setIcon(new ImageIcon(getClass().getResource("/images/view.png")));
@@ -129,24 +126,24 @@ public class DisplayStaff extends JFrame {
                     // Lấy dữ liệu từ các cột của hàng đã chọn
                     String maNV = table.getValueAt(selectedRow, 0).toString();
                     String tenNV = table.getValueAt(selectedRow, 1).toString();
-                    String ngaySinh=table.getValueAt(selectedRow, 2).toString();
+                    String ngaySinh = table.getValueAt(selectedRow, 2).toString();
                     String diaChi = table.getValueAt(selectedRow, 3).toString();
                     String soDienThoai = table.getValueAt(selectedRow, 4).toString();
                     String trangThai = table.getValueAt(selectedRow, 5).toString();
 
                     // Hiển thị dialog để chỉnh sửa thông tin sản phẩm
-                    showDialogViewStaff(maNV,tenNV,ngaySinh,diaChi,soDienThoai, trangThai);
+                    showDialogViewStaff(maNV, tenNV, ngaySinh, diaChi, soDienThoai, trangThai);
                 } else {
                     // Nếu không có hàng nào được chọn, hiển thị thông báo cho người dùng
-                    JOptionPane.showMessageDialog(DisplayStaff.this, "Vui lòng chọn một nhân viên để chỉnh sửa", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(DisplayStaff.this, "Vui lòng chọn một nhân viên để chỉnh sửa",
+                            "Thông báo", JOptionPane.WARNING_MESSAGE);
                 }
 
             }
         });
 
-
         btnedit = new JButton("Sửa");
-//	        btnedit.setBackground(new Color(255, 255, 255));
+        // btnedit.setBackground(new Color(255, 255, 255));
         btnedit.setBounds(355, 5, 55, 32);
         btnedit.setPreferredSize(new Dimension(144, 43));
         btnedit.setIcon(new ImageIcon(getClass().getResource("/images/editing.png")));
@@ -156,7 +153,7 @@ public class DisplayStaff extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
 
-                if(selectedRow != -1) {
+                if (selectedRow != -1) {
                     String maNV = table.getValueAt(selectedRow, 0).toString();
                     String tenNV = table.getValueAt(selectedRow, 1).toString();
                     String ngaySinhStr = table.getValueAt(selectedRow, 2).toString();
@@ -174,15 +171,15 @@ public class DisplayStaff extends JFrame {
                     } catch (ParseException ex) {
                         // Handle parsing error
                         ex.printStackTrace();
-                        JOptionPane.showMessageDialog(DisplayStaff.this, "Ngày sinh không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(DisplayStaff.this, "Ngày sinh không hợp lệ", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
         });
 
-
         btndelete = new JButton("Xóa");
-//	        btndelete.setBackground(new Color(255, 255, 255));
+        // btndelete.setBackground(new Color(255, 255, 255));
         btndelete.setBounds(430, 5, 67, 32);
         btndelete.setPreferredSize(new Dimension(144, 43));
         btndelete.setIcon(new ImageIcon(getClass().getResource("/images/bin.png")));
@@ -196,7 +193,8 @@ public class DisplayStaff extends JFrame {
                 // Kiểm tra nếu không có hàng nào được chọn
                 if (selectedRow == -1) {
                     // Hiển thị thông báo cho người dùng và không thực hiện gì cả
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn một nhân viên để xóa", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn một nhân viên để xóa", "Thông báo",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -204,7 +202,8 @@ public class DisplayStaff extends JFrame {
                 String maNV = table.getValueAt(selectedRow, 0).toString();
 
                 // Hiển thị hộp thoại xác nhận xóa nhân viên
-                int option = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhân viên này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhân viên này?",
+                        "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
 
                 if (option == JOptionPane.YES_OPTION) {
                     stbus.updateTrangthai(maNV, 1);
@@ -214,7 +213,7 @@ public class DisplayStaff extends JFrame {
         });
 
         btnadd = new JButton("Thêm");
-//	        btnadd.setBackground(new Color(255, 255, 255));
+        // btnadd.setBackground(new Color(255, 255, 255));
         btnadd.setBounds(517, 5, 59, 32);
         btnadd.setPreferredSize(new Dimension(144, 43));
         btnadd.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -269,7 +268,7 @@ public class DisplayStaff extends JFrame {
                             stbus.addBus(staff);
                         }
 
-                        //refresh the table
+                        // refresh the table
                         refreshTable();
 
                         JOptionPane.showMessageDialog(null, "Nhập file thành công");
@@ -331,32 +330,31 @@ public class DisplayStaff extends JFrame {
         up.add(btnxuat);
 
         txtTimKiem = new JTextField("");
-        txtTimKiem.setBounds(388, 0,150, 40);
+        txtTimKiem.setBounds(388, 0, 150, 40);
         txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
         txtTimKiem.setHorizontalAlignment(SwingConstants.CENTER);
         txtTimKiem.setPreferredSize(new Dimension(150, 26));
 
-
-        String[] options = {"MaNV", "TenNV", "SDT","DiaChi"};
+        String[] options = { "MaNV", "TenNV", "SDT", "DiaChi" };
         comboBox = new JComboBox<>(options);
         comboBox.setBounds(306, 10, 70, 40);
         comboBox.setPreferredSize(new Dimension(90, 30));
-        comboBox.addActionListener( new ActionListener() {
+        comboBox.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String option=(String) comboBox.getSelectedItem();
+                String option = (String) comboBox.getSelectedItem();
                 txtTimKiem.setText(option);
                 addFocusListenerToTextField(option);
             }
         });
 
-//        txtTimKiem.setColumns(15);
+        // txtTimKiem.setColumns(15);
         txtTimKiem.setPreferredSize(new Dimension(180, 40));
-        JPanel timkiem= new JPanel();
-        timkiem.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
+        JPanel timkiem = new JPanel();
+        timkiem.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 
-        String[] option = {"Đang hoạt động","Đã xóa"};
+        String[] option = { "Đang hoạt động", "Đã xóa" };
         cbhienthi = new JComboBox<>(option);
         cbhienthi.setPreferredSize(new Dimension(130, 40));
         cbhienthi.addActionListener(new ActionListener() {
@@ -368,7 +366,7 @@ public class DisplayStaff extends JFrame {
         });
         timkiem.add(cbhienthi);
         // Đặt txtTimKiem vào vị trí CENTER của BorderLayout trong timkiem
-        JPanel com_tk= new JPanel();
+        JPanel com_tk = new JPanel();
         com_tk.add(comboBox);
         com_tk.add(txtTimKiem);
         com_tk.setBorder(new TitledBorder("Tìm kiếm"));
@@ -385,10 +383,9 @@ public class DisplayStaff extends JFrame {
             }
         });
 
-
-        JPanel chucnang= new JPanel();
+        JPanel chucnang = new JPanel();
         chucnang.setBounds(5, 5, 855, 67);
-        chucnang.setLayout(new GridLayout(3,1,10,0));
+        chucnang.setLayout(new GridLayout(3, 1, 10, 0));
 
         chucnang.add(up);
         chucnang.add(timkiem);
@@ -396,7 +393,7 @@ public class DisplayStaff extends JFrame {
         btnlammoi = new JButton("Làm mới");
         btnlammoi.setPreferredSize(new Dimension(110, 43));
         btnlammoi.setIcon(new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png")));
-        btnlammoi.addActionListener( new ActionListener() {
+        btnlammoi.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -405,7 +402,6 @@ public class DisplayStaff extends JFrame {
             }
         });
         timkiem.add(btnlammoi);
-
 
         // Tạo một bảng mới và thiết lập font
         table = new JTable();
@@ -438,8 +434,7 @@ public class DisplayStaff extends JFrame {
         // Đặt bảng vào scrollPane để có thể cuộn nếu cần
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(5, 117, 855, 402);
-        scrollPane.setPreferredSize(new Dimension(740,402));
-
+        scrollPane.setPreferredSize(new Dimension(740, 402));
 
         // Đặt độ rộng tối thiểu cho cột thứ 2 (Mã LSP)
         table.getColumnModel().getColumn(1).setMinWidth(75);
@@ -451,7 +446,8 @@ public class DisplayStaff extends JFrame {
                 if (e.getClickCount() == 1) { // Check if it's a single click
                     int row = table.getSelectedRow(); // Get the selected row
                     if (row != -1) { // Check if a row is selected
-                        String trangThai = table.getValueAt(row, 5).toString(); // Get the value of the "trangThai" column
+                        String trangThai = table.getValueAt(row, 5).toString(); // Get the value of the "trangThai"
+                                                                                // column
                         if (trangThai.equals("Đã xóa")) { // Check if "trangThai" is "1"
                             String maSP = table.getValueAt(row, 0).toString(); // Get the value of the "maSP" column
                             showConfirmationDialog(maSP); // Show confirmation dialog
@@ -461,13 +457,10 @@ public class DisplayStaff extends JFrame {
             }
         });
 
-        contentPane.add(chucnang,BorderLayout.NORTH);
-        contentPane.add(scrollPane,BorderLayout.CENTER);
+        contentPane.add(chucnang, BorderLayout.NORTH);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
 
     }
-
-
-
 
     public JPanel getPanel() {
         return contentPane;
@@ -497,11 +490,10 @@ public class DisplayStaff extends JFrame {
         JComboBox<Integer> yearComboBox = new JComboBox<>();
 
         JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayout(1,3));
+        panel1.setLayout(new GridLayout(1, 3));
         panel1.add(dayComboBox);
         panel1.add(monthComboBox);
         panel1.add(yearComboBox);
-
 
         for (int i = 1; i <= 31; i++) {
             dayComboBox.addItem(i);
@@ -514,15 +506,12 @@ public class DisplayStaff extends JFrame {
             yearComboBox.addItem(i);
         }
 
-
         JLabel lblDiaChi = new JLabel("Địa chỉ:");
         JTextField txtDiaChi = new JTextField();
         JLabel lblSoDienThoai = new JLabel("Số điện thoại:");
         JTextField txtSoDienThoai = new JTextField();
         JLabel lblTrangThai = new JLabel("Trạng thái:");
-        JComboBox<String> cboTrangThai = new JComboBox<>(new String[]{"Đang hoạt động", "Đã xóa"});
-
-
+        JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang hoạt động", "Đã xóa" });
 
         panel.add(lblMaNV);
         panel.add(txtMaNV);
@@ -542,6 +531,9 @@ public class DisplayStaff extends JFrame {
 
         JButton btnOK = new JButton("OK");
         JButton btnCancel = new JButton("Cancel");
+        btnOK.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_add_30px.png")));
+        btnCancel.setIcon(new ImageIcon(this.getClass().getResource("/images/icons8_cancel_30px_1.png")));
+
         btnOK.setEnabled(false);
 
         buttonPanel.add(btnOK);
@@ -558,12 +550,13 @@ public class DisplayStaff extends JFrame {
                 java.sql.Date ngaySinh = java.sql.Date.valueOf(ngaySinhStr);
                 String diaChi = txtDiaChi.getText();
                 String soDienThoai = txtSoDienThoai.getText();
-                String trangThai = doitrangthai(cboTrangThai.getSelectedItem().toString()); // Chuyển đổi trạng thái từ chuỗi sang int
+                String trangThai = doitrangthai(cboTrangThai.getSelectedItem().toString()); // Chuyển đổi trạng thái từ
+                                                                                            // chuỗi sang int
 
                 if (checkinfo("addDialog", maNV, soDienThoai)) {
 
                     // Thêm nhân viên vào cơ sở dữ liệu
-                    Staff staff = new Staff(maNV, tenNV, ngaySinh, diaChi, soDienThoai,Integer.parseInt(trangThai));
+                    Staff staff = new Staff(maNV, tenNV, ngaySinh, diaChi, soDienThoai, Integer.parseInt(trangThai));
                     stbus.addBus(staff);
                     refreshTable();
                     // Đóng cửa sổ thêm nhân viên
@@ -571,8 +564,6 @@ public class DisplayStaff extends JFrame {
                 }
             }
         });
-
-
 
         btnCancel.addActionListener(new ActionListener() {
 
@@ -600,11 +591,10 @@ public class DisplayStaff extends JFrame {
             }
 
             private void checkFields() {
-                boolean allFieldsFilled = !txtMaNV.getText().isEmpty()&&
+                boolean allFieldsFilled = !txtMaNV.getText().isEmpty() &&
                         !txtTenNV.getText().isEmpty() &&
                         !txtDiaChi.getText().isEmpty() &&
                         !txtSoDienThoai.getText().isEmpty();
-
 
                 btnOK.setEnabled(allFieldsFilled);
             }
@@ -622,9 +612,8 @@ public class DisplayStaff extends JFrame {
         addDialog.setVisible(true);
     }
 
-
-
-    private void showDialogEditStaff(String maNV, String tenNV, Date ngaySinh, String diaChi, String soDienThoai, String trangThai) {
+    private void showDialogEditStaff(String maNV, String tenNV, Date ngaySinh, String diaChi, String soDienThoai,
+            String trangThai) {
         editDialog = new JDialog(this, "Chỉnh sửa thông tin nhân viên", true);
         editDialog.setSize(450, 400);
 
@@ -677,7 +666,7 @@ public class DisplayStaff extends JFrame {
         JLabel lblSoDienThoai = new JLabel("Số điện thoại:");
         JTextField txtSoDienThoai = new JTextField(soDienThoai);
         JLabel lblTrangThai = new JLabel("Trạng thái:");
-        JComboBox<String> cboTrangThai = new JComboBox<>(new String[]{"Đang hoạt động", "Đã xóa"});
+        JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang hoạt động", "Đã xóa" });
         cboTrangThai.setSelectedItem(trangThai);
 
         panel.add(lblMaNV);
@@ -715,10 +704,12 @@ public class DisplayStaff extends JFrame {
                 String updatedSoDienThoai = txtSoDienThoai.getText();
                 String updatedTrangThai = doitrangthai(cboTrangThai.getSelectedItem().toString());
 
-                java.sql.Date ngaySinh = java.sql.Date.valueOf(String.format("%04d-%02d-%02d", updatedYear, updatedMonth, updatedDay));
+                java.sql.Date ngaySinh = java.sql.Date
+                        .valueOf(String.format("%04d-%02d-%02d", updatedYear, updatedMonth, updatedDay));
 
                 if (checkinfo("Edit", updatedMaNV, updatedSoDienThoai)) {
-                    Staff staff = new Staff(updatedMaNV, updatedTenNV, ngaySinh, updatedDiaChi, updatedSoDienThoai,Integer.parseInt(updatedTrangThai) );
+                    Staff staff = new Staff(updatedMaNV, updatedTenNV, ngaySinh, updatedDiaChi, updatedSoDienThoai,
+                            Integer.parseInt(updatedTrangThai));
                     stbus.update(staff);
                     refreshTable();
 
@@ -744,11 +735,10 @@ public class DisplayStaff extends JFrame {
             }
 
             private void checkFields() {
-                boolean allFieldsFilled = !txtMaNV.getText().isEmpty()&&
+                boolean allFieldsFilled = !txtMaNV.getText().isEmpty() &&
                         !txtTenNV.getText().isEmpty() &&
                         !txtDiaChi.getText().isEmpty() &&
                         !txtSoDienThoai.getText().isEmpty();
-
 
                 btnOK.setEnabled(allFieldsFilled);
             }
@@ -772,10 +762,8 @@ public class DisplayStaff extends JFrame {
         editDialog.setVisible(true);
     }
 
-
-
-
-    private void showDialogViewStaff(String maNV, String tenNV, String ngaySinh, String diaChi, String soDienThoai, String trangThai) {
+    private void showDialogViewStaff(String maNV, String tenNV, String ngaySinh, String diaChi, String soDienThoai,
+            String trangThai) {
         JDialog viewDialog = new JDialog(this, "Xem thông tin nhân viên", true);
         viewDialog.setSize(450, 350);
 
@@ -833,26 +821,25 @@ public class DisplayStaff extends JFrame {
         viewDialog.setVisible(true);
     }
 
-
     // Kiểm tra thông tin
     public boolean checkinfo(String a, String maNV, String SĐT) {
-        if (a=="addDialog") {
+        if (a == "addDialog") {
             if (stbus.checkMaMV(maNV)) {
-                JOptionPane.showMessageDialog(addDialog, "Mã nhân viên đã tồn tại trong bảng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(addDialog, "Mã nhân viên đã tồn tại trong bảng.", "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
 
-
         // Kiểm tra số điện thoại
         if (!SĐT.matches("^0[1-9]\\d{8}$")) {
-            JOptionPane.showMessageDialog(addDialog, "Số điện thoại không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(addDialog, "Số điện thoại không hợp lệ. Vui lòng nhập lại.", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         return true;
     }
-
 
     public void refreshTable() {
         String option = (String) cbhienthi.getSelectedItem();
@@ -861,18 +848,17 @@ public class DisplayStaff extends JFrame {
         addFocusListenerToTextField("MaNV");
     }
 
-
     public void Trangthai(String option) {
         model.setRowCount(0); // Clear existing rows from the table
         stbus = new StaffBUS();
         list = stbus.getList();
-        for(Staff staff : list) {
-            if(option.equals("Đang hoạt động") && staff.getTrangThai() == 0 || option.equals("Đã xóa") && staff.getTrangThai() == 1 ) {
+        for (Staff staff : list) {
+            if (option.equals("Đang hoạt động") && staff.getTrangThai() == 0
+                    || option.equals("Đã xóa") && staff.getTrangThai() == 1) {
                 addRowToModel(staff);
             }
         }
     }
-
 
     public void Timkiem(String txt, int trangthai) {
         String selectedField = (String) comboBox.getSelectedItem();
@@ -886,16 +872,12 @@ public class DisplayStaff extends JFrame {
         }
     }
 
-
-
     public void addRowToModel(Staff staff) {
-        String ngaysinh=formatDate(staff.getNgaySinh());
-        Object[] row = { staff.getMaNV(), staff.getTenNV(), ngaysinh, staff.getDiachi(), staff.getSDT(),doitrangthai(staff.getTrangThai()+"") };
+        String ngaysinh = formatDate(staff.getNgaySinh());
+        Object[] row = { staff.getMaNV(), staff.getTenNV(), ngaysinh, staff.getDiachi(), staff.getSDT(),
+                doitrangthai(staff.getTrangThai() + "") };
         model.addRow(row);
     }
-
-
-
 
     // Thêm sự kiện focus cho text field
     private void addFocusListenerToTextField(String defaultText) {
@@ -916,14 +898,14 @@ public class DisplayStaff extends JFrame {
         });
     }
 
-    public  String doitrangthai(String state) {
+    public String doitrangthai(String state) {
         if (state.equals("0")) {
             return "Đang hoạt động";
         } else if (state.equals("Đang hoạt động")) {
             return "0";
-        } else if(state.equals("1")){
+        } else if (state.equals("1")) {
             return "Đã xóa";
-        }else if(state.equals("Đã xóa")) {
+        } else if (state.equals("Đã xóa")) {
             return "1";
         }
         return "Lỗi";
@@ -936,13 +918,13 @@ public class DisplayStaff extends JFrame {
     }
 
     public void showConfirmationDialog(String maNV) {
-        int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn khôi phục nhân viên này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn khôi phục nhân viên này?", "Xác nhận",
+                JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             stbus.updateTrangthai(maNV, 0);
             refreshTable();
         }
     }
-
 
     private void xuatexcel() {
         // TODO add your handling code here:
@@ -981,6 +963,7 @@ public class DisplayStaff extends JFrame {
             e.printStackTrace();
         }
     }
+
     private void openFile(String file) {
         try {
             File path = new File(file);
