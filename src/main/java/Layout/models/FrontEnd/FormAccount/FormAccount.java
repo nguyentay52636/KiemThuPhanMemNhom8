@@ -293,17 +293,26 @@ public class FormAccount extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn một tài khoản");
                     return;
                 }
-                String userName = (String) table1.getValueAt(selectedRow, 1);
+
+                String maQuyen = table1.getValueAt(selectedRow, 5).toString();
+                if ("Q4".equals(maQuyen)) {
+                    JOptionPane.showMessageDialog(null, "Không thể xóa tài khoản admin", "Thông báo",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                String userName = (String) table1.getValueAt(selectedRow, 2);
 
                 // hoi trc khi xoa
-                int comfirm = JOptionPane.showConfirmDialog(null,
+                int confirm = JOptionPane.showConfirmDialog(null,
                         "Bạn có chắc chắn muốn xóa tài khoản " + userName + "?", "Xác nhận xóa",
                         JOptionPane.YES_NO_OPTION);
-                if (comfirm == JOptionPane.YES_OPTION) {
+                if (confirm == JOptionPane.YES_OPTION) {
                     // xoa
                     if (qltk.delete(userName)) {
                         JOptionPane.showMessageDialog(null, "Xóa tài khoản " + userName + " thành công");
 
+                        // Refresh the table data
                         refresh();
                     } else {
                         JOptionPane.showMessageDialog(null, "Xóa tài khoản không thành công");

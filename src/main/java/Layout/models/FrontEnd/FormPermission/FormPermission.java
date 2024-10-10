@@ -4,27 +4,50 @@
 
 package Layout.models.FrontEnd.FormPermission;
 
-import Layout.models.BackEnd.BUS.PermissionBUS;
-import Layout.models.BackEnd.DTO.Permission;
-import Layout.models.FrontEnd.FormAccount.FormAccount;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.PermissionBUS;
+import Layout.models.BackEnd.DTO.Permission;
 
 /**
  * @author master
@@ -167,23 +190,23 @@ public class FormPermission extends JPanel {
         }
 
         // add item for comboBox
-        String[] items = {"Tất cả", "Mã quyền", "Tên quyền", "Chi tiết quyền"};
+        String[] items = { "Tất cả", "Mã quyền", "Tên quyền", "Chi tiết quyền" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
 
-        textField1.setBorder(BorderFactory.createTitledBorder("Tất cả" ));
+        textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
         comboBox1.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String selectedItem = (String) comboBox1.getSelectedItem();
                 if (selectedItem.equals("Tất cả")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Tất cả" ));
+                    textField1.setBorder(BorderFactory.createTitledBorder("Tất cả"));
                 } else if (selectedItem.equals("Mã quyền")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Nhập mã quyền" ));
+                    textField1.setBorder(BorderFactory.createTitledBorder("Nhập mã quyền"));
                 } else if (selectedItem.equals("Tên quyền")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Nhập tên quyền" ));
+                    textField1.setBorder(BorderFactory.createTitledBorder("Nhập tên quyền"));
                 } else if (selectedItem.equals("Chi tiết quyền")) {
-                    textField1.setBorder(BorderFactory.createTitledBorder("Nhập chi tiết quyền" ));
+                    textField1.setBorder(BorderFactory.createTitledBorder("Nhập chi tiết quyền"));
                 }
             }
         });
@@ -245,7 +268,6 @@ public class FormPermission extends JPanel {
         });
         refresh();
 
-
         // su kien khi nhan vao nut xoa
         button2.addActionListener(new ActionListener() {
             @Override
@@ -253,21 +275,31 @@ public class FormPermission extends JPanel {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
                     String maQuyen = table1.getValueAt(selectedRow, 1).toString();
-
-                    boolean result = qlq.delete(maQuyen);
-
-                    if (result) {
-                        JOptionPane.showMessageDialog(null, "Xóa thành công");
-                        refresh();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Xóa thất bại");
+        
+                    // Check if maQuyen is "Q4"
+                    if ("Q4".equals(maQuyen)) {
+                        JOptionPane.showMessageDialog(null, "Không thể xóa quyền Q4", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+        
+                    // Ask for confirmation before deleting
+                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa quyền này?",
+                            "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        boolean result = qlq.delete(maQuyen);
+        
+                        if (result) {
+                            JOptionPane.showMessageDialog(null, "Xóa thành công");
+                            refresh();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Xóa thất bại");
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Chọn quyền cần xóa");
                 }
             }
         });
-
         // su kien khi nhan vao nut sua
         button3.addActionListener(new ActionListener() {
             @Override
@@ -424,7 +456,7 @@ public class FormPermission extends JPanel {
 
     // set data to the table
     public void setDataToTable(ArrayList<Permission> permissions) {
-        String[] columns = {"STT", "Mã quyền", "Tên quyền", "Chi tiết quyền"};
+        String[] columns = { "STT", "Mã quyền", "Tên quyền", "Chi tiết quyền" };
         Object[][] data = new Object[permissions.size()][columns.length];
 
         for (int i = 0; i < permissions.size(); i++) {
@@ -456,4 +488,3 @@ public class FormPermission extends JPanel {
     private JTable table1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
-
