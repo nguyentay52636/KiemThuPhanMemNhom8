@@ -507,21 +507,11 @@ public class FormSell extends JPanel {
                                     { null, null, null, null, null },
                             },
                             getHeaderSell2()));
-                    // tableSell2.setFillsViewportHeight(true);
-                    // tableSell2.setSurrendersFocusOnKeystroke(true);
-                    // tableSell2.setShowVerticalLines(true);
-                    // tableSell2.setShowHorizontalLines(true);
+
                     scrollPane1.setViewportView(tableSell2);
                 }
                 panel10.add(scrollPane1, BorderLayout.CENTER);
             }
-            DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
-            model.addTableModelListener(new TableModelListener() {
-                @Override
-                public void tableChanged(TableModelEvent e) {
-                    // updateBtnTongState();
-                }
-            });
 
             panel8.add(panel10, BorderLayout.CENTER);
 
@@ -543,16 +533,15 @@ public class FormSell extends JPanel {
                 // ---- btnTong ----
                 btnTong.setText("Thanh toán");
                 // btnTong.setEnabled(false);
-                refeshBtn();
                 btnTong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_us_dollar_30px.png")));
                 btnTong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
                 panel13.add(btnTong);
             }
             panel8.add(panel13, BorderLayout.SOUTH);
         }
         add(panel8, BorderLayout.CENTER);
-        // btn Add
-        // updateBtnTongState();
+
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -778,11 +767,30 @@ public class FormSell extends JPanel {
         btnTong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Lấy model của bảng tableSell2
+                DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+                int rowCount = model.getRowCount();
+                System.out.println("Row count: " + rowCount); // Debugging line
+
+                // Kiểm tra xem tableSell2 có dữ liệu hay không
+                boolean hasData = false;
+                for (int i = 0; i < rowCount; i++) {
+                    if (model.getValueAt(i, 0) != null) {
+                        hasData = true;
+                        break;
+                    }
+                }
+
+                if (!hasData) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm để thanh toán!");
+                    return;
+                }
+
                 // Tạo một đối tượng Invoice mới từ các trường nhập liệu
                 Invoice newInvoice = new Invoice();
                 newInvoice.setMaHoaDon(txtMaHoaDon.getText());
 
-                // kiem tra hoa don co trung hay khong
+                // Kiểm tra hóa đơn có trùng hay không
                 String maHoaDon = txtMaHoaDon.getText();
                 if (invoiceBUS.checkInvoiceExist(maHoaDon)) {
                     JOptionPane.showMessageDialog(null, "Mã hóa đơn đã tồn tại! ");
@@ -798,7 +806,6 @@ public class FormSell extends JPanel {
                         txtMaHoaDon.setText(prefix + nextInvoiceId); // Gán mã hóa đơn mới
                     }
                     JOptionPane.showMessageDialog(null, "Mã hóa đơn mới đã được cập! ");
-
                     return;
                 }
 
@@ -839,7 +846,6 @@ public class FormSell extends JPanel {
 
                     // Thêm chi tiết hóa đơn
                     InvoiceDetailDAO invoiceDetailDAO = new InvoiceDetailDAO();
-                    DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
                     for (int i = 0; i < model.getRowCount(); i++) {
                         InvoiceDetail detail = new InvoiceDetail();
                         detail.setMaHoaDon(newInvoice.getMaHoaDon());
@@ -887,14 +893,6 @@ public class FormSell extends JPanel {
             }
         });
     }
-
-    // private void updateBtnTongState() {
-    // DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
-    // btnTong.setEnabled(false);
-    // if (model.getRowCount() > 0) {
-    // btnTong.setEnabled(true);
-    // }
-    // }
 
     // hàm in hóa đơn
     public void printInvoice(Invoice invoice) {
@@ -967,16 +965,6 @@ public class FormSell extends JPanel {
     public void refreshTableData() {
         ArrayList<Invoice> invoiceList = invoiceBUS.getListInvoice();
 
-    }
-
-    public void refeshBtn() {
-        int selectedRow = tableSell2.getSelectedRow();
-        if (selectedRow == -1 && tableSell2.getRowCount() <= 0) {
-            btnTong.setEnabled(false);
-        } else {
-            btnTong.setEnabled(true);
-
-        }
     }
 
     public void setNhanVien(String nhanVien) {

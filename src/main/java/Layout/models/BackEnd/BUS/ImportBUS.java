@@ -6,6 +6,7 @@
 package Layout.models.BackEnd.BUS;
 
 import Layout.models.BackEnd.DAO.ImportDAO;
+import Layout.models.BackEnd.DAO.InvoiceDAO;
 import Layout.models.BackEnd.DTO.Import;
 import Layout.models.BackEnd.DTO.Invoice;
 
@@ -34,7 +35,7 @@ public class ImportBUS {
         return "PN" + (listImport.size() + 1);
     }
 
-    public Import getPhieuNhap(String mapn){
+    public Import getPhieuNhap(String mapn) {
         for (Import pn : listImport) {
             if (pn.getMaPN().equals(mapn)) {
                 return pn;
@@ -68,7 +69,8 @@ public class ImportBUS {
         return result;
     }
 
-    public ArrayList<Import> searchByDateAndTotalPrice(LocalDate fromDate, LocalDate toDate, double fromPrice, double toPrice) {
+    public ArrayList<Import> searchByDateAndTotalPrice(LocalDate fromDate, LocalDate toDate, double fromPrice,
+            double toPrice) {
         ArrayList<Import> result = new ArrayList<>();
         for (Import import1 : listImport) {
             if ((import1.getNgayNhap().isEqual(fromDate) || import1.getNgayNhap().isAfter(fromDate))
@@ -149,7 +151,15 @@ public class ImportBUS {
 
     }
 
-    public ArrayList<Import> search1(String type, String value, LocalDate _ngay1, LocalDate _ngay2, int _tong1, int _tong2) {
+    public boolean checkImportExist(String maPhieuNHap) {
+        ImportDAO invoiceDAO = new ImportDAO();
+        Import invoice = invoiceDAO.getImport(maPhieuNHap);
+
+        return invoice != null;
+    }
+
+    public ArrayList<Import> search1(String type, String value, LocalDate _ngay1, LocalDate _ngay2, int _tong1,
+            int _tong2) {
         ArrayList<Import> result = new ArrayList<>();
 
         listImport.forEach((pn) -> {
@@ -198,13 +208,14 @@ public class ImportBUS {
             }
 
         });
-        //Ngay lap, tong tien
+        // Ngay lap, tong tien
         for (int i = result.size() - 1; i >= 0; i--) {
             Import pn = result.get(i);
             LocalDate ngaynhap = pn.getNgayNhap();
             float tongtien = pn.getTongTien();
 
-            Boolean ngayKhongThoa = (_ngay1 != null && ngaynhap.isBefore(_ngay1)) || (_ngay2 != null && ngaynhap.isAfter(_ngay2));
+            Boolean ngayKhongThoa = (_ngay1 != null && ngaynhap.isBefore(_ngay1))
+                    || (_ngay2 != null && ngaynhap.isAfter(_ngay2));
             Boolean tienKhongThoa = (_tong1 != -1 && tongtien < _tong1) || (_tong2 != -1 && tongtien > _tong2);
 
             if (ngayKhongThoa || tienKhongThoa) {
@@ -223,7 +234,8 @@ public class ImportBUS {
         return ok;
     }
 
-    public Boolean update(String maPN, String maNCC, String maNV, LocalDate ngayNhap, LocalTime gioNhap, float tongTien) {
+    public Boolean update(String maPN, String maNCC, String maNV, LocalDate ngayNhap, LocalTime gioNhap,
+            float tongTien) {
         Import pn = new Import(maPN, maNCC, maNV, ngayNhap, gioNhap, tongTien);
         return update(pn);
     }

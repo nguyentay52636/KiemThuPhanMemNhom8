@@ -7,6 +7,7 @@ package Layout.models.BackEnd.DAO;
 
 import Layout.models.BackEnd.ConnectDataBasee.ConnectionDB;
 import Layout.models.BackEnd.DTO.Import;
+import Layout.models.BackEnd.DTO.Invoice;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,6 +68,16 @@ public class ImportDAO {
         return ok;
     }
 
+    public Import getImport(String maPhieuNhap) {
+        ArrayList<Import> imports = readDB();
+        for (Import i : imports) {
+            if (i.getMaPN().equals(maPhieuNhap)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public Boolean delete(String mapn) {
         connection = new ConnectionDB();
         if (!connection.sqlUpdate("DELETE FROM import WHERE MaPN='" + mapn + "';")) {
@@ -98,7 +109,8 @@ public class ImportDAO {
         return ok;
     }
 
-    public Boolean update(String maPN, String maNCC, String maNV, LocalDate ngayNhap, LocalTime gioNhap, float tongTien) {
+    public Boolean update(String maPN, String maNCC, String maNV, LocalDate ngayNhap, LocalTime gioNhap,
+            float tongTien) {
         Import pn = new Import();
         pn.setMaPN(maPN);
         pn.setMaNCC(maNCC);

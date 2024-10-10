@@ -700,11 +700,45 @@ public class FormNhapHang extends JPanel {
         btnTong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+                int rowCount = model.getRowCount();
+                System.out.println("Row count: " + rowCount); // Debugging line
+
+                // Kiểm tra xem tableSell2 có dữ liệu hay không
+                boolean hasData = false;
+                for (int i = 0; i < rowCount; i++) {
+                    if (model.getValueAt(i, 0) != null) {
+                        hasData = true;
+                        break;
+                    }
+                }
+
+                if (!hasData) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm để nhập hàng !");
+                    return;
+                }
                 Import newImport = new Import();
                 newImport.setMaPN(txtMaPhieuNhap.getText());
                 String nhaCungCap = txtNhaCungCap.getText();
                 if (nhaCungCap.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp!");
+                    return;
+                }
+                String maPhieuNhap = txtMaPhieuNhap.getText();
+                if (importBUS.checkImportExist(maPhieuNhap)) {
+                    JOptionPane.showMessageDialog(null, "Mã hóa đơn đã tồn tại! ");
+                    String currentImportID = txtMaPhieuNhap.getText();
+                    int i = currentImportID.length() - 1;
+                    while (i >= 0 && Character.isDigit(currentImportID.charAt(i))) {
+                        i--;
+                    }
+                    if (i + 1 <= currentImportID.length()) {
+                        String prefix = currentImportID.substring(0, i + 1); // Lấy phần tiền tố
+                        int nextInvoiceId = Integer.parseInt(currentImportID.substring(i + 1)) + 1;
+                        // Tăng số
+                        txtMaPhieuNhap.setText(prefix + nextInvoiceId); // Gán mã hóa đơn mới
+                    }
+                    JOptionPane.showMessageDialog(null, "Mã hóa đơn mới đã được cập! ");
                     return;
                 }
                 newImport.setMaNCC(txtNhaCungCap.getText().split("-")[1]);
@@ -724,7 +758,7 @@ public class FormNhapHang extends JPanel {
 
                 // them chi tiet phieu nhap
                 ImportDetailsDAO importDetailsDAO = new ImportDetailsDAO();
-                DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+                // DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
                 for (int i = 0; i < model.getRowCount(); i++) {
                     ImportDetails detail = new ImportDetails();
                     detail.setMa(newImport.getMaPN());
