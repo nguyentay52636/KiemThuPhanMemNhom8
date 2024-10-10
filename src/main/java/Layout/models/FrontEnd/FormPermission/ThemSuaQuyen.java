@@ -67,7 +67,7 @@ public class ThemSuaQuyen extends JDialog {
         // inputs
         txMaQuyen.setBorder(BorderFactory.createTitledBorder("Mã quyền"));
         txTenQuyen.setBorder(BorderFactory.createTitledBorder("Tên quyền"));
-
+        txMaQuyen.setEnabled(false);
         JPanel plInput = new JPanel();
         plInput.add(txMaQuyen);
         plInput.add(txTenQuyen);
@@ -129,8 +129,10 @@ public class ThemSuaQuyen extends JDialog {
     }
 
     private void btnThemMouseClicked() {
+
         if (checkEmpty()) {
             String maquyen = txMaQuyen.getText();
+
             String tenquyen = txTenQuyen.getText();
 
             String chitietquyen = chitietForm.getQuyen();

@@ -45,6 +45,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+/**
+ * @author m1lt43
+ */
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -79,9 +84,6 @@ import Layout.models.FrontEnd.FormPromotion.FormChoosePromotion;
 import Layout.models.FrontEnd.Formatter.PriceFormatter;
 import Layout.models.WritePDF.WritePDF;
 
-/**
- * @author m1lt43
- */
 public class FormSell extends JPanel {
     private FormInvoice formInvoice;
 
@@ -513,6 +515,14 @@ public class FormSell extends JPanel {
                 }
                 panel10.add(scrollPane1, BorderLayout.CENTER);
             }
+            DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+            model.addTableModelListener(new TableModelListener() {
+                @Override
+                public void tableChanged(TableModelEvent e) {
+                    // updateBtnTongState();
+                }
+            });
+
             panel8.add(panel10, BorderLayout.CENTER);
 
             // ======== panel12 ========
@@ -533,6 +543,7 @@ public class FormSell extends JPanel {
                 // ---- btnTong ----
                 btnTong.setText("Thanh toán");
                 // btnTong.setEnabled(false);
+                refeshBtn();
                 btnTong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_us_dollar_30px.png")));
                 btnTong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel13.add(btnTong);
@@ -562,7 +573,7 @@ public class FormSell extends JPanel {
 
             }
         });
-        updateBtnTongState();
+
         // lam moi
         btnReset.addActionListener(new ActionListener() {
             @Override
@@ -877,13 +888,13 @@ public class FormSell extends JPanel {
         });
     }
 
-    private void updateBtnTongState() {
-        DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
-        btnTong.setEnabled(false);
-        if (model.getRowCount() > 0) {
-            btnTong.setEnabled(true);
-        }
-    }
+    // private void updateBtnTongState() {
+    // DefaultTableModel model = (DefaultTableModel) tableSell2.getModel();
+    // btnTong.setEnabled(false);
+    // if (model.getRowCount() > 0) {
+    // btnTong.setEnabled(true);
+    // }
+    // }
 
     // hàm in hóa đơn
     public void printInvoice(Invoice invoice) {
@@ -956,6 +967,16 @@ public class FormSell extends JPanel {
     public void refreshTableData() {
         ArrayList<Invoice> invoiceList = invoiceBUS.getListInvoice();
 
+    }
+
+    public void refeshBtn() {
+        int selectedRow = tableSell2.getSelectedRow();
+        if (selectedRow == -1 && tableSell2.getRowCount() <= 0) {
+            btnTong.setEnabled(false);
+        } else {
+            btnTong.setEnabled(true);
+
+        }
     }
 
     public void setNhanVien(String nhanVien) {

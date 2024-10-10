@@ -562,7 +562,7 @@ public class DisplayProductDisableButton extends JFrame {
         JComboBox<String> cbLSP = new JComboBox<>(listMLSP.toArray(new String[0]));
 
         JLabel lblTenSP = new JLabel("Tên sản phẩm:");
-
+        lblTenSP.setFont(new Font("Arial", Font.BOLD, 14));
         JTextField txtTenSP = new JTextField();
 
         JLabel lblDonGia = new JLabel("Đơn giá:");
@@ -572,7 +572,7 @@ public class DisplayProductDisableButton extends JFrame {
 
         JLabel lblFileAnh = new JLabel("File ảnh:");
         lblFileAnh.setFont(boldFont);
-        JButton btnChooseImage = new JButton("Chọn ảnh", new ImageIcon("icon.png"));
+        JButton btnChooseImage = new JButton("Chọn ảnh");
 
         JLabel lblSoLuong = new JLabel("Số lượng:");
         lblSoLuong.setFont(boldFont);
@@ -582,6 +582,28 @@ public class DisplayProductDisableButton extends JFrame {
         JLabel lblTrangThai = new JLabel("Trạng thái:");
         lblTrangThai.setFont(boldFont);
         JComboBox<String> cboTrangThai = new JComboBox<>(new String[] { "Đang bán", "Đã xóa" });
+        btnChooseImage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Tạo một hộp thoại chọn file
+                JFileChooser fileChooser = new JFileChooser();
+
+                // Thiết lập chỉ cho phép chọn file ảnh (có định dạng jpg, png, gif)
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif");
+                fileChooser.setFileFilter(filter);
+
+                // Hiển thị hộp thoại chọn file và lấy đường dẫn của file được chọn
+                int result = fileChooser.showOpenDialog(null); // null để hiển thị ở giữa màn hình
+
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String imagePath = selectedFile.getAbsolutePath();
+
+                    // Hiển thị đường dẫn ảnh đã chọn trên JTextField (hoặc JButton nếu bạn dùng nó)
+                    btnChooseImage.setText(imagePath);
+                }
+            }
+        });
 
         // Thêm vào input panel
         inputPanel.add(lblMaSP);
@@ -630,7 +652,7 @@ public class DisplayProductDisableButton extends JFrame {
 
                 // Giá trị đơn giá và số lượng đã mặc định là 0, không cần kiểm tra người dùng
                 // nhập
-                float donGia = 0.0f; // Giá trị mặc định
+                float donGia = 0.0f;// Giá trị mặc định
                 int soLuong = 0; // Giá trị mặc định
 
                 // Kiểm tra xem giá trị mã sản phẩm đã tồn tại hay không, và kiểm tra trạng
@@ -652,6 +674,8 @@ public class DisplayProductDisableButton extends JFrame {
 
                     // Làm mới bảng hiển thị
                     refreshTable();
+                    JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!", "Thông báo",
+                            JOptionPane.INFORMATION_MESSAGE);
 
                     // Đóng dialog sau khi thêm thành công
                     addDialog.dispose();

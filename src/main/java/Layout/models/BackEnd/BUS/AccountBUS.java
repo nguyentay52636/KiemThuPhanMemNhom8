@@ -45,6 +45,15 @@ public class AccountBUS {
         return null;
     }
 
+    public Account checkEmailExits(String email) {
+        for (Account tk : dstk) {
+            if (tk.getEmail().equals(email)) {
+                return tk;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Account> search(String value, String type) {
         ArrayList<Account> result = new ArrayList<>();
 

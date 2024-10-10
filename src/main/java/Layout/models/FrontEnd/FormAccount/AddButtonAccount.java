@@ -102,14 +102,17 @@ public class AddButtonAccount extends JFrame {
                 JOptionPane.showMessageDialog(null, "Lỗi, không tìm thấy tài khoản");
                 this.dispose();
             }
+            AccountBUS accountBUS = new AccountBUS();
+
             txtEmail.setText(this.tkSua.getEmail());
-            String emailAdmin = "admin@expamle.com";
+            String emailAdmin = "admin@example.com";
             String getTxtEmail = txtEmail.getText();
             if (getTxtEmail.equals(emailAdmin)) {
                 txtEmail.setEnabled(false); // Khóa ô input
             } else {
                 txtEmail.setEnabled(true);
             }
+
             txUsername.setText(this.tkSua.getUsername());
             txUsername.setEditable(false);
             txPassword.setText(this.tkSua.getPassword());
@@ -184,13 +187,34 @@ public class AddButtonAccount extends JFrame {
             txMaNV.setEnabled(false);
             String maquyen = txMaQuyen.getText();
             txMaQuyen.setEnabled(false);
-            Account newAccount = new Account(email, username, pass, manv, maquyen);
-            if (qltkBUS.add(email, username, pass, manv, maquyen)) {
-                JOptionPane.showMessageDialog(this, "Thêm " + username + " thành công!");
-                if (accountAddedListener != null) {
-                    accountAddedListener.onAccountAdded(newAccount);
+
+            // Check if the email or username already exists
+            AccountBUS accountBUS = new AccountBUS();
+            boolean emailExists = false;
+            boolean usernameExists = false;
+
+            for (Account account : accountBUS.getDstk()) {
+                if (account.getEmail().equals(email)) {
+                    emailExists = true;
                 }
-                this.dispose();
+                if (account.getUsername().equals(username)) {
+                    usernameExists = true;
+                }
+            }
+
+            if (emailExists) {
+                JOptionPane.showMessageDialog(this, "Email đã tồn tại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else if (usernameExists) {
+                JOptionPane.showMessageDialog(this, "Username đã tồn tại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Account newAccount = new Account(email, username, pass, manv, maquyen);
+                if (qltkBUS.add(email, username, pass, manv, maquyen)) {
+                    JOptionPane.showMessageDialog(this, "Thêm " + username + " thành công!");
+                    if (accountAddedListener != null) {
+                        accountAddedListener.onAccountAdded(newAccount);
+                    }
+                    this.dispose();
+                }
             }
         }
     }
@@ -202,15 +226,35 @@ public class AddButtonAccount extends JFrame {
             String pass = txPassword.getText();
             String manv = txMaNV.getText();
             String maquyen = txMaQuyen.getText();
+            // Check if the email or username already exists
+            AccountBUS accountBUS = new AccountBUS();
+            boolean emailExists = false;
+            boolean usernameExists = false;
 
-            Account fixAccount = new Account(email, username, pass, manv, maquyen);
-            if (qltkBUS.update(email, username, pass, manv, maquyen)) {
-                JOptionPane.showMessageDialog(this, "Sửa " + username + " thành công!");
-                if (accountAddedListener != null) {
-                    accountAddedListener.onAccountAdded(fixAccount);
+            for (Account account : accountBUS.getDstk()) {
+                if (account.getEmail().equals(email)) {
+                    emailExists = true;
                 }
-                this.dispose();
+                if (account.getUsername().equals(username)) {
+                    usernameExists = true;
+                }
             }
+
+            if (emailExists) {
+                JOptionPane.showMessageDialog(this, "Email đã tồn tại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else if (usernameExists) {
+                JOptionPane.showMessageDialog(this, "Username đã tồn tại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Account fixAccount = new Account(email, username, pass, manv, maquyen);
+                if (qltkBUS.update(email, username, pass, manv, maquyen)) {
+                    JOptionPane.showMessageDialog(this, "Sửa " + username + " thành công!");
+                    if (accountAddedListener != null) {
+                        accountAddedListener.onAccountAdded(fixAccount);
+                    }
+                    this.dispose();
+                }
+            }
+
         }
     }
 
