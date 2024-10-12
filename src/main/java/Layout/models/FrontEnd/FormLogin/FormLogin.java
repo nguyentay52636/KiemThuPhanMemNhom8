@@ -439,6 +439,9 @@ public class FormLogin extends JFrame {
 
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
 
+                    // Set the current username
+                    AccountBUS.setCurrentUsername(username);
+
                     // lay thong tin nhan vien tu tai khoan da dang nhap
                     StaffBUS staffBUS = new StaffBUS();
                     Staff staff = staffBUS.getStaff(tk.getMaNV());
@@ -480,7 +483,6 @@ public class FormLogin extends JFrame {
                 }
             }
         });
-
         label10.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

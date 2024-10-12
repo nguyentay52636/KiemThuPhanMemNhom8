@@ -45,11 +45,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-/**
- * @author m1lt43
- */
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -641,11 +636,11 @@ public class FormSell extends JPanel {
 
             public void performSearch() {
                 String keyWord = txtSearch.getText();
-                System.out.println(keyWord);
+                // System.out.println(keyWord);
                 String type = (String) comboBox.getSelectedItem();
-                System.out.println(type);
+                // System.out.println(type);
                 ArrayList<Product> result = productBUS.searchProduct(keyWord, type);
-                System.out.println(result);
+                // System.out.println(result);
                 setDataTable(result);
             }
         });

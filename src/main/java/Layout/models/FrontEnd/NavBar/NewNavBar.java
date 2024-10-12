@@ -26,11 +26,12 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import Layout.models.BackEnd.BUS.AccountBUS;
 import Layout.models.FrontEnd.FormAccount.FormAccount;
 import Layout.models.FrontEnd.FormBanHang.FormSell;
 import Layout.models.FrontEnd.FormCustomer.FormKhachHang;
 import Layout.models.FrontEnd.FormCustomer.FormKhachHangDisableButton;
-import Layout.models.FrontEnd.FormHello.Hello;
+import Layout.models.FrontEnd.FormHello.BeginForm;
 import Layout.models.FrontEnd.FormInvoice.FormInvoice;
 import Layout.models.FrontEnd.FormInvoice.FormInvoiceDisableButton;
 import Layout.models.FrontEnd.FormLogin.FormLogin;
@@ -68,7 +69,7 @@ public class NewNavBar extends JPanel {
 
     DisplayProduct displayProduct;
     DisplayProductDisableButton displayProductDisableButton;
-    Hello hello = new Hello();
+    // Hello hello = new Hello();
 
     FormInvoice formInvoice;
     FormSell formSell;
@@ -551,11 +552,23 @@ public class NewNavBar extends JPanel {
                 }
             }
         });
-
+        label3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String username = AccountBUS.getCurrentUsername();
+                if (username != null && !username.isEmpty()) {
+                    FormChangePassword formChangePassword = new FormChangePassword(username);
+                    formChangePassword.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No user is currently logged in.");
+                }
+            }
+        });
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-
-        cardPanel.add(hello, "Hello");
+        String username = AccountBUS.getCurrentUsername();
+        cardPanel.add(new BeginForm("Chào " + AccountBUS.getCurrentUsername()), BorderLayout.CENTER);
+        ;
 
         formSell = new FormSell(formInvoice);
         cardPanel.add(formSell, "formSell");
@@ -673,6 +686,7 @@ public class NewNavBar extends JPanel {
             if ("quanlynhaphang".equals(permission)) {
                 panel13.setVisible(true);
                 panel13.addMouseListener(new MouseAdapter() {
+
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if (lastClickedPanel != null) {
@@ -714,7 +728,9 @@ public class NewNavBar extends JPanel {
                     }
                 });
             }
-            if ("quanlysanpham".equals(permission)) {
+            if ("quanlysanpham".equals(permission))
+
+            {
                 panel14.setVisible(true);
                 panel14.addMouseListener(new MouseAdapter() {
                     @Override

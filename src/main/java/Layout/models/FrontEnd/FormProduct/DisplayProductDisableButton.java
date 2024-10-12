@@ -205,6 +205,9 @@ public class DisplayProductDisableButton extends JFrame {
                         String maSP = (String) table.getValueAt(selectedRow, 0);
                         prbus.updateTrangthai(maSP, 1);
                         refreshTable();
+                        // Hiển thị thông báo xóa thành công
+                        JOptionPane.showMessageDialog(DisplayProductDisableButton.this, "Xóa sản phẩm thành công!",
+                                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
                     // Nếu không có hàng nào được chọn, hiển thị thông báo cho người dùng
@@ -213,7 +216,6 @@ public class DisplayProductDisableButton extends JFrame {
                 }
             }
         });
-
         panel2.add(btndelete);
 
         // Sự kiện khi nhấn nút "DELETE"
@@ -1090,7 +1092,7 @@ public class DisplayProductDisableButton extends JFrame {
         panelloc.setVisible(!isTextVisible);
 
         if (isTextVisible) {
-            txtTimKiem.setText(option);
+            // txtTimKiem.setText(option);
 
         } else {
             txtTimKiem.setText(""); // Clear text

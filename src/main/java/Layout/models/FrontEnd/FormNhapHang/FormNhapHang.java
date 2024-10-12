@@ -687,11 +687,11 @@ public class FormNhapHang extends JPanel {
 
             public void performSearch() {
                 String keyWord = txtSearch.getText();
-                System.out.println(keyWord);
+                // System.out.println(keyWord);
                 String type = (String) comboBox.getSelectedItem();
-                System.out.println(type);
+                // System.out.println(type);
                 ArrayList<Product> result = productBUS.searchProduct(keyWord, type);
-                System.out.println(result);
+                // System.out.println(result);
                 setDataTable(result);
             }
         });

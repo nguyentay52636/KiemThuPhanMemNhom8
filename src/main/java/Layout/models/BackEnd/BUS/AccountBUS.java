@@ -14,6 +14,7 @@ public class AccountBUS {
     private ArrayList<Account> dstk = new ArrayList<>();
     AccountDAO qltkDAO = new AccountDAO();
     ConnectionDB connectionDB = new ConnectionDB();
+    private static String currentUsername;
 
     public AccountBUS() {
         dstk = qltkDAO.readDB();
@@ -30,6 +31,14 @@ public class AccountBUS {
 
     public String[] getHeaders() {
         return new String[] { "Email", "Tên tài khoản", "Mật khẩu", "Mã nhân viên", "Mã quyền" };
+    }
+
+    public static String getCurrentUsername() {
+        return currentUsername;
+    }
+
+    public static void setCurrentUsername(String username) {
+        currentUsername = username;
     }
 
     public void readDB() {
