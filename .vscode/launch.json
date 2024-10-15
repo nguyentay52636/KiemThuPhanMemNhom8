@@ -6,6 +6,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TabbedPaneExample",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.NavBar.TabbedPaneExample",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "FormThongKe",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.ThongKe.FormThongKe",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "ThongKePanel",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.ThongKe.ThongKePanel",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "NhapCode",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.ThongKe.NhapCode",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
+            "name": "PieChartDemo",
+            "request": "launch",
+            "mainClass": "Layout.models.FrontEnd.MainFrame.PieChartDemo",
+            "projectName": "your-artifact-id"
+        },
+        {
+            "type": "java",
             "name": "ProductGUI",
             "request": "launch",
             "mainClass": "Layout.models.FrontEnd.FormProduct.ProductGUI",

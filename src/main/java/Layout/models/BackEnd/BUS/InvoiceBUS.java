@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+import Layout.models.BackEnd.ChangeData.InvoiceData;
 import Layout.models.BackEnd.DAO.InvoiceDAO;
 import Layout.models.BackEnd.DTO.Invoice;
 
@@ -181,5 +182,9 @@ public class InvoiceBUS {
         });
         return result;
     }
-
+// public String getInvoicesAsJSON() {
+//         ArrayList<Invoice> invoices = getAllInvoices();
+//         InvoiceData invoiceData = new InvoiceData();
+//         return invoiceData.toJSON(invoices);
+//     }
 }

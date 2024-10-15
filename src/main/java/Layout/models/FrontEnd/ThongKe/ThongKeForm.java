@@ -7,8 +7,11 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -106,13 +110,39 @@ public class ThongKeForm extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 
 		tabbedPane = new JTabbedPane();
+		tabbedPane.setFont(new Font("Arial", Font.PLAIN, 18)); // Increase tab size
+		tabbedPane.setUI(new BasicTabbedPaneUI() {
+			@Override
+			protected void installDefaults() {
+				super.installDefaults();
+				tabAreaInsets = new Insets(10, 10, 10, 10); // Increase tab area
+			}
+		});
+
+		tabbedPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selectedIndex = tabbedPane.getSelectedIndex();
+				for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+					if (i == selectedIndex) {
+						tabbedPane.setForegroundAt(i, Color.black); // Set selected tab item color to white
+					} else {
+						tabbedPane.setForegroundAt(i, Color.white); // Set non-selected tab item color to black
+					}
+				}
+			}
+		});
 
 		dshd = thongke.ListHD();
 		dspn = thongke.ListPN();
 		tabbedPane.addTab("Tổng quát", displaybai1()); // Thêm panel1 vào tab 1
 		tabbedPane.addTab("Bán ra", displaybai2(dshd, "hoaDon"));
 		tabbedPane.addTab("Nhập hàng", displaybai3(dspn, "Phieunhap"));
+		tabbedPane.addTab("Helllo", displaybai3(dspn, "Phieunhap"));
 
+		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+			tabbedPane.setBackgroundAt(i, Color.DARK_GRAY); // Set tab background color to dark gray
+		}
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 	}
 
@@ -143,7 +173,7 @@ public class ThongKeForm extends JFrame {
 		panel_3.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
 
 		JLabel lblNewLabel = new JLabel("Sản phẩm");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_3.add(lblNewLabel);
 

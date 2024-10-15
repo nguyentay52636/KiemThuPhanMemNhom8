@@ -53,10 +53,21 @@ public class FormLogin extends JFrame {
     private FormSell formSell = new FormSell(formInvoice);
     private String maQuyen; // biến thành viên để lư MaQuyen
     private String chiTietQuyen; // bien thanh vien de luu chi tiet quyen
+    private static String tenNhanVien;
+    private static String maNhanVien;
+
     public static String loggedInMaNV;
 
     public String getChiTietQuyen() {
         return chiTietQuyen;
+    }
+
+    public static String getTenNhanVien() {
+        return tenNhanVien;
+    }
+
+    public static String getMaNhanVien() {
+        return maNhanVien;
     }
 
     public FormLogin() {
@@ -447,6 +458,9 @@ public class FormLogin extends JFrame {
                     Staff staff = staffBUS.getStaff(tk.getMaNV());
                     loggedInMaNV = tk.getMaNV();
 
+                    // Set the static variable tenNhanVien
+                    tenNhanVien = staff.getTenNV();
+                    maNhanVien = staff.getMaNV();
                     formSell.setNhanVien(staff.getTenNV());
 
                     // luu MaQuyen vào biến thành viên
@@ -467,7 +481,8 @@ public class FormLogin extends JFrame {
                     // dat ten nhan vien vao label1
                     if (staff != null) {
                         mainFrame.getNavBar().getLabel1().setText(staff.getTenNV());
-                        System.out.println("Ten nhan vien: " + staff.getTenNV() + " - " + staff.getMaNV());
+                        // System.out.println("Ten nhan vien: " + staff.getTenNV() + " - " +
+                        // staff.getMaNV());
                     } else {
 
                     }
@@ -481,13 +496,6 @@ public class FormLogin extends JFrame {
                         JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại");
                     }
                 }
-            }
-        });
-        label10.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new PasswordResetForm().setVisible(true);
-
             }
         });
         // sự kiện khi nhấn enter

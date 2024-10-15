@@ -566,8 +566,9 @@ public class NewNavBar extends JPanel {
         });
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-        String username = AccountBUS.getCurrentUsername();
-        cardPanel.add(new BeginForm("Chào " + AccountBUS.getCurrentUsername()), BorderLayout.CENTER);
+        String username = FormLogin.getTenNhanVien();
+        String codeStaff = FormLogin.getMaNhanVien();
+        cardPanel.add(new BeginForm("Chào " + username + " " + "-" + " " + codeStaff), BorderLayout.CENTER);
         ;
 
         formSell = new FormSell(formInvoice);
