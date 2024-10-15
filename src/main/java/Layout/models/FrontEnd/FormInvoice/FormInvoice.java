@@ -174,11 +174,11 @@ public class FormInvoice extends JPanel {
                             panel2.add(button1);
 
                             //---- button2 ----
-                            button2.setText("Nh\u1eadp Excel");
-                            button2.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
-                            button2.setPreferredSize(new Dimension(130, 55));
-                            button2.addActionListener(e -> button2(e));
-                            panel2.add(button2);
+                            // button2.setText("Nh\u1eadp Excel");
+                            // button2.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
+                            // button2.setPreferredSize(new Dimension(130, 55));
+                            // button2.addActionListener(e -> button2(e));
+                            // panel2.add(button2);
 
                             //
                             //

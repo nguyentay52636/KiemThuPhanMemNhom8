@@ -14,11 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -63,7 +61,7 @@ public class FormKhachHang extends JPanel {
         button2 = new JButton();
         button3 = new JButton();
         button4 = new JButton();
-        button5 = new JButton();
+        // button5 = new JButton();
         panel3 = new JPanel();
         panel4 = new JPanel();
         panel5 = new JPanel();
@@ -109,8 +107,8 @@ public class FormKhachHang extends JPanel {
                 panel2.add(button4);
 
                 //---- button5 ----
-                button5.setText("Nh\u1eadp Excel");
-                panel2.add(button5);
+                // button5.setText("Nh\u1eadp Excel");
+                // panel2.add(button5);
             }
             panel1.add(panel2);
 
@@ -173,7 +171,7 @@ public class FormKhachHang extends JPanel {
         button2.setPreferredSize(size);
         button3.setPreferredSize(size);
         button4.setPreferredSize(size);
-        button5.setPreferredSize(size);
+        // button5.setPreferredSize(size);
         button8.setPreferredSize(new Dimension(140, 40));
 
         // set size for combobox
@@ -184,15 +182,16 @@ public class FormKhachHang extends JPanel {
         ImageIcon iconThem = new ImageIcon(getClass().getResource("/images/icons8_add_30px.png"));
         ImageIcon iconXoa = new ImageIcon(getClass().getResource("/images/icons8_delete_forever_30px_1.png"));
         ImageIcon IconSua = new ImageIcon(getClass().getResource("/images/icons8_wrench_30px.png"));
-        ImageIcon exportIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
+        // ImageIcon exportIcon = new
+        // ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
         ImageIcon importIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
         ImageIcon refreshIcon = new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png"));
 
         button1.setIcon(iconThem);
         button2.setIcon(iconXoa);
         button3.setIcon(IconSua);
-        button4.setIcon(exportIcon);
-        button5.setIcon(importIcon);
+        // button4.setIcon(exportIcon);
+        // button5.setIcon(importIcon);
         button8.setIcon(refreshIcon);
 
         // set background for button
@@ -377,54 +376,54 @@ public class FormKhachHang extends JPanel {
         });
 
         // nhap excel
-        button5.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn file Excel");
+        // button5.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn file Excel");
 
-                int userSelection = fileChooser.showOpenDialog(null);
+        // int userSelection = fileChooser.showOpenDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToOpen = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToOpen = fileChooser.getSelectedFile();
 
-                    try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
-                        Workbook workbook = new XSSFWorkbook(inputStream);
+        // try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
+        // Workbook workbook = new XSSFWorkbook(inputStream);
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        Iterator<Row> rowIterator = sheet.iterator();
+        // Sheet sheet = workbook.getSheetAt(0);
+        // Iterator<Row> rowIterator = sheet.iterator();
 
-                        // skip thee header row
-                        if (rowIterator.hasNext()) {
-                            rowIterator.next();
-                        }
+        // // skip thee header row
+        // if (rowIterator.hasNext()) {
+        // rowIterator.next();
+        // }
 
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
+        // while (rowIterator.hasNext()) {
+        // Row row = rowIterator.next();
 
-                            String makh = row.getCell(1).getStringCellValue();
-                            String tenkh = row.getCell(2).getStringCellValue();
-                            String diachi = row.getCell(3).getStringCellValue();
-                            String sdt = row.getCell(4).getStringCellValue();
-                            int trangthai = (int) row.getCell(5).getNumericCellValue();
+        // String makh = row.getCell(1).getStringCellValue();
+        // String tenkh = row.getCell(2).getStringCellValue();
+        // String diachi = row.getCell(3).getStringCellValue();
+        // String sdt = row.getCell(4).getStringCellValue();
+        // int trangthai = (int) row.getCell(5).getNumericCellValue();
 
-                            Customer customer = new Customer(makh, tenkh, diachi, sdt, trangthai);
+        // Customer customer = new Customer(makh, tenkh, diachi, sdt, trangthai);
 
-                            // add to the database
-                            qlkh.add(customer);
-                        }
+        // // add to the database
+        // qlkh.add(customer);
+        // }
 
-                        //
-                        refresh();
+        // //
+        // refresh();
 
-                        JOptionPane.showMessageDialog(null, "Nhập file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Nhập file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        // JOptionPane.showMessageDialog(null, "Nhập file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Nhập file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
 
         // search
         textField1.getDocument().addDocumentListener(new DocumentListener() {
@@ -496,7 +495,7 @@ public class FormKhachHang extends JPanel {
     private JButton button2;
     private JButton button3;
     private JButton button4;
-    private JButton button5;
+    // private JButton button5;
     private JPanel panel3;
     private JPanel panel4;
     private JPanel panel5;

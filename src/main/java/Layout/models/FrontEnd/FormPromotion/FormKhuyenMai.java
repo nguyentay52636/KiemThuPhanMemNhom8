@@ -14,12 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -69,7 +66,7 @@ public class FormKhuyenMai extends JPanel {
         button3 = new JButton();
         button4 = new JButton();
         button5 = new JButton();
-        button6 = new JButton();
+        // button6 = new JButton();
         panel3 = new JPanel();
         panel4 = new JPanel();
         paneltr = new JPanel();
@@ -126,9 +123,9 @@ public class FormKhuyenMai extends JPanel {
                 panel2.add(button5);
 
                 //---- button6 ----
-                button6.setText("Nh\u1eadp Excel");
-                button6.setPreferredSize(new Dimension(144, 43));
-                panel2.add(button6);
+                // button6.setText("Nh\u1eadp Excel");
+                // button6.setPreferredSize(new Dimension(144, 43));
+                // panel2.add(button6);
             }
             panel1.add(panel2);
 
@@ -211,7 +208,8 @@ public class FormKhuyenMai extends JPanel {
         ImageIcon IconSua = new ImageIcon(getClass().getResource("/images/icons8_wrench_30px.png"));
         ImageIcon iconKetThuc = new ImageIcon(getClass().getResource("/images/icons8_cancel_30px_1.png"));
         ImageIcon exportIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
-        ImageIcon importIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
+        // ImageIcon importIcon = new
+        // ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
         ImageIcon refreshIcon = new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png"));
 
         button1.setIcon(iconThem);
@@ -219,7 +217,7 @@ public class FormKhuyenMai extends JPanel {
         button3.setIcon(IconSua);
         button4.setIcon(iconKetThuc);
         button5.setIcon(exportIcon);
-        button6.setIcon(importIcon);
+        // button6.setIcon(importIcon);
         button7.setIcon(refreshIcon);
 
         // set font
@@ -435,57 +433,58 @@ public class FormKhuyenMai extends JPanel {
         });
 
         // nhap excel
-        button6.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn file Excel");
+        // button6.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn file Excel");
 
-                int userSelection = fileChooser.showOpenDialog(null);
+        // int userSelection = fileChooser.showOpenDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToOpen = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToOpen = fileChooser.getSelectedFile();
 
-                    try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
-                        Workbook workbook = new XSSFWorkbook(inputStream);
+        // try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
+        // Workbook workbook = new XSSFWorkbook(inputStream);
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        Iterator<Row> rowIterator = sheet.iterator();
+        // Sheet sheet = workbook.getSheetAt(0);
+        // Iterator<Row> rowIterator = sheet.iterator();
 
-                        // skip thee header row
-                        if (rowIterator.hasNext()) {
-                            rowIterator.next();
-                        }
+        // // skip thee header row
+        // if (rowIterator.hasNext()) {
+        // rowIterator.next();
+        // }
 
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
+        // while (rowIterator.hasNext()) {
+        // Row row = rowIterator.next();
 
-                            String maKhuyenMai = row.getCell(1).getStringCellValue();
-                            String tenKhuyenMai = row.getCell(2).getStringCellValue();
-                            float dieuKienKhuyenMai = (float) row.getCell(3).getNumericCellValue();
-                            float phanTramKhuyenMai = (float) row.getCell(4).getNumericCellValue();
-                            LocalDate ngayBatDau = LocalDate.parse(row.getCell(5).getStringCellValue());
-                            LocalDate ngayKetThuc = LocalDate.parse(row.getCell(6).getStringCellValue());
-                            String trangThai = row.getCell(7).getStringCellValue();
+        // String maKhuyenMai = row.getCell(1).getStringCellValue();
+        // String tenKhuyenMai = row.getCell(2).getStringCellValue();
+        // float dieuKienKhuyenMai = (float) row.getCell(3).getNumericCellValue();
+        // float phanTramKhuyenMai = (float) row.getCell(4).getNumericCellValue();
+        // LocalDate ngayBatDau = LocalDate.parse(row.getCell(5).getStringCellValue());
+        // LocalDate ngayKetThuc = LocalDate.parse(row.getCell(6).getStringCellValue());
+        // String trangThai = row.getCell(7).getStringCellValue();
 
-                            Promotion promotion = new Promotion(maKhuyenMai, tenKhuyenMai, dieuKienKhuyenMai,
-                                    phanTramKhuyenMai, ngayBatDau, ngayKetThuc, trangThai);
+        // Promotion promotion = new Promotion(maKhuyenMai, tenKhuyenMai,
+        // dieuKienKhuyenMai,
+        // phanTramKhuyenMai, ngayBatDau, ngayKetThuc, trangThai);
 
-                            // add to the database
-                            qlkm.add(promotion);
-                        }
+        // // add to the database
+        // qlkm.add(promotion);
+        // }
 
-                        //
-                        refresh();
+        // //
+        // refresh();
 
-                        JOptionPane.showMessageDialog(null, "Nhập file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Nhập file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        // JOptionPane.showMessageDialog(null, "Nhập file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Nhập file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
 
         // su kien nut lam moi
         button7.addActionListener(new ActionListener() {

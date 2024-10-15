@@ -4,29 +4,42 @@
 
 package Layout.models.FrontEnd.FormTypeProduct;
 
-import Layout.models.BackEnd.BUS.TypeProductBUS;
-import Layout.models.BackEnd.DTO.Permission;
-import Layout.models.BackEnd.DTO.TypeProduct;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Layout.models.BackEnd.BUS.TypeProductBUS;
+import Layout.models.BackEnd.DTO.TypeProduct;
 
 /**
  * @author master
@@ -49,7 +62,7 @@ public class FormTypeProductDisableButton extends JPanel {
         button3 = new JButton();
         button4 = new JButton();
         button5 = new JButton();
-        button6 = new JButton();
+        // button6 = new JButton();
         panel3 = new JPanel();
         panel5 = new JPanel();
         comboBox1 = new JComboBox();
@@ -107,11 +120,11 @@ public class FormTypeProductDisableButton extends JPanel {
                 button5.setIcon(exportIcon);
 
                 //---- button6 ----
-                button6.setText("Nhập Excel");
+                // button6.setText("Nhập Excel");
 //                button6.setFont(button6.getFont().deriveFont(button6.getFont().getSize() + 5f));
-                panel2.add(button6);
-                ImageIcon importIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
-                button6.setIcon(importIcon);
+                // panel2.add(button6);
+                // ImageIcon importIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
+                // button6.setIcon(importIcon);
             }
             panel1.add(panel2);
 
@@ -175,7 +188,7 @@ public class FormTypeProductDisableButton extends JPanel {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
 
         // combobox
-        String[] items = {"Tất cả", "Mã loại", "Tên loại", "Mô tả"};
+        String[] items = { "Tất cả", "Mã loại", "Tên loại", "Mô tả" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
@@ -198,12 +211,12 @@ public class FormTypeProductDisableButton extends JPanel {
         });
 
         // set color for button
-//        button2.setBackground(Color.white);
-//        button3.setBackground(Color.white);
-//        button4.setBackground(Color.white);
-//        button5.setBackground(Color.white);
-//        button6.setBackground(Color.white);
-//        button1.setBackground(new Color(135, 206, 250));
+        // button2.setBackground(Color.white);
+        // button3.setBackground(Color.white);
+        // button4.setBackground(Color.white);
+        // button5.setBackground(Color.white);
+        // button6.setBackground(Color.white);
+        // button1.setBackground(new Color(135, 206, 250));
 
         // set size for button
         Dimension sizeButton = new Dimension(144, 35);
@@ -211,7 +224,7 @@ public class FormTypeProductDisableButton extends JPanel {
         button3.setPreferredSize(sizeButton);
         button4.setPreferredSize(sizeButton);
         button5.setPreferredSize(sizeButton);
-        button6.setPreferredSize(sizeButton);
+        // button6.setPreferredSize(sizeButton);
         button1.setPreferredSize(new Dimension(140, 40));
 
         // font
@@ -279,7 +292,6 @@ public class FormTypeProductDisableButton extends JPanel {
             }
         });
 
-
         // search
         textField1.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -316,7 +328,7 @@ public class FormTypeProductDisableButton extends JPanel {
         button2.setEnabled(false);
         button3.setEnabled(false);
         button4.setEnabled(false);
-        button6.setEnabled(false);
+        // button6.setEnabled(false);
     }
 
     // refresh data in table
@@ -325,7 +337,7 @@ public class FormTypeProductDisableButton extends JPanel {
         setDataToTable(qllsp.getDslsp());
     }
 
-    //set data to table
+    // set data to table
     public void setDataToTable(ArrayList<TypeProduct> data) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("STT");
@@ -335,7 +347,7 @@ public class FormTypeProductDisableButton extends JPanel {
 
         for (int i = 0; i < data.size(); i++) {
             TypeProduct typeProduct = data.get(i);
-            model.addRow(new Object[]{
+            model.addRow(new Object[] {
                     i + 1,
                     typeProduct.getMaLoaiSanPham(),
                     typeProduct.getTenLoaiSanPham(),
@@ -353,7 +365,7 @@ public class FormTypeProductDisableButton extends JPanel {
     private JButton button3;
     private JButton button4;
     private JButton button5;
-    private JButton button6;
+    // private JButton button6;
     private JPanel panel3;
     private JPanel panel5;
     private JComboBox comboBox1;
@@ -364,5 +376,3 @@ public class FormTypeProductDisableButton extends JPanel {
     private JTable table1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
-
-

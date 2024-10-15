@@ -70,7 +70,7 @@ public class DisplayProductDisableButton extends JFrame {
     private JButton btnedit;
     private JButton btnview;
     private JButton btnxuat;
-    private JButton btnnhap;
+    // private JButton btnnhap;
     private JComboBox comboBox1;
     private DefaultTableModel model;
     private JScrollPane scrollPane1;
@@ -288,7 +288,7 @@ public class DisplayProductDisableButton extends JFrame {
         panel2.add(btnview);
 
         btnxuat = new JButton("Xuất Excel");
-        // btnxuat.setBackground(new Color(255, 255, 255));
+        btnxuat.setBackground(new Color(255, 255, 255));
         btnxuat.setPreferredSize(new Dimension(144, 43));
         btnxuat.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
         btnxuat.addActionListener(new ActionListener() {
@@ -337,61 +337,63 @@ public class DisplayProductDisableButton extends JFrame {
         });
         panel2.add(btnxuat);
 
-        btnnhap = new JButton("Nhập Excel");
-        // btnnhap.setBackground(new Color(255, 255, 255));
-        btnnhap.setPreferredSize(new Dimension(144, 43));
-        btnnhap.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
-        btnnhap.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn file Excel");
+        // btnnhap = new JButton("Nhập Excel");
+        // // btnnhap.setBackground(new Color(255, 255, 255));
+        // btnnhap.setPreferredSize(new Dimension(144, 43));
+        // btnnhap.setIcon(new
+        // ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
+        // btnnhap.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn file Excel");
 
-                int userSelection = fileChooser.showOpenDialog(null);
+        // int userSelection = fileChooser.showOpenDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToOpen = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToOpen = fileChooser.getSelectedFile();
 
-                    try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
-                        Workbook workbook = new XSSFWorkbook(inputStream);
+        // try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
+        // Workbook workbook = new XSSFWorkbook(inputStream);
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        Iterator<Row> rowIterator = sheet.iterator();
+        // Sheet sheet = workbook.getSheetAt(0);
+        // Iterator<Row> rowIterator = sheet.iterator();
 
-                        // skip thee header row
-                        if (rowIterator.hasNext()) {
-                            rowIterator.next();
-                        }
+        // // skip thee header row
+        // if (rowIterator.hasNext()) {
+        // rowIterator.next();
+        // }
 
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
+        // while (rowIterator.hasNext()) {
+        // Row row = rowIterator.next();
 
-                            String maSp = row.getCell(1).getStringCellValue();
-                            String maLsp = row.getCell(2).getStringCellValue();
-                            String tenSp = row.getCell(3).getStringCellValue();
-                            float donGia = (float) row.getCell(4).getNumericCellValue();
-                            int soLuong = (int) row.getCell(5).getNumericCellValue();
-                            String fileAnh = row.getCell(6).getStringCellValue();
-                            int trangThai = (int) row.getCell(7).getNumericCellValue();
+        // String maSp = row.getCell(1).getStringCellValue();
+        // String maLsp = row.getCell(2).getStringCellValue();
+        // String tenSp = row.getCell(3).getStringCellValue();
+        // float donGia = (float) row.getCell(4).getNumericCellValue();
+        // int soLuong = (int) row.getCell(5).getNumericCellValue();
+        // String fileAnh = row.getCell(6).getStringCellValue();
+        // int trangThai = (int) row.getCell(7).getNumericCellValue();
 
-                            Product product = new Product(maSp, maLsp, tenSp, donGia, soLuong, fileAnh, trangThai);
+        // Product product = new Product(maSp, maLsp, tenSp, donGia, soLuong, fileAnh,
+        // trangThai);
 
-                            // add to the database
-                            prbus.addBus(product);
-                        }
+        // // add to the database
+        // prbus.addBus(product);
+        // }
 
-                        //
-                        refreshTable();
+        // //
+        // refreshTable();
 
-                        JOptionPane.showMessageDialog(null, "Nhập file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Nhập file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        panel2.add(btnnhap);
+        // JOptionPane.showMessageDialog(null, "Nhập file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Nhập file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
+        // panel2.add(btnnhap);
 
         JPanel panel3 = new JPanel();
         FlowLayout fl_panel3 = new FlowLayout();
@@ -1191,7 +1193,7 @@ public class DisplayProductDisableButton extends JFrame {
         btndelete.setEnabled(false);
         btnedit.setEnabled(false);
         btnview.setEnabled(false);
-        btnnhap.setEnabled(false);
+        // btnnhap.setEnabled(false);
         cbhienthi.removeItem("Đã xóa");
     }
 

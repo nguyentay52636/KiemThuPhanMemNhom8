@@ -13,17 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -86,7 +83,7 @@ public class FormPhieuNhap extends JPanel {
         panel1 = new JPanel();
         panel2 = new JPanel();
         button1 = new JButton();
-        button2 = new JButton();
+        // button2 = new JButton();
         button3 = new JButton();
         panel3 = new JPanel();
         panel4 = new JPanel();
@@ -137,9 +134,9 @@ public class FormPhieuNhap extends JPanel {
                 panel2.add(button1);
 
                 //---- button2 ----
-                button2.setText("Nh\u1eadp Excel");
-                button2.setPreferredSize(new Dimension(144, 43));
-                panel2.add(button2);
+                // button2.setText("Nh\u1eadp Excel");
+                // button2.setPreferredSize(new Dimension(144, 43));
+                // panel2.add(button2);
 
 //                //---- button3 ----
 //                button3.setText("In PDF");
@@ -288,7 +285,7 @@ public class FormPhieuNhap extends JPanel {
         // set size for button
         Dimension sizeButton = new Dimension(150, 40);
         button1.setPreferredSize(sizeButton);
-        button2.setPreferredSize(sizeButton);
+        // button2.setPreferredSize(sizeButton);
         button3.setPreferredSize(new Dimension(100, 35));
         button4.setPreferredSize(new Dimension(50, 40));
         button5.setPreferredSize(new Dimension(50, 40));
@@ -315,13 +312,14 @@ public class FormPhieuNhap extends JPanel {
 
         // set icon
         ImageIcon iconXuatExcel = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
-        ImageIcon iconNhapExcel = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
+        // ImageIcon iconNhapExcel = new
+        // ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
         ImageIcon iconLich = new ImageIcon(getClass().getResource("/images/icons8_calendar_31_30px.png"));
         ImageIcon iconXem = new ImageIcon(getClass().getResource("/images/icons8_show_property_30px.png"));
         ImageIcon iconLamMoi = new ImageIcon(getClass().getResource("/images/icons8_data_backup_30px.png"));
 
         button1.setIcon(iconXuatExcel);
-        button2.setIcon(iconNhapExcel);
+        // button2.setIcon(iconNhapExcel);
         button4.setIcon(iconLich);
         button5.setIcon(iconLich);
         button6.setIcon(iconXem);
@@ -396,62 +394,65 @@ public class FormPhieuNhap extends JPanel {
         });
 
         // xuat excel
-        button2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn file Excel");
+        // button2.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn file Excel");
 
-                int userSelection = fileChooser.showOpenDialog(null);
+        // int userSelection = fileChooser.showOpenDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToOpen = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToOpen = fileChooser.getSelectedFile();
 
-                    try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
-                        Workbook workbook = new XSSFWorkbook(inputStream);
+        // try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
+        // Workbook workbook = new XSSFWorkbook(inputStream);
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        Iterator<Row> rowIterator = sheet.iterator();
+        // Sheet sheet = workbook.getSheetAt(0);
+        // Iterator<Row> rowIterator = sheet.iterator();
 
-                        // skip thee header row
-                        if (rowIterator.hasNext()) {
-                            rowIterator.next();
-                        }
+        // // skip thee header row
+        // if (rowIterator.hasNext()) {
+        // rowIterator.next();
+        // }
 
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
+        // while (rowIterator.hasNext()) {
+        // Row row = rowIterator.next();
 
-                            String maPhieuNhap = row.getCell(1).getStringCellValue();
-                            String maNhaCungCap = row.getCell(2).getStringCellValue();
-                            String maNhanVien = row.getCell(3).getStringCellValue();
-                            String ngayLap = row.getCell(4).getStringCellValue();
-                            String gioLap = row.getCell(5).getStringCellValue();
-                            float tongTien = (float) row.getCell(6).getNumericCellValue();
+        // String maPhieuNhap = row.getCell(1).getStringCellValue();
+        // String maNhaCungCap = row.getCell(2).getStringCellValue();
+        // String maNhanVien = row.getCell(3).getStringCellValue();
+        // String ngayLap = row.getCell(4).getStringCellValue();
+        // String gioLap = row.getCell(5).getStringCellValue();
+        // float tongTien = (float) row.getCell(6).getNumericCellValue();
 
-                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        // DateTimeFormatter dateTimeFormatter =
+        // DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-                            LocalDate localDate = LocalDate.parse(ngayLap, dateTimeFormatter);
-                            LocalTime localTime = LocalTime.parse(gioLap, timeFormatter);
+        // LocalDate localDate = LocalDate.parse(ngayLap, dateTimeFormatter);
+        // LocalTime localTime = LocalTime.parse(gioLap, timeFormatter);
 
-                            Import anImport = new Import(maPhieuNhap, maNhaCungCap, maNhanVien, localDate, localTime,
-                                    tongTien);
+        // Import anImport = new Import(maPhieuNhap, maNhaCungCap, maNhanVien,
+        // localDate, localTime,
+        // tongTien);
 
-                            // add to the database
-                            importBUS.add(maPhieuNhap, maNhaCungCap, maNhanVien, localDate, localTime, tongTien);
-                        }
+        // // add to the database
+        // importBUS.add(maPhieuNhap, maNhaCungCap, maNhanVien, localDate, localTime,
+        // tongTien);
+        // }
 
-                        //
-                        refresh();
+        // //
+        // refresh();
 
-                        JOptionPane.showMessageDialog(null, "Nhập file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Nhập file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        // JOptionPane.showMessageDialog(null, "Nhập file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Nhập file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
 
         // pdf
         button3.addActionListener(new ActionListener() {
@@ -714,7 +715,7 @@ public class FormPhieuNhap extends JPanel {
     private JPanel panel1;
     private JPanel panel2;
     private JButton button1;
-    private JButton button2;
+    // private JButton button2;
     private JButton button3;
     private JPanel panel3;
     private JPanel panel4;

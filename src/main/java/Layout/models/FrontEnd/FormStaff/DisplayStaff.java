@@ -281,53 +281,54 @@ public class DisplayStaff extends JFrame {
         });
         up.add(btnnhap);
 
-        btnxuat = new JButton("Xuất Excel");
-        btnxuat.setPreferredSize(new Dimension(144, 43));
-        btnxuat.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
-        btnxuat.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnxuat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn nơi lưu file");
+        // btnxuat = new JButton("Xuất Excel");
+        // btnxuat.setPreferredSize(new Dimension(144, 43));
+        // btnxuat.setIcon(new
+        // ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
+        // btnxuat.setFont(new Font("Tahoma", Font.BOLD, 12));
+        // btnxuat.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn nơi lưu file");
 
-                int userSelection = fileChooser.showSaveDialog(null);
+        // int userSelection = fileChooser.showSaveDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToSave = fileChooser.getSelectedFile();
 
-                    Workbook workbook = new XSSFWorkbook();
-                    Sheet sheet = workbook.createSheet("Nhân viên");
+        // Workbook workbook = new XSSFWorkbook();
+        // Sheet sheet = workbook.createSheet("Nhân viên");
 
-                    // tao row header
-                    Row headerRow = sheet.createRow(0);
-                    headerRow.createCell(0).setCellValue("Mã NV");
-                    headerRow.createCell(1).setCellValue("Tên NV");
-                    headerRow.createCell(2).setCellValue("Ngày sinh");
-                    headerRow.createCell(3).setCellValue("Địa chỉ");
-                    headerRow.createCell(4).setCellValue("SĐT");
-                    headerRow.createCell(5).setCellValue("Trạng thái");
+        // // tao row header
+        // Row headerRow = sheet.createRow(0);
+        // headerRow.createCell(0).setCellValue("Mã NV");
+        // headerRow.createCell(1).setCellValue("Tên NV");
+        // headerRow.createCell(2).setCellValue("Ngày sinh");
+        // headerRow.createCell(3).setCellValue("Địa chỉ");
+        // headerRow.createCell(4).setCellValue("SĐT");
+        // headerRow.createCell(5).setCellValue("Trạng thái");
 
-                    // them du lieu vao sheet
-                    for (int i = 0; i < table.getRowCount(); i++) {
-                        Row row = sheet.createRow(i + 1);
-                        for (int j = 0; j < table.getColumnCount(); j++) {
-                            row.createCell(j).setCellValue(table.getValueAt(i, j).toString());
-                        }
-                    }
+        // // them du lieu vao sheet
+        // for (int i = 0; i < table.getRowCount(); i++) {
+        // Row row = sheet.createRow(i + 1);
+        // for (int j = 0; j < table.getColumnCount(); j++) {
+        // row.createCell(j).setCellValue(table.getValueAt(i, j).toString());
+        // }
+        // }
 
-                    // ghi vao file
-                    try (FileOutputStream outputStream = new FileOutputStream(fileToSave)) {
-                        workbook.write(outputStream);
-                        JOptionPane.showMessageDialog(null, "Xuất file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Xuất file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        up.add(btnxuat);
+        // // ghi vao file
+        // try (FileOutputStream outputStream = new FileOutputStream(fileToSave)) {
+        // workbook.write(outputStream);
+        // JOptionPane.showMessageDialog(null, "Xuất file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Xuất file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
+        // up.add(btnxuat);
 
         txtTimKiem = new JTextField("");
         txtTimKiem.setBounds(388, 0, 150, 40);

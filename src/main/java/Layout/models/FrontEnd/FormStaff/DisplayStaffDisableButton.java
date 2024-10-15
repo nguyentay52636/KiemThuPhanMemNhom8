@@ -14,7 +14,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
@@ -22,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -67,7 +65,7 @@ public class DisplayStaffDisableButton extends JFrame {
     private JButton btnedit;
     private JButton btndelete;
     private JButton btnadd;
-    private JButton btnnhap;
+    // private JButton btnnhap;
     private JButton btnxuat;
     private ArrayList<Staff> list;
     private JDialog editDialog;
@@ -214,60 +212,62 @@ public class DisplayStaffDisableButton extends JFrame {
             }
         });
 
-        btnnhap = new JButton("Nhập Excel");
-        btnnhap.setIcon(new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
-        btnnhap.setPreferredSize(new Dimension(144, 43));
-        btnnhap.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnnhap.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn file Excel");
+        // btnnhap = new JButton("Nhập Excel");
+        // btnnhap.setIcon(new
+        // ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png")));
+        // btnnhap.setPreferredSize(new Dimension(144, 43));
+        // btnnhap.setFont(new Font("Tahoma", Font.BOLD, 12));
+        // btnnhap.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn file Excel");
 
-                int userSelection = fileChooser.showOpenDialog(null);
+        // int userSelection = fileChooser.showOpenDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToOpen = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToOpen = fileChooser.getSelectedFile();
 
-                    try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
-                        Workbook workbook = new XSSFWorkbook(inputStream);
+        // try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
+        // Workbook workbook = new XSSFWorkbook(inputStream);
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        Iterator<Row> rowIterator = sheet.iterator();
+        // Sheet sheet = workbook.getSheetAt(0);
+        // Iterator<Row> rowIterator = sheet.iterator();
 
-                        // skip thee header row
-                        if (rowIterator.hasNext()) {
-                            rowIterator.next();
-                        }
+        // // skip thee header row
+        // if (rowIterator.hasNext()) {
+        // rowIterator.next();
+        // }
 
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
+        // while (rowIterator.hasNext()) {
+        // Row row = rowIterator.next();
 
-                            String maNV = row.getCell(0).getStringCellValue();
-                            String tenNV = row.getCell(1).getStringCellValue();
-                            Date ngaySinh = Date.valueOf(row.getCell(2).getStringCellValue());
-                            String diaChi = row.getCell(3).getStringCellValue();
-                            String soDienThoai = row.getCell(4).getStringCellValue();
-                            int trangThai = (int) row.getCell(5).getNumericCellValue();
+        // String maNV = row.getCell(0).getStringCellValue();
+        // String tenNV = row.getCell(1).getStringCellValue();
+        // Date ngaySinh = Date.valueOf(row.getCell(2).getStringCellValue());
+        // String diaChi = row.getCell(3).getStringCellValue();
+        // String soDienThoai = row.getCell(4).getStringCellValue();
+        // int trangThai = (int) row.getCell(5).getNumericCellValue();
 
-                            Staff staff = new Staff(maNV, tenNV, ngaySinh, diaChi, soDienThoai, trangThai);
+        // Staff staff = new Staff(maNV, tenNV, ngaySinh, diaChi, soDienThoai,
+        // trangThai);
 
-                            // add to the database
-                            stbus.addBus(staff);
-                        }
+        // // add to the database
+        // stbus.addBus(staff);
+        // }
 
-                        // refresh the table
-                        refreshTable();
+        // // refresh the table
+        // refreshTable();
 
-                        JOptionPane.showMessageDialog(null, "Nhập file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Nhập file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        up.add(btnnhap);
+        // JOptionPane.showMessageDialog(null, "Nhập file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Nhập file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
+        // up.add(btnnhap);
 
         btnxuat = new JButton("Xuất Excel");
         btnxuat.setPreferredSize(new Dimension(144, 43));
@@ -1123,7 +1123,7 @@ public class DisplayStaffDisableButton extends JFrame {
         btndelete.setEnabled(false);
         btnedit.setEnabled(false);
         btnview.setEnabled(false);
-        btnnhap.setEnabled(false);
+        // btnnhap.setEnabled(false);
         cbhienthi.removeItem("Đã xóa");
     }
 }

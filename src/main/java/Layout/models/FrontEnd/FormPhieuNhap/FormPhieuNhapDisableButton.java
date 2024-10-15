@@ -4,15 +4,28 @@
 
 package Layout.models.FrontEnd.FormPhieuNhap;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Formatter;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -21,17 +34,16 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import Layout.models.BackEnd.BUS.ImportBUS;
-import Layout.models.BackEnd.BUS.StaffBUS;
-import Layout.models.BackEnd.DTO.Import;
-import Layout.models.FrontEnd.FormImportDetails.FormImportDetails;
-import Layout.models.FrontEnd.Formatter.PriceFormatter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import static java.awt.SystemColor.text;
+import Layout.models.BackEnd.BUS.ImportBUS;
+import Layout.models.BackEnd.BUS.StaffBUS;
+import Layout.models.BackEnd.DTO.Import;
+import Layout.models.FrontEnd.FormImportDetails.FormImportDetails;
+import Layout.models.FrontEnd.Formatter.PriceFormatter;
 
 /**
  * @author master
@@ -105,9 +117,9 @@ public class FormPhieuNhapDisableButton extends JPanel {
                 panel2.add(button1);
 
                 //---- button2 ----
-                button2.setText("Nh\u1eadp Excel");
-                button2.setPreferredSize(new Dimension(144, 43));
-                panel2.add(button2);
+                // button2.setText("Nh\u1eadp Excel");
+                // button2.setPreferredSize(new Dimension(144, 43));
+                // panel2.add(button2);
 
                 //---- button3 ----
 //                button3.setText("In PDF");
@@ -247,7 +259,8 @@ public class FormPhieuNhapDisableButton extends JPanel {
         // JFormDesigner - End of compnvonent initialization  //GEN-END:initComponents  @formatter:on
 
         // add item in comboBox
-        String[] items = { "Tất cả", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã nhân viên", "Ngày lập", "Giờ lập","Tổng tiền" };
+        String[] items = { "Tất cả", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã nhân viên", "Ngày lập", "Giờ lập",
+                "Tổng tiền" };
         for (String item : items) {
             comboBox1.addItem(item);
         }
@@ -525,4 +538,3 @@ public class FormPhieuNhapDisableButton extends JPanel {
     }
 
 }
-

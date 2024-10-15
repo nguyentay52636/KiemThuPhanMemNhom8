@@ -12,11 +12,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -120,11 +118,11 @@ public class FormTypeProduct extends JPanel {
                 button5.setIcon(exportIcon);
 
                 //---- button6 ----
-                button6.setText("Nhập Excel");
-//                button6.setFont(button6.getFont().deriveFont(button6.getFont().getSize() + 5f));
-                panel2.add(button6);
-                ImageIcon importIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
-                button6.setIcon(importIcon);
+//                 button6.setText("Nhập Excel");
+// //                button6.setFont(button6.getFont().deriveFont(button6.getFont().getSize() + 5f));
+//                 panel2.add(button6);
+                // ImageIcon importIcon = new ImageIcon(getClass().getResource("/images/icons8_ms_excel_30px.png"));
+                // button6.setIcon(importIcon);
             }
             panel1.add(panel2);
 
@@ -224,7 +222,7 @@ public class FormTypeProduct extends JPanel {
         button3.setPreferredSize(sizeButton);
         button4.setPreferredSize(sizeButton);
         button5.setPreferredSize(sizeButton);
-        button6.setPreferredSize(sizeButton);
+        // button6.setPreferredSize(sizeButton);
         button1.setPreferredSize(new Dimension(140, 40));
 
         // font
@@ -347,52 +345,52 @@ public class FormTypeProduct extends JPanel {
         });
 
         // nhap excel
-        button6.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Chọn file Excel");
+        // button6.addActionListener(new ActionListener() {
+        // @Override
+        // public void actionPerformed(ActionEvent actionEvent) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setDialogTitle("Chọn file Excel");
 
-                int userSelection = fileChooser.showOpenDialog(null);
+        // int userSelection = fileChooser.showOpenDialog(null);
 
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToOpen = fileChooser.getSelectedFile();
+        // if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // File fileToOpen = fileChooser.getSelectedFile();
 
-                    try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
-                        Workbook workbook = new XSSFWorkbook(inputStream);
+        // try (FileInputStream inputStream = new FileInputStream(fileToOpen)) {
+        // Workbook workbook = new XSSFWorkbook(inputStream);
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        Iterator<Row> rowIterator = sheet.iterator();
+        // Sheet sheet = workbook.getSheetAt(0);
+        // Iterator<Row> rowIterator = sheet.iterator();
 
-                        // skip thee header row
-                        if (rowIterator.hasNext()) {
-                            rowIterator.next();
-                        }
+        // // skip thee header row
+        // if (rowIterator.hasNext()) {
+        // rowIterator.next();
+        // }
 
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
+        // while (rowIterator.hasNext()) {
+        // Row row = rowIterator.next();
 
-                            String maLoai = row.getCell(1).getStringCellValue();
-                            String tenLoai = row.getCell(2).getStringCellValue();
-                            String moTa = row.getCell(3).getStringCellValue();
+        // String maLoai = row.getCell(1).getStringCellValue();
+        // String tenLoai = row.getCell(2).getStringCellValue();
+        // String moTa = row.getCell(3).getStringCellValue();
 
-                            TypeProduct typeProduct = new TypeProduct(maLoai, tenLoai, moTa);
+        // TypeProduct typeProduct = new TypeProduct(maLoai, tenLoai, moTa);
 
-                            // add to the database
-                            qllsp.add(typeProduct);
-                        }
+        // // add to the database
+        // qllsp.add(typeProduct);
+        // }
 
-                        //
-                        refresh();
+        // //
+        // refresh();
 
-                        JOptionPane.showMessageDialog(null, "Nhập file thành công");
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Nhập file không thành công");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        // JOptionPane.showMessageDialog(null, "Nhập file thành công");
+        // } catch (IOException e) {
+        // JOptionPane.showMessageDialog(null, "Nhập file không thành công");
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
 
         // search
         textField1.getDocument().addDocumentListener(new DocumentListener() {
@@ -459,7 +457,7 @@ public class FormTypeProduct extends JPanel {
     private JButton button3;
     private JButton button4;
     private JButton button5;
-    private JButton button6;
+    // private JButton button6;
     private JPanel panel3;
     private JPanel panel5;
     private JComboBox comboBox1;
